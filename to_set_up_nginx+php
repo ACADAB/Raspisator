@@ -1,3 +1,6 @@
+#linux
+
+
 sudo apt-get install php7.0-common php7.0-cli php7.0-fpm
 
 sudo apt-get install nginx
@@ -11,3 +14,5 @@ to start:
 projects must be located in nginx root initialized in /sites-available/default
 
 #http://askubuntu.com/questions/134666/what-is-the-easiest-way-to-enable-php-on-nginx
+#osx:
+https://blog.frd.mn/install-nginx-php-fpm-mysql-and-phpmyadmin-on-os-x-mavericks-using-homebrew/
