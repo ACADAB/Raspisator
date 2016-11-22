@@ -2,7 +2,7 @@
 
 
 <form>
-	<input type=text id=name>
+<input type=text id=name value = "<?php echo $_GET['name']  ?>">
 
 </form>
 

@@ -1,0 +1,25 @@
+{
+  "name": "raspisator",
+  "version": "1.0.0",
+  "description": "makes school scedule",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-latest": "^6.16.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel JS -d lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TIXFeniks/Raspisator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TIXFeniks/Raspisator/issues"
+  },
+  "homepage": "https://github.com/TIXFeniks/Raspisator#readme"
+}
