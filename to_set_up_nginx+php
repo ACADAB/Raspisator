@@ -13,6 +13,12 @@ to start:
 
 projects must be located in nginx root initialized in /sites-available/default
 
+#install npm
+sudo apt-get install npm
+
+#initialize package:
+npm install --save-dev
+
 #http://askubuntu.com/questions/134666/what-is-the-easiest-way-to-enable-php-on-nginx
 #osx:
 https://blog.frd.mn/install-nginx-php-fpm-mysql-and-phpmyadmin-on-os-x-mavericks-using-homebrew/
