@@ -1,0 +1,31 @@
+#linux
+
+
+sudo apt-get install php7.0-common php7.0-cli php7.0-fpm
+
+sudo apt-get install nginx
+
+uncomment php in /etc/nginx/sites-available/default
+
+to start:
+	sudo service nginx restart
+	sudo service php7.0-fpm restart
+
+projects must be located in nginx root initialized in /sites-available/default
+
+#install npm
+sudo apt-get install npm
+
+#to initialize package:
+npm install --save-dev
+#to build js code:
+webpack --watch
+#note: it must be installed globally
+#or with no global installation:
+npm run watch
+
+
+
+#http://askubuntu.com/questions/134666/what-is-the-easiest-way-to-enable-php-on-nginx
+#osx:
+https://blog.frd.mn/install-nginx-php-fpm-mysql-and-phpmyadmin-on-os-x-mavericks-using-homebrew/
