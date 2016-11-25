@@ -1,7 +1,7 @@
 #!/bin/bash
 
-service nginx restart
-service php7.0-fpm restart
-service mysql restart
+sudo service nginx restart
+sudo service php7.0-fpm restart
+sudo service mysql restart
 
 npm run watch 

@@ -1,7 +1,11 @@
 <head></head>
 <body>
 
-	
+	<?
+		if( !isset($_GET['name'])){
+			$_GET['name'] = '';
+		}
+	?>
 
 	<h1>Hello!</h1>
 
