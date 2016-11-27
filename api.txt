@@ -1,0 +1,18 @@
+
+#method = POST
+login(uname|e-mail, password, rememberMe) => {isLoggedIn:[1|0], user_id}
+
+#method = POST
+register(uname, e-mail, name, password) => {success:[true|false], errorMessage}
+
+requestReset(e-mail) => {}
+
+requestDelete() => {}
+
+getUserName(user_id) => {uname}
+
+logout() => 
+
+getLoggedIn() => {users:[]}
+
+getRegistered() => {users:[]}
