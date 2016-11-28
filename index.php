@@ -1,14 +1,14 @@
-<head></head>
+<?
+header('Content-Type: text/html; charset=utf-8');
+//Я - забавный комментарий
+
+?>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
 <body>
 	<h1>Hello!</h1>
-
-
-	<div>
-		<input type=number name=A>
-		<input type=number name=B>
-		<button name=OK>OK </button>
-	</div>
-
 	<div id = app></div>
-	<script src="JS/scripts.min.js" ></script>>
+	<script src="JS/scripts.min.js" ></script>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
 </body>
