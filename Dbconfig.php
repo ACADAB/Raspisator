@@ -14,11 +14,6 @@ catch(Exception $e){
 	echo $e->getMessage();
 }
 
-$DB_host = "localhost";
-$DB_user = "root";
-$DB_pass = "Dimdidimdi1-e";
-$DB_name = "dblogin";
-
 try
 {
      $DB_con = new PDO("mysql:host={$ini['host']};dbname={$ini['dbname']}",$ini['user'],$ini['pass']);
