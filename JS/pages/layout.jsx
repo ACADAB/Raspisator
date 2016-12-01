@@ -11,7 +11,9 @@ export default class Layout extends(React.Component){
 		};
 	}
 
-	componentWillMount(){
+
+
+	componentWillMount(){//TODO: add unmount!
 		AccountStore.on("change", ()=>{
 			this.setState({
 				account:AccountStore.getAccount()
