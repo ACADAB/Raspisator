@@ -48,17 +48,16 @@ class USER
              {
                 $_SESSION['user_session'] = $userRow['user_id'];
                 $_SESSION['user_name'] = $userRow['user_name'];
-                return ['is_loggedin'=>true];
-             }
-             else
-             {
-                return ['is_loggedin'=>false];
+                return ['isLoggedin'=>true, 'name' => $_SESSION['user_name']];
              }
           }
+          http_response_code(400);
+          return ['isLoggedin'=>false];
        }
        catch(PDOException $e)
        {
-           return ['is_loggedin'=>false];
+          http_response_code(400);
+          return ['isLoggedin'=>false];
 
            //echo $e->getMessage();
        }
@@ -83,11 +82,11 @@ class USER
    {
       if(isset($_SESSION['user_session']))
       {
-         return  ['is_loggedin'=>true];
+         return  ['isLoggedin'=>true, 'name'=>$_SESSION['user_name']];
       } 
       else
       {
-        return  ['is_loggedin'=>false];
+        return  ['isLoggedin'=>false];
       }
    }
  

@@ -27,6 +27,9 @@ sudo apt-get install npm
 
 #to initialize package:
 npm install --save-dev
+
+#don't forget to fix db_connection.ini and settings.jsx
+
 #to build js code:
 webpack --watch
 #note: it must be installed globally

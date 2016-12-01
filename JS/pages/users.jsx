@@ -5,7 +5,7 @@ import User from './user.jsx';
 export default class Users extends(React.Component){
 	constructor(props){
 		super(props);
-		this.state = {users:[]}
+		this.state = {users:[]};
 	}
 
 	componentWillMount(){

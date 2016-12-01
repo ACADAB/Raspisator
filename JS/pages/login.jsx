@@ -1,41 +1,32 @@
 import React from "react";
 import FormData from 'react-form-data';
 import request from '../API.jsx';
-import { hashHistory } from 'react-router';
-
-export default class Register extends(React.Component){
+import * as AccountActions from '../actions/accountActions.jsx';
+export default class Login extends(React.Component){
 	constructor(props){
 		super(props);
 		this.formData = {
-			umail:"",
 			password:"",
-			name:"",
-			uname:""
+			name:""
 		}
 		this.updateFormData = FormData.updateFormData.bind(this);
 		this.setFormData = FormData.setFormData.bind(this);
 	}
 	handleSubmit(event){
 		const dat = this.formData;
-		request('register', dat, 'post').then(res=>{
-			hashHistory.push('login');
-		}).catch(e=>alert("This Login/ e-mail is already taken!"));
+		AccountActions.login(dat);		
 	}
 
 	render(){
 		let a =0;
 		return (
 			<div>
-				<h1>Регистрация</h1>
+				<h1>Вход</h1>
 				<form onChange={this.updateFormData} method="POST" acceptCharset="utf-8" action="http://localhost/var/www/html/Raspisator/API/register.php">
-					<label>E-mail</label><br/>
-					<input type="e-mail" name="umail"/><br/>
-					<label>Password</label><br/>
+					<label>Имя пользователя / E-mail</label><br/>
+					<input type="e-mail" name="name"/><br/>
+					<label>Пароль</label><br/>
 					<input type="password" name="password"/><br/>
-					<label>Name</label><br/>
-					<input type="name" name="name"/><br/>
-					<label>User name</label><br/>
-					<input type="uesrname" name="uname"/><br/>
 					<button type='button'  onClick={e => this.handleSubmit(e)}>OК</button>
 				</form>
 			</div>
