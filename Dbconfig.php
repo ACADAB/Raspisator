@@ -1,4 +1,4 @@
-<?
+<?php
 session_start();
 //phpinfo();
 $ini = parse_ini_file("db_connection_default.ini");	
