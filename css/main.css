@@ -1,3 +1,18 @@
-.hidden{
-	dsplay:none;
+.class{
+	background-color: lightblue;
+	border-color: black white;
+	border-top-width: 1px;
+	padding: 5px;
+}
+
+.class:hover{
+	background-color: #2867cc;
+}
+
+.dragging{
+	opacity:0;
+}
+
+.class-list{
+	width:200px;
 }

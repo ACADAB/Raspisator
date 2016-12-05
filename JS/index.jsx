@@ -9,6 +9,7 @@ import Users from './pages/users.jsx';
 import Register from './pages/register.jsx';
 import Logout from './pages/logout.jsx';
 import Login from './pages/login.jsx';
+import Editor from './pages/editor.jsx';
 
 import properties from './settings.jsx';
 
@@ -29,6 +30,7 @@ ReactDOM.render((
 			<Route path="register" component={Register}></Route>
 			<Route path="logout" component={Logout}></Route>
 			<Route path="login" component={Login}></Route>
+			<Route path="editor" component={Editor}></Route>
 		</Route> 
 	</Router>
 	), app);

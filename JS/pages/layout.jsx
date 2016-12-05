@@ -13,7 +13,7 @@ export default class Layout extends(React.Component){
 
 
 
-	componentWillMount(){//TODO: add unmount!
+	componentWillMount(){//TODO: add unmount!ee
 		AccountStore.on("change", ()=>{
 			this.setState({
 				account:AccountStore.getAccount()
@@ -24,11 +24,12 @@ export default class Layout extends(React.Component){
 
 	render(){
 		if (this.state.account.isLoggedIn)
-			return (
+			return (	
 				<div>
 					<h1>Hello, {this.state.account.name}</h1>
 					<Link to="users">Users </Link>
 					<Link to="logout">Logout </Link>
+					<Link to="editor">editor </Link>
 					{this.props.children}
 				</div>
 			);

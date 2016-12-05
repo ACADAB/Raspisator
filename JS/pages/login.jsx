@@ -27,7 +27,7 @@ export default class Login extends(React.Component){
 					<input type="e-mail" name="name"/><br/>
 					<label>Пароль</label><br/>
 					<input type="password" name="password"/><br/>
-					<button type='button'  onClick={e => this.handleSubmit(e)}>OК</button>
+					<button type='button' className="btn" onClick={e => this.handleSubmit(e)}>OК</button>
 				</form>
 			</div>
 			);
