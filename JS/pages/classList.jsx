@@ -86,7 +86,7 @@ export default class ClassList extends(React.Component){
 	render(){
 		const unused = classStore.getUnused();
 		const classes = unused.map((c,index) =>
-				<Class name={c.name} index={c.id} teacher={c.teacher} grade={c.grade} key={index}/>
+				<Class name={c.name} id={c.id} index={index} teacher={c.teacher} grade={c.grade} key={c.id}/>
 			)
 		const {connectDropTarget} = this.props;
 		return connectDropTarget(

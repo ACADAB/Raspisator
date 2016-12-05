@@ -25,6 +25,24 @@ class ClassStore extends EventEmitter{
 				teacher:"ЮН",
 				grade:"11"
 			},
+			{
+				id: 3,
+				name:"Биология",
+				teacher:"Таня",
+				grade:"6"
+			},
+			{
+				id: 4,
+				name:"Алгебра",
+				teacher:"ИЕ",
+				grade:"8"
+			},
+			{
+				id: 5,
+				name:"Физика",
+				teacher:"ЮН",
+				grade:"11"
+			},
 		];
 	}
 
@@ -42,10 +60,34 @@ class ClassStore extends EventEmitter{
 	}
 
 	swapUnusedItems(ind1,ind2){
-		const tmp = this.unused[ind1];
-		this.unused[ind1] = this.unused[ind2];
-		this.unused[ind2] = tmp;
+		const minInd = Math.min(ind1,ind2);
+		const maxInd = Math.max(ind1,ind2);
+		if (maxInd-minInd > 1){
+			if (ind1 < ind2){
+
+				const tmp = this.unused[minInd];
+				for (let i =minInd+1; i<=maxInd; i+=1 ){
+					this.unused[i-1] = this.unused[i]
+				}
+				this.unused[maxInd] = tmp; 
+			} else {
+				const tmp = this.unused[maxInd];
+				for (let i =maxInd-1; i>=minInd; i-=1 ){
+					this.unused[i+1] = this.unused[i]
+				}
+				this.unused[minInd] = tmp; 
+			}
+		} else {
+
+			const tmp = this.unused[minInd];
+			this.unused[minInd] = this.unused[maxInd];
+			
+			this.unused[maxInd] = tmp;
+		}
+		
+				console.log(minInd,maxInd);
 		this.emit('change');
+
 	}
 
 	handleActions(action){
