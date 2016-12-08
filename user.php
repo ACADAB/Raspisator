@@ -1,4 +1,4 @@
-  <?php
+<?php
 
 $SUCCESS = ['success'=>true];
 

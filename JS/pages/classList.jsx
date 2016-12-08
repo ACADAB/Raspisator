@@ -16,8 +16,10 @@ const cardTarget = {
     // Determine mouse position
     const clientOffset = monitor.getClientOffset();
 
+    const numClasses = classStore.getLenUnused();
+
     // get class height to to count the changes amount
-    const classHeight = (r=>r.bottom - r.top)(thisRect)/classStore.getLenUnused();
+    const classHeight = (r=>r.bottom - r.top)(thisRect)/numClasses;
     //get index of hovered class
     const hoverIndex = Math.floor((clientOffset.y-thisRect.top)/ classHeight);
     
@@ -40,17 +42,20 @@ const cardTarget = {
     // Get pixels to the top
     const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
+    //if it's out of bounds don't do anything
+    if (hoverIndex < 0 || hoverIndex >= numClasses) return;
+
     // Only perform the move when the mouse has crossed half of the items height
     // When dragging downwards, only move when the cursor is below 50%
     // When dragging upwards, only move when the cursor is above 50%
 
     // Dragging downwards
-    if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+    if (dragIndex == hoverIndex - 1 && hoverClientY < hoverMiddleY) {
       return;
     }
 
     // Dragging upwards
-    if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+    if (dragIndex == hoverIndex + 1 && hoverClientY > hoverMiddleY) {
       return;
     }
 
