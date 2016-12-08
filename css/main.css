@@ -1,12 +1,43 @@
+
+.class-space{
+	width:150px;
+	height:40px;
+	background-color:lightgrey;
+
+	/*border:1px solid grey; */
+}
+
 .class{
-	background-color: lightblue;
-	border-color: black white;
-	border-top-width: 1px;
+	-webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+	width:100%;
 	padding: 5px;
+	/*border-color: black;
+	border-top-width: 1px;*/
+	
+}
+
+.blue{
+	background-color: lightblue !important;
+}
+
+.red{
+	background-color: #f92755 !important;
+}
+
+
+.yellow{
+	background-color: yellow !important;
+}
+
+.class:not(:first-child){
+	border-top: 1px solid black;
+	
 }
 
 .class:hover{
-	background-color: #2867cc;
+	filter: brightness(85%);
 }
 
 .dragging{
@@ -14,5 +45,22 @@
 }
 
 .class-list{
-	width:200px;
+	width:150px;
+	height: 100vh;
+	display:inline-block;
+	float:left;
+}
+.grid{
+	display: inline-block;
+	clear:both;
+}
+
+.overlay{
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	zIndex: 1;
+	opacity: 0.5;
 }

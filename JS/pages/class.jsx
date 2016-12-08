@@ -23,9 +23,11 @@ export default class Class extends(React.Component){
 	}
 
 	render(){
-		const { grade, teacher,name,isDragging, connectDragSource} = this.props;
-		
-		const DOMclasses = isDragging?'class dragging': 'class'
+		const { grade, teacher, name, color, isDragging, connectDragSource} = this.props;
+
+
+
+		const DOMclasses =color + (isDragging?' class-space class dragging': ' class class-space');
 
 		return connectDragSource(
 			<div className={DOMclasses}>

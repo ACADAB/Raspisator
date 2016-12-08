@@ -1,6 +1,8 @@
 import React from "react";
 import Class from './class.jsx';
 import ClassList from './classList.jsx';
+import Grid from './grid.jsx';
+
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -17,6 +19,7 @@ export default class Editor extends(React.Component){
 		return (
 			<div className="editor">
 				<ClassList/>
+				<Grid/>
 			</div>
 			);
 	}
