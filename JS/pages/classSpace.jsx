@@ -8,7 +8,11 @@ import { DropTarget } from 'react-dnd';
 import Class from './class.jsx';
 
 const cardTarget = {
-	drop(props, monitor, component) {
+	canDrop : function(props, monitor, component){
+		return classStore.canDrop(monitor.getItem().id, props.x, props.y);;
+	},
+
+	drop : function(props, monitor, component) {
 		const dragID = monitor.getItem().id;
 		const currID = classStore.table.table[props.x][props.y];
 		if (currID == -1){
@@ -21,7 +25,9 @@ const cardTarget = {
 
 @DropTarget(ItemTypes.CLASS, cardTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
-  isOver: monitor.isOver()
+  isOver: monitor.isOver(),
+  canDrop: monitor.canDrop(),
+   isDragging: monitor.getItem()
 }))
 
 export default class ClassSpace extends(React.Component){
@@ -44,15 +50,15 @@ export default class ClassSpace extends(React.Component){
 
 
 	renderOverlay(color) {
-		console.log("overlay "+color)
 	    return (
 	      <div className={"overlay "+color}/>
 	    );
 	  }
 
 	render(){
-		const {x, y, isOver} = this.props;
+		const {x, y, isOver,canDrop, isDragging} = this.props;
 		const id = classStore.table.table[x][y];
+		const isDrag = (isDragging == null)? false: true;
 		const {connectDropTarget} = this.props;
 		let c = '';
 		if (id != -1){
@@ -69,7 +75,8 @@ export default class ClassSpace extends(React.Component){
 					{
 					(id != -1) && <Class name={c.name} id={c.id} index={c.id} color={c.color} teacher={c.teacher} grade={c.grade}/>
 					}
-					{ isOver && this.renderOverlay('yellow')}	
+					{isDrag&& canDrop && isOver && this.renderOverlay('yellow')}	
+					{isDrag&& !canDrop && this.renderOverlay('red')}		
 					</div>
 				</div>
 					

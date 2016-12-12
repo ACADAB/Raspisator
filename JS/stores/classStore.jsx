@@ -2,6 +2,8 @@ import { EventEmitter} from "events";
 
 import dispatcher from '../dispatcher.jsx';
 
+import request from '../API.jsx';
+
 //generates a matrix, filled with -1 of size x*y
 function getEmptyTable(x,y){
 	var a = [], b;
@@ -10,66 +12,44 @@ function getEmptyTable(x,y){
 	return {width : x, height : y, table : a}
 }
 
+
 class ClassStore extends EventEmitter{
 	constructor(){
 		super();
-		this.unused = [
-			{
-				id: 0,
-				name:"Биология",
-				teacher:"Азамат",
-				grade:"6",
-				color:"blue",
-			},
-			{
-				id: 1,
-				name:"Физика",
-				teacher:"Гриц",
-				grade:"8",
-				color:"red",
-			},
-			{
-				id: 2,
-				name:"Физика",
-				teacher:"ЮН",
-				grade:"11",
-				color:"blue",
-			},
-			{
-				id: 3,
-				name:"Биология",
-				teacher:"Таня",
-				grade:"6",
-				color:"red",
-			},
-			{
-				id: 4,
-				name:"Алгебра",
-				teacher:"ИЕ",
-				grade:"8",
-				color:"red",
-			},
-			{
-				id: 5,
-				name:"Физика",
-				teacher:"ЮН",
-				grade:"11",
-				color:"blue",
-			},
-		];
+		this.unused = [];
 		this.used = [];
 		this.classPosition = {
-			0:{isUsed : false, index : 0, x : -1, y : -1},
-			1:{isUsed : false, index : 1, x : -1, y : -1},
-			2:{isUsed : false, index : 2, x : -1, y : -1},
-			3:{isUsed : false, index : 3, x : -1, y : -1},
-			4:{isUsed : false, index : 4, x : -1, y : -1},
-			5:{isUsed : false, index : 5, x : -1, y : -1},
 		}; 
 
 		this.setMaxListeners(100);
 
 		this.table = getEmptyTable(6,4);
+
+		this.loadLessons(1);
+
+		this.colClasses = ['8E','9E','10E','11E'];
+	}
+
+	loadLessons(project_id){
+		request('getLessons', {'project_id':project_id}).then(res=>{	
+			//this.unused = res.data;
+			//
+			const dataLen = res.data.length;
+			for (let i =0; i< dataLen; i++){
+				this.unused.push({
+					id : i,
+					db_id : parseInt(res.data[i].id),
+					grade : res.data[i].grade_number + res.data[i].grade_name,
+					name : res.data[i].lesson_name,
+					teacher : res.data[i].name,
+					color : 'red'
+				});
+				this.classPosition[this.unused[i].id] = {isUsed : false, index : i, x : -1, y : -1};
+
+
+			}
+			this.emit('change');
+		});
 	}
 
 	getUnused(){
@@ -83,6 +63,24 @@ class ClassStore extends EventEmitter{
 	setUnused(arr){
 		this.unused = arr;
 		this.emit('change');
+	}
+
+
+	canDrop(id, x,y){
+		
+		const lesson = this.getClassByID(id);
+
+		if (this.colClasses[y] != lesson.grade){
+			return false;
+		}
+		for (let i=0; i< this.table.height; i++){
+			
+			if (i!=y && this.table.table[x][i] != -1 && this.getClassByID( this.table.table[x][i]).teacher == lesson.teacher){
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	moveUnusedItem(from,to){

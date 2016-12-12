@@ -85,6 +85,7 @@ class USER
 		  $result = [];
           $stmt = $this->db->prepare("
 		  	select
+      lessons.id,
 			lessons.lesson_name,
 			grades.grade_name,
 			grades.grade_number,
