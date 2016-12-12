@@ -11,8 +11,6 @@ import Logout from './pages/logout.jsx';
 import Login from './pages/login.jsx';
 import Editor from './pages/editor.jsx';
 
-import properties from './settings.jsx';
-
 
 var outVal = 0; 
 
