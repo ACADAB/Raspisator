@@ -77,7 +77,43 @@ class USER
            echo $e->getMessage();
        }
    }
- 
+   
+   public function get_lessons($current_project_id)
+   {
+      try
+       {
+		  $result = [];
+          $stmt = $this->db->prepare("
+		  	select
+			lessons.lesson_name,
+			grades.grade_name,
+			grades.grade_number,
+			users.name
+			from
+			lessons
+			join grades
+			on grades.id = lessons.grade_id
+			join project_lesson_relation
+			on project_lesson_relation.lesson_id = lessons.id 
+			join users
+			on users.user_id = lessons.teacher_id
+			where project_lesson_relation.project_id = :current_project_id");
+          $stmt->bindparam(":current_project_id", $current_project_id, PDO::PARAM_INT);
+		  $stmt->execute();
+		  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+			 $result[] = $row;
+		  }
+          return $result;
+       }
+       catch(PDOException $e)
+       {
+          http_response_code(400);
+          echo $e->getMessage();
+		  return [];
+
+           
+       }
+   }
    public function is_loggedin()
    {
       if(isset($_SESSION['user_session']))
