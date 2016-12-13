@@ -13,7 +13,8 @@ const cardSource = {
 
 @DragSource(ItemTypes.CLASS, cardSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
-  isDragging: monitor.isDragging()
+  isDragging: monitor.isDragging(),
+  connectDragPreview: connect.dragPreview()
 }))
 
 
@@ -22,12 +23,17 @@ export default class Class extends(React.Component){
 		super(props);
 	}
 
+	componentDidMount(){
+		var connectDragPreview = this.props.connectDragPreview;
+  		var img = new Image();
+    	connectDragPreview(img);
+	}
+
 	render(){
 		const { grade, teacher, name, color, isDragging, connectDragSource} = this.props;
 
 
-
-		const DOMclasses =color + (isDragging?' class-space class dragging': ' class class-space');
+		const DOMclasses =color + (isDragging?' class-box class dragging': ' class class-box');
 
 		return connectDragSource(
 			<div className={DOMclasses}>

@@ -9,5 +9,12 @@ header('Content-Type: text/html; charset=utf-8');
 <body>
 	<div id = app></div>
 	<script src="JS/scripts.min.js" ></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
+	
+
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 </body>

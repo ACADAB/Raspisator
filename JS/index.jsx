@@ -10,6 +10,8 @@ import Register from './pages/register.jsx';
 import Logout from './pages/logout.jsx';
 import Login from './pages/login.jsx';
 import Editor from './pages/editor.jsx';
+import Index from './pages/index.jsx';
+import Home from './pages/home.jsx'
 
 //import properties from './settings.jsx';
 
@@ -25,11 +27,12 @@ const app = document.getElementById("app");
 ReactDOM.render((
 	<Router history={hashHistory}>
 		<Route path="/" component={Layout}>
-			<IndexRoute component={Users}></IndexRoute>
+			<IndexRoute component={Index}></IndexRoute>
 			<Route path="users" component={Users}></Route>
 			<Route path="register" component={Register}></Route>
 			<Route path="logout" component={Logout}></Route>
 			<Route path="login" component={Login}></Route>
+			<Route path="home" component={Home}></Route>
 			<Route path="editor" component={Editor}></Route>
 		</Route> 
 	</Router>

@@ -2,6 +2,9 @@ import React from "react";
 import FormData from 'react-form-data';
 import request from '../API.jsx';
 import * as AccountActions from '../actions/accountActions.jsx';
+
+import {Button} from 'react-bootstrap';
+
 export default class Login extends(React.Component){
 	constructor(props){
 		super(props);
@@ -27,7 +30,7 @@ export default class Login extends(React.Component){
 					<input type="e-mail" name="name"/><br/>
 					<label>Пароль</label><br/>
 					<input type="password" name="password"/><br/>
-					<button type='button' className="btn" onClick={e => this.handleSubmit(e)}>OК</button>
+					<Button bsStyle='success' type='button' className="btn" onClick={e => this.handleSubmit(e)}>OК</Button>
 				</form>
 			</div>
 			);

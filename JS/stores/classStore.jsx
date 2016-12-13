@@ -52,6 +52,10 @@ class ClassStore extends EventEmitter{
 		});
 	}
 
+	getColNames(){
+		return this.colClasses;		
+	}
+
 	getUnused(){
 		return this.unused;
 	}

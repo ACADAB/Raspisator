@@ -40,6 +40,10 @@ class AccountStore extends EventEmitter{
 		hashHistory.push('users');
 	}
 
+	redirect(to){
+		hashHistory.push(to);
+	}
+
 	setAccount(account){
 		this.account = account;
 		this.emit('change');

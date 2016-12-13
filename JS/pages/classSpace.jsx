@@ -65,7 +65,7 @@ export default class ClassSpace extends(React.Component){
 			c = classStore.getClassByID(id);
 		}
 			return connectDropTarget(
-				<div className="class-space" >
+				<div className="class-space class-box" >
 					<div style={{
         position: 'relative',
         width: '100%',

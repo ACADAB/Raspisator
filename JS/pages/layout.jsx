@@ -3,6 +3,8 @@ import request from "../API.jsx";
 import {Link} from 'react-router';
 import AccountStore from '../stores/accountStore.jsx';
 
+import {Nav, NavItem, Grid, Row, Navbar} from 'react-bootstrap';
+
 export default class Layout extends(React.Component){
 	constructor(props){
 		super(props);
@@ -22,25 +24,66 @@ export default class Layout extends(React.Component){
 		AccountStore.updateAccount();
 	}
 
+	handleSelect(to){
+		AccountStore.redirect(to);
+	}
+
 	render(){
-		if (this.state.account.isLoggedIn)
+		let currentPath = this.props.routes[this.props.routes.length - 1].path;
+		if (this.state.account.isLoggedIn){
+			if (currentPath == undefined) currentPath = 'users';
 			return (	
 				<div>
-					<h1>Hello, {this.state.account.name}</h1>
-					<Link to="users">Users </Link>
-					<Link to="logout">Logout </Link>
-					<Link to="editor">editor </Link>
-					{this.props.children}
+
+					<Grid>
+						<Row>
+							<h1>Hello, {this.state.account.name}</h1>
+							<Navbar>	
+								<Nav bsStyle="tabs" activeKey={currentPath} onSelect={this.handleSelect}>
+									<NavItem eventKey="home">Home</NavItem>
+									<NavItem eventKey="users">Users</NavItem>
+									<NavItem eventKey="editor">editor</NavItem>
+								</Nav>
+								<Nav pullRight onSelect={this.handleSelect}>
+									<NavItem eventKey="logout">Logout</NavItem>
+								</Nav>
+							</Navbar>
+					
+					
+
+							{this.props.children}
+						</Row>
+					</Grid>
 				</div>
 			);
-		else
+		}
+		else{
+			if (currentPath ==  undefined) currentPath = 'login';
 			return (
 				<div>
-					<h1>Hello, {this.state.account.name}</h1>
-					<Link to="register">Register </Link>
-					<Link to="login">Log in </Link>
-					{this.props.children}
+
+					<Grid>
+						<Row>
+							<h1>Hello, {this.state.account.name}</h1>
+							<Navbar>	
+								<Nav bsStyle="tabs" activeKey={currentPath} onSelect={this.handleSelect}>
+									<NavItem eventKey="home">Home</NavItem>
+								</Nav>
+								<Nav pullRight onSelect={this.handleSelect}>
+									<NavItem eventKey="register">Register</NavItem>
+									<NavItem eventKey="login">Log in </NavItem>
+								</Nav>
+							</Navbar>
+
+
+
+
+
+							{this.props.children}
+						</Row>
+					</Grid>
 				</div>
 			);
+		}
 	}
 }

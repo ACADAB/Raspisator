@@ -11,13 +11,28 @@ export default class Grid extends(React.Component){
 	render(){
 		const width = classStore.table.width;
 		const height = classStore.table.height;
+		const colNames = classStore.getColNames();
 		var rows = [];
+
+		var row = [];
+		for (let y = 0; y < height; y++){
+			row.push(
+					<th draggable="false" key={y}>{colNames[y]}</th>
+				)
+		}
+
+		rows.push(
+				<tr draggable="false" key={-1}>
+					{row}
+				</tr>
+			)
+
 		for (let x = 0; x < width; x++){
 			var row = [];
 			for (let y = 0; y < height; y++){
 				row.push(
 
-						<td key={y}><ClassSpace x={x} y={y} /></td>
+						<td draggable="false" key={y}><ClassSpace x={x} y={y} /></td>
 					)
 			}
 
@@ -28,9 +43,9 @@ export default class Grid extends(React.Component){
 				)
 		}
 		return (
-				<div>
-					<table>
-						<tbody>
+				<div class='grid-wrapper'>
+					<table draggable={false}>
+						<tbody draggable={false}>
 							{rows}
 						</tbody>
 					</table>
