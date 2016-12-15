@@ -7,6 +7,9 @@ import ItemTypes from '../ItemTypes.jsx';
 import * as ClassActions from '../actions/classActions.jsx';
 import classStore from '../stores/classStore.jsx';
 
+import AddPair from './addPair.jsx'
+
+
 const cardTarget = {
     drop(props, monitor, component){
         const dragID  = monitor.getItem().id;
@@ -107,7 +110,7 @@ export default class ClassList extends(React.Component){
 		const {connectDropTarget} = this.props;
 		return connectDropTarget( 
                 <div className="class-list">
-                    
+                        <AddPair />
             			<div>
             				{classes}
             			</div>

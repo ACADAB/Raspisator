@@ -3,11 +3,15 @@ import { DragSource } from 'react-dnd';
 import ItemTypes from '../ItemTypes.jsx';
 
 const cardSource = {
-  beginDrag(props) {
-    return {
-      id: props.id,
-      index: props.index
-    };
+	canDrag(props){
+		if (props.notDraggable) return false;
+		else return true;
+	},
+	beginDrag(props) {
+		return {
+	      id: props.id,
+	      index: props.index
+	    };
   }
 };
 
@@ -16,8 +20,6 @@ const cardSource = {
   isDragging: monitor.isDragging(),
   connectDragPreview: connect.dragPreview()
 }))
-
-
 export default class Class extends(React.Component){
 	constructor(props){
 		super(props);

@@ -31,3 +31,14 @@ export function setUnused(id){
 		id: id
 	});
 } 
+
+export function addPair(grade, name, teacher, color, db_id = -1){
+	dispatcher.dispatch({
+		type: 'ADD_PAIR',
+		grade: grade,
+		name: name,
+		teacher: teacher,
+		color: color,
+		db_id: db_id
+	});
+} 

@@ -3,7 +3,11 @@
 	width:150px;
 	height:40px;
 
-	background-color: #e1d8ff;;
+	-webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+
+	background-color: #e1d8ff;
 }
 
 td:not(:last-child) .class-space{
@@ -36,7 +40,7 @@ tr:not(:last-child) .class-space{
 
 
 .yellow{
-	background-color: yellow !important;
+	background-color: #ffd428 !important;
 }
 
 .class:not(:first-child){
@@ -66,6 +70,7 @@ tr:not(:last-child) .class-space{
 .class-list{
 	height: 100%;
 }
+
 
 .grid-wrapper{
 	overflow-x: auto;

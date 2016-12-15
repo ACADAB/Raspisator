@@ -18,8 +18,9 @@ class ClassStore extends EventEmitter{
 		super();
 		this.unused = [];
 		this.used = [];
-		this.classPosition = {
-		}; 
+		this.classPosition = {};
+
+		this.maxID = -1; 
 
 		this.setMaxListeners(100);
 
@@ -30,11 +31,22 @@ class ClassStore extends EventEmitter{
 		this.colClasses = ['8E','9E','10E','11E'];
 	}
 
+
+	getGrades(){
+		return this.colClasses;
+	}
+
 	loadLessons(project_id){
 		request('getLessons', {'project_id':project_id}).then(res=>{	
 			//this.unused = res.data;
 			//
+
+			this.unused = [];
+			this.used = [];
+
 			const dataLen = res.data.length;
+			this.maxID = dataLen;
+
 			for (let i =0; i< dataLen; i++){
 				this.unused.push({
 					id : i,
@@ -52,6 +64,22 @@ class ClassStore extends EventEmitter{
 		});
 	}
 
+	addPair(grade, name, teacher, color, db_id = -1){
+		this.maxID += 1;
+		this.unused.push({
+			id : this.maxID,
+			db_id : db_id,
+			grade : grade,
+			name : name,
+			teacher : teacher,
+			color : color
+		});
+		this.classPosition[this.maxID] = {isUsed : false, index : this.unused.length-1, x : -1, y : -1};		
+		this.emit('change');
+	}
+
+
+	//now this just duplicates this.getGrades, but nay change =)
 	getColNames(){
 		return this.colClasses;		
 	}
@@ -221,7 +249,9 @@ class ClassStore extends EventEmitter{
 			case "MOVE_TO_UNUSED":
 				this.setToUnused(action.id);
 				break;
-			
+			case "ADD_PAIR":
+				this.addPair(action.grade, action.name, action.teacher, action.color, action.db_id);
+				break;
 
 			default:
 				// statements_def
