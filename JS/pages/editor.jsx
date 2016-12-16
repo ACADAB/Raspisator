@@ -7,7 +7,7 @@ import {Col,Row} from 'react-bootstrap';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { default as TouchBackend } from 'react-dnd-touch-backend';
-
+import classStore from '../stores/classStore.jsx';
 
 import { default as ItemPreview } from './classPreview.jsx';
 
@@ -15,6 +15,7 @@ import { default as ItemPreview } from './classPreview.jsx';
 export default class Editor extends(React.Component){
 	constructor(props){
 		super(props);
+		classStore.loadLessons(props.params.id);
 	}
 
 	render(){

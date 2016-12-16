@@ -10,7 +10,7 @@ export default class projects extends(React.Component){
 
 	componentWillMount(){
 		request('getAllProjects').then(res=>{
-			console.log(res.data);
+			//console.log(res.data);
 			this.setState({projects:res.data});
 		})
 	}
@@ -18,7 +18,7 @@ export default class projects extends(React.Component){
 	render(){
 		const list = this.state.projects.map(u=>
 			<li key={u.id}><Project id = {u.id} 
-			project_name={u.project_name}/></li>
+			name={u.project_name}/></li>
 			)
 		return (
 			<div>

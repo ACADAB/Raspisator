@@ -33,7 +33,7 @@ ReactDOM.render((
 			<Route path="logout" component={Logout}></Route>
 			<Route path="login" component={Login}></Route>
 			<Route path="home" component={Home}></Route>
-			<Route path="editor" component={Editor}></Route>
+			<Route path="editor/:id" component={Editor}></Route>
 		</Route> 
 	</Router>
 	), app);
