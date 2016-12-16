@@ -85,7 +85,7 @@ class USER
 		  $result = [];
           $stmt = $this->db->prepare("
 		  	select
-      lessons.id,
+            lessons.id,
 			lessons.lesson_name,
 			grades.grade_name,
 			grades.grade_number,
@@ -142,6 +142,80 @@ class USER
 		   http_response_code(200);
            return ['success'=>'OK'];
 	   }
+	   catch(PDOException $e)
+	   {
+		   http_response_code(400);//FIX ME NOT SENDING
+           return ['error'=>$e->getMessage()];
+       }
+   }
+   public function add_lesson($subject, $teach_id, $grade_id)
+   {
+       try
+	   {
+           $stmt = $this->db->prepare("INSERT INTO lessons (lesson_name, teacher_id, grade_id) VALUES (:subject, :teacher_id, :grade_id)");
+	       $stmt->bindparam(":subject", $subject);
+	       $stmt->bindparam(":teacher_id", $teach_id, PDO::PARAM_INT);
+		   $stmt->bindparam(":grade_id", $grade_id, PDO::PARAM_INT);
+	   	   $stmt->execute();
+		   http_response_code(200);
+           return ['success'=>'OK'];
+	   }
+	   catch(PDOException $e)
+	   {
+		   http_response_code(400);//FIX ME NOT SENDING
+           return ['error'=>$e->getMessage()];
+       }
+   }
+   public function delete_lesson($lesson_id)
+   {
+       try
+	   {
+           $stmt = $this->db->prepare("DELETE FROM lessons WHERE id = :lid");
+		   $stmt->bindparam(":lid", $lesson_id, PDO::PARAM_INT);
+	   	   $stmt->execute();
+		   http_response_code(200);
+           return ['success'=>'OK'];
+	   }
+	   catch(PDOException $e)
+	   {
+		   http_response_code(400);//FIX ME NOT SENDING
+           return ['error'=>$e->getMessage()];
+       }
+   }
+   public function delete_project($project_id)
+   {
+       try
+	   {
+           $stmt = $this->db->prepare("DELETE FROM projects WHERE id = :pid");
+		   $stmt->bindparam(":pid", $project_id, PDO::PARAM_INT);
+	   	   $stmt->execute();
+           
+           $stmt = $this->db->prepare("DELETE FROM project_lesson_relation WHERE project_id = :pid");
+	   	   $stmt->bindparam(":pid", $project_id, PDO::PARAM_INT);
+           $stmt->execute();
+		   http_response_code(200);
+           return ['success'=>'OK'];
+	   }
+	   catch(PDOException $e)
+	   {
+		   http_response_code(400);//FIX ME NOT SENDING
+           return ['error'=>$e->getMessage()];
+       }
+   }
+   public function add_project($p_name)
+   {
+       try
+	   {
+           if(isset($_SESSION['user_session']))
+           {
+               $stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name) VALUES (:oid, :pr_name)");
+	           $stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
+               $stmt->bindparam(":pr_name", $p_name);
+	   	       $stmt->execute();
+		       http_response_code(200);
+               return ['success'=>'OK'];
+           }
+       }
 	   catch(PDOException $e)
 	   {
 		   http_response_code(400);//FIX ME NOT SENDING
