@@ -10,7 +10,7 @@ export default class projects extends(React.Component){
 
 	componentWillMount(){
 		request('getAllProjects').then(res=>{
-			//console.log(res.data);
+			console.log(res.data);
 			this.setState({projects:res.data});
 		})
 	}

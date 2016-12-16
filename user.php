@@ -131,7 +131,41 @@ class USER
    {
        header("Location: $url");
    }
- 
+   public function set_project_lesson_relation($pair_id, $project_id)
+   {
+	   try
+	   {
+           $stmt = $this->db->prepare("INSERT INTO project_lesson_relation (lesson_id, project_id) VALUES (:pair_id, :project_id)");
+	       $stmt->bindparam(":pair_id", $pair_id, PDO::PARAM_INT);
+	       $stmt->bindparam(":project_id", $project_id, PDO::PARAM_INT);
+	   	   $stmt->execute();
+		   http_response_code(200);
+           return ['success'=>'OK'];
+	   }
+	   catch(PDOException $e)
+	   {
+		   http_response_code(400);//FIX ME NOT SENDING
+           return ['error'=>$e->getMessage()];
+       }
+   }
+   public function get_all_projects()
+   {
+       try
+       {
+		  $result = [];
+          $stmt = $this->db->prepare("SELECT id, project_name FROM projects WHERE owner_id = :cid");
+		  $stmt->bindparam(":cid", $_SESSION['user_session'], PDO::PARAM_INT);
+          $stmt->execute();
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+			 $result[] = $row;
+		  }
+          return $result;
+	   }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+   }
    public function logout()
    {
         session_destroy();
