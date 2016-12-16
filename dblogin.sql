@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Дек 12 2016 г., 20:34
+-- Время создания: Дек 16 2016 г., 18:02
 -- Версия сервера: 5.7.16-0ubuntu0.16.04.1
 -- Версия PHP: 7.0.13-1~dotdeb+8.1
 
@@ -74,16 +74,17 @@ INSERT INTO `lessons` (`id`, `lesson_name`, `teacher_id`, `grade_id`) VALUES
 
 CREATE TABLE `projects` (
   `id` int(10) UNSIGNED NOT NULL,
-  `owner_id` int(10) UNSIGNED NOT NULL
+  `owner_id` int(10) UNSIGNED NOT NULL,
+  `project_name` varchar(50) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Дамп данных таблицы `projects`
 --
 
-INSERT INTO `projects` (`id`, `owner_id`) VALUES
-(1, 27),
-(2, 28);
+INSERT INTO `projects` (`id`, `owner_id`, `project_name`) VALUES
+(1, 27, 'project1(Е классы)'),
+(2, 28, 'project2(Е классы)');
 
 -- --------------------------------------------------------
 
@@ -107,7 +108,8 @@ INSERT INTO `project_lesson_relation` (`id`, `project_id`, `lesson_id`) VALUES
 (3, 1, 3),
 (4, 1, 4),
 (5, 2, 1),
-(6, 2, 2);
+(6, 2, 2),
+(7, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -178,7 +180,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT для таблицы `lessons`
 --
