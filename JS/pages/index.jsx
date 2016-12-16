@@ -2,7 +2,7 @@ import React from "react";
 import request from "../API.jsx";
 import {Link} from 'react-router';
 import AccountStore from '../stores/accountStore.jsx';
-import Users from './users.jsx';
+import Projects from './projects.jsx';
 import Home from './home.jsx';
 
 export default class Index extends(React.Component){
@@ -28,7 +28,7 @@ export default class Index extends(React.Component){
 		if (AccountStore.getAccount().isLoggedIn){
 			return(
 				<div>
-					<Users />
+					<Projects />
 				</div>
 				)
 		} 

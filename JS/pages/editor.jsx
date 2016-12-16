@@ -9,6 +9,8 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { default as TouchBackend } from 'react-dnd-touch-backend';
 import classStore from '../stores/classStore.jsx';
 
+import AddPair from './addPair.jsx'
+
 import { default as ItemPreview } from './classPreview.jsx';
 
 @DragDropContext(HTML5Backend)
@@ -22,6 +24,7 @@ export default class Editor extends(React.Component){
 		return (
 			<div className="editor">
 				<Col md={2} xs={4} className="class-list">
+					<AddPair/>
 					<ClassList/>
 				</Col>
 				<Col md={16} xs={16}>

@@ -22,7 +22,7 @@ function getItemStyles (currentOffset) {
 
     // http://www.paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/
     var x = currentOffset.x;
-    var y = currentOffset.y;
+    var y = currentOffset.y + document.body.scrollTop;
     var transform = `translate(${x}px, ${y}px)`;
 
     return {

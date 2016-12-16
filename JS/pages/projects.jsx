@@ -22,8 +22,10 @@ export default class projects extends(React.Component){
 			)
 		return (
 			<div>
-				<h1>There will be projects</h1>
-				{list}
+				<h1>Ваши проекты:</h1>
+				<ul>
+					{list}
+				</ul>
 			</div>
 			);
 	}

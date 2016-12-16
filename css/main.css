@@ -30,6 +30,10 @@ tr:not(:last-child) .class-space{
 	
 }
 
+ul{
+	list-style: none;
+}
+
 .blue{
 	background-color: lightblue !important;
 }
@@ -38,9 +42,20 @@ tr:not(:last-child) .class-space{
 	background-color: #f92755 !important;
 }
 
+.orange{
+	background-color: #ffad42 !important;	
+}
+
+.white{
+	background-color: #ffffff !important;	
+}
 
 .yellow{
 	background-color: #ffd428 !important;
+}
+
+.grey{
+	background-color: #bc8d8d !important;
 }
 
 .class:not(:first-child){

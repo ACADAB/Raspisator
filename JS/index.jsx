@@ -11,7 +11,8 @@ import Logout from './pages/logout.jsx';
 import Login from './pages/login.jsx';
 import Editor from './pages/editor.jsx';
 import Index from './pages/index.jsx';
-import Home from './pages/home.jsx'
+import Home from './pages/home.jsx';
+import NotFound from './pages/404.jsx';
 
 //import properties from './settings.jsx';
 
@@ -34,6 +35,7 @@ ReactDOM.render((
 			<Route path="login" component={Login}></Route>
 			<Route path="home" component={Home}></Route>
 			<Route path="editor/:id" component={Editor}></Route>
+			<Route path="*" component={NotFound} />
 		</Route> 
 	</Router>
 	), app);

@@ -25,7 +25,8 @@ class ClassStore extends EventEmitter{
 		this.setMaxListeners(100);
 
 		this.table = getEmptyTable(6,4);
-		this.refreshStoppingHighlight();
+
+		this.refreshStoppingHighlight(false);
 
 		this.colClasses = ['8E','9E','10E','11E'];
 	}
@@ -43,6 +44,8 @@ class ClassStore extends EventEmitter{
 			this.unused = [];
 			this.used = [];
 
+			this.refreshStoppingHighlight(false);
+			
 			const dataLen = res.data.length;
 			this.maxID = dataLen;
 
@@ -96,37 +99,44 @@ class ClassStore extends EventEmitter{
 		this.emit('change');
 	}
 
-	refreshStoppingHighlight(){
+	refreshStoppingHighlight(change = true){
 		this.stoppingHighlight = getEmptyTable(this.table.width, this.table.height, false);
+		if (change) this.emit('change');
 	}
 
 
-	canDrop(id, x,y, rec= true, highlight = false){
-		if (highlight) this.refreshStoppingHighlight();
+	canDrop(id, x, y, highlight = false, rec= true){
+		if (highlight) this.refreshStoppingHighlight(false);
 
 		const lesson = this.getClassByID(id);
 
 		if (this.colClasses[y] != lesson.grade){
 			if (highlight)
 				for (let i = 0; i< this.table.width; i++){
-					this.stoppingHighlight[i][y] = true;
+					this.stoppingHighlight.table[i][y] = true;
 				}
+
+			if (highlight) this.emit('change');
 			return false;
 		}
+		let isConflict = false;
 		for (let i=0; i< this.table.height; i++){
-			let isConflict = false;
 			if (i!=y && this.table.table[x][i] != -1 && this.getClassByID( this.table.table[x][i]).teacher == lesson.teacher){
 				isConflict = true;
-				this.stoppingHighlight[x][i] = true;
+				if (highlight)
+					this.stoppingHighlight.table[x][i] = true;
 			}
+		}
 
-			if (isConflict) return false;
+		if (isConflict){ 
+				if (highlight) this.emit('change');
+				return false;
 		}
 
 		const targetID = this.table.table[x][y];
 		const pos = this.classPosition[id];
-		if (rec && targetID != -1 && pos.isUsed) return this.canDrop(targetID, pos.x, pos.y, false);
-
+		if (highlight) this.emit('change');
+		if (rec && targetID != -1 && pos.isUsed) return this.canDrop(targetID, pos.x, pos.y, false, false);
 		return true;
 	}
 

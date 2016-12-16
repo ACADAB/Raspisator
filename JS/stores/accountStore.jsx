@@ -33,11 +33,11 @@ class AccountStore extends EventEmitter{
 	}
 
 	redirectToLogin(){
-		hashHistory.push('login');
+		this.redirect('login');
 	}
 
 	redirectToIndex(){
-		hashHistory.push('users');
+		this.redirect('projects');
 	}
 
 	redirect(to){

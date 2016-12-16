@@ -20,6 +20,10 @@ const cardTarget = {
 		} else {
 			ClassActions.swapByID(dragID, currID);
 		};
+	},
+	hover : function(props, monitor, component) {
+		const dragID = monitor.getItem().id;
+		classStore.canDrop(dragID,props.x, props.y,true, true);
 	}
 };
 
@@ -60,6 +64,7 @@ export default class ClassSpace extends(React.Component){
 		const id = classStore.table.table[x][y];
 		const isDrag = (isDragging == null)? false: true;
 		const {connectDropTarget} = this.props;
+		const isHighlighted = classStore.stoppingHighlight.table[x][y];
 		let c = '';
 		if (id != -1){
 			c = classStore.getClassByID(id);
@@ -76,7 +81,8 @@ export default class ClassSpace extends(React.Component){
 					(id != -1) && <Class name={c.name} id={c.id} index={c.id} color={c.color} teacher={c.teacher} grade={c.grade}/>
 					}
 					{isDrag&& canDrop && isOver && this.renderOverlay('yellow')}	
-					{isDrag&& !canDrop && this.renderOverlay('red')}		
+					{isDrag&& !isHighlighted && !canDrop && this.renderOverlay('grey')}
+					{isDrag && !canDrop && isHighlighted && this.renderOverlay('red')}		
 					</div>
 				</div>
 					
