@@ -26,8 +26,6 @@ class ClassStore extends EventEmitter{
 
 		this.table = getEmptyTable(6,4);
 
-		this.loadLessons(1);
-
 		this.colClasses = ['8E','9E','10E','11E'];
 	}
 
