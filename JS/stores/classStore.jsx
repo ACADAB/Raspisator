@@ -5,9 +5,9 @@ import dispatcher from '../dispatcher.jsx';
 import request from '../API.jsx';
 
 //generates a matrix, filled with -1 of size x*y
-function getEmptyTable(x,y){
+function getEmptyTable(x,y, val = -1){
 	var a = [], b;
-	while (a.push(b = []) <= x) while (b.push(-1) < y);
+	while (a.push(b = []) <= x) while (b.push(val) < y);
 	a.pop();
 	return {width : x, height : y, table : a}
 }
@@ -25,6 +25,7 @@ class ClassStore extends EventEmitter{
 		this.setMaxListeners(100);
 
 		this.table = getEmptyTable(6,4);
+		this.refreshStoppingHighlight();
 
 		this.colClasses = ['8E','9E','10E','11E'];
 	}
@@ -95,19 +96,31 @@ class ClassStore extends EventEmitter{
 		this.emit('change');
 	}
 
+	refreshStoppingHighlight(){
+		this.stoppingHighlight = getEmptyTable(this.table.width, this.table.height, false);
+	}
 
-	canDrop(id, x,y, rec= true){
-		
+
+	canDrop(id, x,y, rec= true, highlight = false){
+		if (highlight) this.refreshStoppingHighlight();
+
 		const lesson = this.getClassByID(id);
 
 		if (this.colClasses[y] != lesson.grade){
+			if (highlight)
+				for (let i = 0; i< this.table.width; i++){
+					this.stoppingHighlight[i][y] = true;
+				}
 			return false;
 		}
 		for (let i=0; i< this.table.height; i++){
-			
+			let isConflict = false;
 			if (i!=y && this.table.table[x][i] != -1 && this.getClassByID( this.table.table[x][i]).teacher == lesson.teacher){
-				return false;
+				isConflict = true;
+				this.stoppingHighlight[x][i] = true;
 			}
+
+			if (isConflict) return false;
 		}
 
 		const targetID = this.table.table[x][y];
