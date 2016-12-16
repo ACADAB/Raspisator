@@ -41,7 +41,7 @@ export default class Layout extends(React.Component){
 							<Navbar>	
 								<Nav bsStyle="tabs" activeKey={currentPath} onSelect={this.handleSelect}>
 									<NavItem eventKey="home">Home</NavItem>
-									<NavItem eventKey="users">Users</NavItem>
+									<NavItem eventKey="projects">Projects</NavItem>
 									<NavItem eventKey="editor">editor</NavItem>
 								</Nav>
 								<Nav pullRight onSelect={this.handleSelect}>
