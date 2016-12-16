@@ -54,7 +54,7 @@ class ClassStore extends EventEmitter{
 					grade : res.data[i].grade_number + res.data[i].grade_name,
 					name : res.data[i].lesson_name,
 					teacher : res.data[i].name,
-					color : 'red'
+					color : 'blue'
 				});
 				this.classPosition[this.unused[i].id] = {isUsed : false, index : i, x : -1, y : -1};
 
@@ -98,7 +98,7 @@ class ClassStore extends EventEmitter{
 	}
 
 
-	canDrop(id, x,y){
+	canDrop(id, x,y, rec= true){
 		
 		const lesson = this.getClassByID(id);
 
@@ -111,6 +111,10 @@ class ClassStore extends EventEmitter{
 				return false;
 			}
 		}
+
+		const targetID = this.table.table[x][y];
+		const pos = this.classPosition[id];
+		if (rec && targetID != -1 && pos.isUsed) return this.canDrop(targetID, pos.x, pos.y, false);
 
 		return true;
 	}

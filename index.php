@@ -4,6 +4,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 ?>
 <head>
+<link rel="icon" href="favicon.ico">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
