@@ -71,15 +71,15 @@ class USER
           $stmt->bindparam(":pid", $id, PDO::PARAM_INT);
           $stmt->bindparam(":pd", $data);
           $stmt->execute();
-          $res = $stmt->fetch(PDO::FETCH_ASSOC);
+          //$res = $stmt->fetch(PDO::FETCH_ASSOC);
           http_response_code(200);  
           return ;
        }
        catch(PDOException $e)
        {
-          http_response_code(400);
+        //  http_response_code(400);
           echo $e->getMessage();
-      return [];
+      //return [];
 
            
        }

@@ -60,7 +60,7 @@ class ClassStore extends EventEmitter{
 
 
 			const dataLen = data.lessons.length;
-			this.maxID = dataLen-1;
+			this.maxID = dataLen;
 
 			for (let i =0; i< dataLen; i++){
 				const resLesson = data.lessons[i];
@@ -83,7 +83,7 @@ class ClassStore extends EventEmitter{
 			}
 
 			this.emit('change');
-		});
+		}).catch(err=>console.log);
 	}
 
 
@@ -189,14 +189,15 @@ class ClassStore extends EventEmitter{
 
 			lessons.push(lesson);
 		}
-
+		//console.log(this.maxID);
 		const toSave = {
 			lessons: lessons,
 			table: this.table,
 			grades: this.colClasses
 		}
-
-		request('saveProject',{'data': JSON.stringify(toSave), 'project_id':this.projectID},"post").then(console.log);
+		//console.log(toSave);
+		//TODO: display something if we get error or ok status.
+		request('saveProject',{'data': JSON.stringify(toSave), 'project_id':this.projectID},"post");
 	}
 
 	moveUnusedItem(from,to){
