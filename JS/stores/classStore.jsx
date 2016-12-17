@@ -21,6 +21,7 @@ class ClassStore extends EventEmitter{
 		this.classPosition = {};
 
 		this.maxID = -1; 
+		this.project_id = -1;
 
 		this.setMaxListeners(100);
 
@@ -29,6 +30,10 @@ class ClassStore extends EventEmitter{
 		this.refreshStoppingHighlight(false);
 
 		this.colClasses = ['8E','9E','10E','11E'];
+
+		this.save = this.save.bind(this);
+
+		this.projectLessons = {};
 	}
 
 
@@ -36,33 +41,66 @@ class ClassStore extends EventEmitter{
 		return this.colClasses;
 	}
 
-	loadLessons(project_id){
-		request('getLessons', {'project_id':project_id}).then(res=>{	
-			//this.unused = res.data;
-			//
 
-			this.unused = [];
-			this.used = [];
+	loadProject(project_id){
+		this.loadLessons(project_id).then(
+			()=>request('getProject', {'project_id':project_id})).then(res=>{	
+			console.log(res);
+			const data = JSON.parse(res.data.project_data);
+			const usedLen = data.lessons.filter((lesson)=>lesson.isUsed).length;
+			this.projectID = project_id;
+			this.project_name = res.data.project_name;
+			this.unused = Array(data.lessons.length - usedLen);
+			this.used = Array(usedLen);
 
 			this.refreshStoppingHighlight(false);
 			
-			const dataLen = res.data.length;
-			this.maxID = dataLen;
+
+			this.table = data.table;
+
+
+			const dataLen = data.lessons.length;
+			this.maxID = dataLen-1;
 
 			for (let i =0; i< dataLen; i++){
-				this.unused.push({
-					id : i,
-					db_id : parseInt(res.data[i].id),
+				const resLesson = data.lessons[i];
+				const projLesson = this.projectLessons[resLesson.db_id];
+				const lesson = {
+					id: i,
+					db_id: resLesson.db_id,
+					grade: projLesson.grade,
+					name: projLesson.name,
+					teacher: projLesson.teacher,
+					color: resLesson.color
+				}
+				this.setClassByPos(resLesson,lesson,false);
+				this.classPosition[i] = {
+					isUsed : resLesson.isUsed,
+					index : resLesson.index,
+					x : resLesson.x,
+					y : resLesson.y
+				};
+			}
+
+			this.emit('change');
+		});
+	}
+
+
+	loadLessons(project_id){
+		return request('getLessons', {'project_id':project_id}).then(res=>{	
+			
+			const dataLen = res.data.length;
+			this.projectLessons = {};
+
+			for (let i =0; i< dataLen; i++){
+				this.projectLessons[parseInt(res.data[i].id)] = {
 					grade : res.data[i].grade_number + res.data[i].grade_name,
 					name : res.data[i].lesson_name,
-					teacher : res.data[i].name,
-					color : 'blue'
-				});
-				this.classPosition[this.unused[i].id] = {isUsed : false, index : i, x : -1, y : -1};
-
-
+					teacher : res.data[i].name
+				};
 			}
-			this.emit('change');
+			return this.projectLessons;
 		});
 	}
 
@@ -138,6 +176,27 @@ class ClassStore extends EventEmitter{
 		if (highlight) this.emit('change');
 		if (rec && targetID != -1 && pos.isUsed) return this.canDrop(targetID, pos.x, pos.y, false, false);
 		return true;
+	}
+
+	save(){
+		let lessons = [];
+		for(let i=0; i< this.maxID; i++){
+			let lesson = this.classPosition[i];
+			const classDesc = this.getClassByPos(lesson);
+
+			lesson.db_id = classDesc.db_id;
+			lesson.color = classDesc.color;
+
+			lessons.push(lesson);
+		}
+
+		const toSave = {
+			lessons: lessons,
+			table: this.table,
+			grades: this.colClasses
+		}
+
+		request('saveProject',{'data': JSON.stringify(toSave), 'project_id':this.projectID},"post").then(console.log);
 	}
 
 	moveUnusedItem(from,to){
@@ -277,7 +336,9 @@ class ClassStore extends EventEmitter{
 			case "ADD_PAIR":
 				this.addPair(action.grade, action.name, action.teacher, action.color, action.db_id);
 				break;
-
+			case "SAVE_PROJECT":
+				this.save();
+				break;
 			default:
 				// statements_def
 				break;
@@ -288,5 +349,7 @@ class ClassStore extends EventEmitter{
 const classStore = new ClassStore; 
 
 dispatcher.register(classStore.handleActions.bind(classStore));
+
+window.classStore = classStore;
 
 export default classStore;

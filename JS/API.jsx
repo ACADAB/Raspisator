@@ -19,10 +19,12 @@ export default function request (url, data={}, method='get') {
 	path = path.reduce((l,r) => l+'/'+r);
 
 	url = path +'/API/' + url + '.php';
+
+	method = method.toLowerCase();
 		
 	let config = {
 			method : method,
-		url : url,
+			url : url,
 			data : data,
 			transformRequest:[(data)=>queryString.stringify(data)]//FIXME!!!
 	}

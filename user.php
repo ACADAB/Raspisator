@@ -63,6 +63,28 @@ class USER
        }
    }
 
+   public function save_project_data($id, $data) {
+      try
+       {
+          $result = [];
+          $stmt = $this->db->prepare("UPDATE projects SET project_data = :pd WHERE id = :pid");
+          $stmt->bindparam(":pid", $id, PDO::PARAM_INT);
+          $stmt->bindparam(":pd", $data);
+          $stmt->execute();
+          $res = $stmt->fetch(PDO::FETCH_ASSOC);
+          http_response_code(200);  
+          return ;
+       }
+       catch(PDOException $e)
+       {
+          http_response_code(400);
+          echo $e->getMessage();
+      return [];
+
+           
+       }
+   }
+
    public function get_all_users()
    {
       try
@@ -78,6 +100,27 @@ class USER
        }
    }
    
+   public function get_project($current_project_id)
+   {
+      try
+       {
+      $result = [];
+          $stmt = $this->db->prepare("SELECT project_name, project_data FROM projects WHERE id = :id");
+          $stmt->bindparam(":id", $current_project_id, PDO::PARAM_INT);
+          $stmt->execute();
+          $row = $stmt->fetch(PDO::FETCH_ASSOC);
+          return $row;
+       }
+       catch(PDOException $e)
+       {
+          http_response_code(400);
+          echo $e->getMessage();
+          return [];
+
+           
+       }
+     }
+
    public function get_lessons($current_project_id)
    {
       try

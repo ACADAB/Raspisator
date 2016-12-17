@@ -42,3 +42,9 @@ export function addPair(grade, name, teacher, color, db_id = -1){
 		db_id: db_id
 	});
 } 
+
+export function save(){
+	dispatcher.dispatch({
+		type: 'SAVE_PROJECT'
+	});
+} 
