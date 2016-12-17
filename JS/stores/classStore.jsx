@@ -13,27 +13,58 @@ function getEmptyTable(x,y, val = -1){
 }
 
 
+Array.prototype.getUnique = function(){
+   var u = {}, a = [];
+   for(var i = 0, l = this.length; i < l; ++i){
+      if(u.hasOwnProperty(this[i])) {
+         continue;
+      }
+      a.push(this[i]);
+      u[this[i]] = 1;
+   }
+   return a;
+}
+
 class ClassStore extends EventEmitter{
 	constructor(){
 		super();
+		this.projectID = -1;
+
+		this.initEmptyProj = this.initEmptyProj.bind(this);
+
+		this.setMaxListeners(100);
+		this.save = this.save.bind(this);
+
+		this.initEmptyProj();
+
+	}
+
+	initEmptyProj(){
+		
+
 		this.unused = [];
 		this.used = [];
 		this.classPosition = {};
 
 		this.maxID = -1; 
-		this.project_id = -1;
 
-		this.setMaxListeners(100);
+		let grades = [];
 
-		this.table = getEmptyTable(6,4);
+		for (let id in this.projectLessons){
+			grades.push(this.projectLessons[id].grade);
+		}
+
+		grades = grades.getUnique();
+		grades.sort();
+
+		this.colClasses = grades;
+
+
+		this.table = getEmptyTable(6,this.colClasses.length);
+
 
 		this.refreshStoppingHighlight(false);
 
-		this.colClasses = ['8E','9E','10E','11E'];
-
-		this.save = this.save.bind(this);
-
-		this.projectLessons = {};
 	}
 
 
@@ -41,18 +72,32 @@ class ClassStore extends EventEmitter{
 		return this.colClasses;
 	}
 
+	getAvailableLessons(){
+		return this.projectLessons;
+	}
 
 	loadProject(project_id){
+
+		this.projectLessons = {};
+
 		this.loadLessons(project_id).then(
 			()=>request('getProject', {'project_id':project_id})).then(res=>{	
-			console.log(res);
+
+			this.initEmptyProj();
+			this.projectID = project_id;
+			
+			if (res.data.project_data == 'null') {
+				this.emit('change');
+				console.log('null data');
+				return;
+			}
+
 			const data = JSON.parse(res.data.project_data);
 			const usedLen = data.lessons.filter((lesson)=>lesson.isUsed).length;
-			this.projectID = project_id;
 			this.project_name = res.data.project_name;
 			this.unused = Array(data.lessons.length - usedLen);
 			this.used = Array(usedLen);
-
+			this.colClasses = data.grades;
 			this.refreshStoppingHighlight(false);
 			
 
@@ -60,11 +105,14 @@ class ClassStore extends EventEmitter{
 
 
 			const dataLen = data.lessons.length;
-			this.maxID = dataLen;
-
+			this.maxID = dataLen-1;
 			for (let i =0; i< dataLen; i++){
+
 				const resLesson = data.lessons[i];
+				
+
 				const projLesson = this.projectLessons[resLesson.db_id];
+
 				const lesson = {
 					id: i,
 					db_id: resLesson.db_id,
@@ -73,6 +121,7 @@ class ClassStore extends EventEmitter{
 					teacher: projLesson.teacher,
 					color: resLesson.color
 				}
+
 				this.setClassByPos(resLesson,lesson,false);
 				this.classPosition[i] = {
 					isUsed : resLesson.isUsed,
@@ -180,7 +229,7 @@ class ClassStore extends EventEmitter{
 
 	save(){
 		let lessons = [];
-		for(let i=0; i< this.maxID; i++){
+		for(let i=0; i<= this.maxID; i++){
 			let lesson = this.classPosition[i];
 			const classDesc = this.getClassByPos(lesson);
 

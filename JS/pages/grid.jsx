@@ -6,6 +6,21 @@ import classStore from "../stores/classStore.jsx";
 export default class Grid extends(React.Component){
 	constructor(props){
 		super(props);
+		this.rerender = this.rerender.bind(this);
+		this.state={};
+	}
+
+
+	rerender(){
+		this.setState({});
+	}
+
+	componentWillMount(){
+		classStore.on('change', this.rerender)
+	}
+
+	componentWillUnmount(){
+		classStore.removeListener('change', this.rerender );
 	}
 
 	render(){

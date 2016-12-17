@@ -7,12 +7,126 @@ import Class from './class.jsx';
 
 
 const defClass = {
+            bd_id: -1,
+            color: 'red',
+        };
+
+
+export default class AddPair extends(React.Component){
+    constructor(props){
+        super(props);
+        this.state = { showModal: false };
+        this.close = this.close.bind(this);
+        this.open = this.open.bind(this);
+        this.rerender = this.rerender.bind(this);
+        this.makePair = this.makePair.bind(this);
+
+        this.formData = Object.create(defClass);
+        this.updateFormData = FormData.updateFormData.bind(this);
+        this.setFormData = FormData.setFormData.bind(this);
+
+    }
+
+
+    rerender(){
+        this.setState(this.state);
+    }
+
+    close() {
+        this.setState({ showModal: false });
+        this.formData = Object.create(defClass);
+    }
+
+    open() {
+        this.setState({ showModal: true });
+    }
+
+    componentWillMount(){
+        console.log('willmount!!!!',defClass);
+        this.formData = Object.create(defClass);
+    }
+
+    makePair(e){
+        const {bd_id, color} = this.formData;
+        if (bd_id != -1){
+            const {grade, name, teacher} = classStore.getAvailableLessons()[bd_id];
+            ClassActions.addPair(grade, name, teacher,color,bd_id);
+        }
+        this.close();
+        e.preventDefault();
+        return false;
+    }
+
+    render(){
+        const lessons_arr = classStore.getAvailableLessons();
+        const {bd_id, color} = this.formData;
+        const currentLesson = lessons_arr[bd_id];
+        let lessons = [];
+
+        let isFirst = true;
+        let def = "";
+        for (let id in lessons_arr){
+            //console.log(id);
+            if (isFirst) def = id;
+            lessons.push(
+                    <option value={id} key={id}>
+                        {lessons_arr[id].name},
+                        {lessons_arr[id].grade},
+                        {lessons_arr[id].teacher}
+                    </option>
+                )
+            isFirst = false;
+        }
+
+        return (
+            <div>
+                <Button
+                  bsStyle="primary"
+                  onClick={this.open}
+                  block
+                >
+                    Add Lesson
+                </Button>   
+                <Modal show={this.state.showModal} onHide={this.close}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add Lesson</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <form onSubmit={this.makePair} onChange={(e)=>{this.updateFormData(e); this.rerender()}}>
+                            <FormGroup>
+                                <ControlLabel>Урок</ControlLabel>
+                                <FormControl componentClass="select" defaultValue={def} name="bd_id" required>
+                                    {lessons}
+                                </FormControl>
+                                <ControlLabel>Цвет</ControlLabel>
+                                <FormControl componentClass="select" defaultValue="red" name="color" required>
+                                    <option value='red'>Красный</option>
+                                    <option value='yellow'>Жёлтый</option>
+                                    <option value='blue'>Синий</option>
+                                </FormControl>
+                                <Button type='submit'> OK </Button>
+                            </FormGroup>
+                            {bd_id != -1 && <Class notDraggable name={currentLesson.name} color={color} teacher={currentLesson.teacher} grade={currentLesson.grade}/>}
+                        </form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={this.close}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
+                <br/>
+            </div>
+        );
+    }
+}
+
+/*
+
+const defClass = {
             grade: '8E',
             name: '',
             teacher: '',
             color: 'red',
         };
-
 export default class AddPair extends(React.Component){
     constructor(props){
         super(props);
@@ -100,3 +214,4 @@ export default class AddPair extends(React.Component){
     	);
     }
 }
+*/
