@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
--- http://www.phpmyadmin.net
+-- version 4.6.4deb1+deb.cihar.com~xenial.1
+-- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Дек 16 2016 г., 18:02
+-- Время создания: Дек 17 2016 г., 23:08
 -- Версия сервера: 5.7.16-0ubuntu0.16.04.1
--- Версия PHP: 7.0.13-1~dotdeb+8.1
+-- Версия PHP: 7.0.8-0ubuntu0.16.04.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -60,10 +60,10 @@ CREATE TABLE `lessons` (
 --
 
 INSERT INTO `lessons` (`id`, `lesson_name`, `teacher_id`, `grade_id`) VALUES
-(1, 'Физика', 27, 3),
-(2, 'Физика2', 27, 1),
-(3, 'Алгебра', 28, 2),
-(4, 'Алгебра2', 28, 4),
+(1, 'Физика', 30, 3),
+(2, 'Физика', 28, 1),
+(3, 'Алгебра', 30, 2),
+(4, 'Алгебра', 28, 4),
 (5, 'jkdsnvdjknv', 1, 3);
 
 -- --------------------------------------------------------
@@ -75,16 +75,18 @@ INSERT INTO `lessons` (`id`, `lesson_name`, `teacher_id`, `grade_id`) VALUES
 CREATE TABLE `projects` (
   `id` int(10) UNSIGNED NOT NULL,
   `owner_id` int(10) UNSIGNED NOT NULL,
-  `project_name` varchar(50) CHARACTER SET utf8 NOT NULL
+  `project_name` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `project_data` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Дамп данных таблицы `projects`
 --
 
-INSERT INTO `projects` (`id`, `owner_id`, `project_name`) VALUES
-(1, 27, 'project1(Е классы)'),
-(2, 28, 'project2(Е классы)');
+INSERT INTO `projects` (`id`, `owner_id`, `project_name`, `project_data`) VALUES
+(1, 30, 'E - классы', '{"lessons":[{"isUsed":true,"index":3,"x":1,"y":2,"db_id":1,"color":"blue"},{"isUsed":true,"index":1,"x":3,"y":0,"db_id":2,"color":"yellow"},{"isUsed":true,"index":4,"x":2,"y":1,"db_id":3,"color":"red"},{"isUsed":true,"index":2,"x":2,"y":3,"db_id":4,"color":"blue"},{"isUsed":true,"index":0,"x":0,"y":1,"db_id":"3","color":"yellow"},{"isUsed":true,"index":5,"x":1,"y":0,"db_id":"2","color":"yellow"}],"table":{"table":[[-1,4,-1,-1],[5,-1,0,-1],[-1,2,-1,3],[1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]],"width":6,"height":4},"grades":["8E","9E","10E","11E"]}'),
+(2, 30, 'Больше е-классов', '{"lessons":[{"isUsed":true,"index":0,"x":1,"y":1,"db_id":"2","color":"yellow"},{"isUsed":true,"index":1,"x":3,"y":1,"db_id":"2","color":"yellow"},{"isUsed":true,"index":2,"x":2,"y":0,"db_id":"1","color":"blue"},{"isUsed":true,"index":3,"x":4,"y":1,"db_id":"2","color":"yellow"},{"isUsed":true,"index":4,"x":2,"y":1,"db_id":"2","color":"yellow"},{"isUsed":false,"index":0,"x":-1,"y":-1,"db_id":"1","color":"yellow"},{"isUsed":false,"index":1,"x":-1,"y":-1,"db_id":"2","color":"yellow"},{"isUsed":false,"index":2,"x":-1,"y":-1,"db_id":"1","color":"blue"}],"table":{"width":6,"height":2,"table":[[-1,-1],[-1,0],[2,4],[-1,1],[-1,3],[-1,-1]]},"grades":["10E","8E"]}'),
+(3, 27, 'Больше е-классов', 'null');
 
 -- --------------------------------------------------------
 
@@ -109,7 +111,7 @@ INSERT INTO `project_lesson_relation` (`id`, `project_id`, `lesson_id`) VALUES
 (4, 1, 4),
 (5, 2, 1),
 (6, 2, 2),
-(7, 1, 5);
+(9, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -130,7 +132,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_pass`, `name`) VALUES
-(27, 'g1231234', 'root', '$2y$10$uSnV4KxCkBGp6JvYdrGnfulqIx1SvEbJLxj7Sd5w7bJRu.OsPgdfS', 'G1234re213'),
+(30, 'dimdiem', 'root', '$2y$10$7U2tFQPj5.F7Lj3DDzuBc.NSfwWLCOPrPwnFFK0m5N6WGclsS7oUe', 'dmitry'),
 (28, 'acadab', 'newuserrrrr', '$2y$10$zn2lcIXahaicOJtCRELoLuAU0689pzbhc8nrJXyHivW4XzJbI.bDy', 'Greeeg'),
 (29, 'greg', 'lalallalal', '$2y$10$UjYIQWhfAvFOSG2mwgznQ.UAy5S6vQxth45l8tT4wsFQdR0e9IO4C', 'Гриша');
 
@@ -190,17 +192,17 @@ ALTER TABLE `lessons`
 -- AUTO_INCREMENT для таблицы `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT для таблицы `project_lesson_relation`
 --
 ALTER TABLE `project_lesson_relation`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
