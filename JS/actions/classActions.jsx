@@ -6,6 +6,9 @@ export function swapByIndex(i1,i2){
 		i1: i1,
 		i2: i2
 	});
+	dispatcher.dispatch({
+		type: 'STOP_EDITING'
+	});
 } 
 
 export function swapByID(i1,i2){
@@ -13,6 +16,9 @@ export function swapByID(i1,i2){
 		type: 'SWAP_CLASS_BY_ID',
 		i1: i1,
 		i2: i2
+	});
+	dispatcher.dispatch({
+		type: 'STOP_EDITING'
 	});
 } 
 
@@ -23,12 +29,18 @@ export function setUsed(id,x,y){
 		x: x,
 		y: y
 	});
+	dispatcher.dispatch({
+		type: 'STOP_EDITING'
+	});
 } 
 
 export function setUnused(id){
 	dispatcher.dispatch({
 		type: 'MOVE_TO_UNUSED',
 		id: id
+	});
+	dispatcher.dispatch({
+		type: 'STOP_EDITING'
 	});
 } 
 
@@ -48,3 +60,17 @@ export function save(){
 		type: 'SAVE_PROJECT'
 	});
 } 
+
+export function startEditMode(id){
+	dispatcher.dispatch({
+		id:id,
+		type: 'START_EDITING'
+	});
+} 
+
+export function stopEditMode(id){
+	dispatcher.dispatch({
+		type: 'STOP_EDITING'
+	});
+} 
+

@@ -7,12 +7,22 @@ import { DropTarget } from 'react-dnd';
 
 import Class from './class.jsx';
 
+function fakeMonitor(){
+	const item = {id:classStore.editingID};
+
+	return {
+		getItem: ()=>item
+	}
+}
+
 const cardTarget = {
 	canDrop : function(props, monitor, component){
-		return classStore.canDrop(monitor.getItem().id, props.x, props.y);;
+		return classStore.canDrop(props.x, props.y);;
 	},
 
 	drop : function(props, monitor, component) {
+		console.log('dropped');
+
 		const dragID = monitor.getItem().id;
 		const currID = classStore.table.table[props.x][props.y];
 		if (currID == -1){
@@ -23,7 +33,7 @@ const cardTarget = {
 	},
 	hover : function(props, monitor, component) {
 		const dragID = monitor.getItem().id;
-		classStore.canDrop(dragID,props.x, props.y,true, true);
+		classStore.canDrop(props.x, props.y,true, true);
 	}
 };
 
@@ -38,7 +48,9 @@ export default class ClassSpace extends(React.Component){
 	constructor(props){
 		super(props);
 		this.rerender = this.rerender.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 	}
+
 
 	rerender(){
 		this.setState({});
@@ -57,20 +69,33 @@ export default class ClassSpace extends(React.Component){
 	    return (
 	      <div className={"overlay "+color}/>
 	    );
-	  }
+	}
+
+	handleClick(){
+		console.log('classSpace click', classStore.editing);
+		if (classStore.editing && classStore.setable) cardTarget.drop(this.props, fakeMonitor(),undefined)
+	}
 
 	render(){
-		const {x, y, isOver,canDrop, isDragging} = this.props;
+		const {x, y, isOver, isDragging} = this.props;
+		let canDrop = this.props.canDrop;
+
 		const id = classStore.table.table[x][y];
 		const isDrag = (isDragging == null)? false: true;
+		const isChanging = classStore.editing || isDrag;
+
+
+		if (!isDrag && isChanging) canDrop = classStore.canDrop(x,y);
+
 		const {connectDropTarget} = this.props;
 		const isHighlighted = classStore.stoppingHighlight.table[x][y];
+
 		let c = '';
 		if (id != -1){
 			c = classStore.getClassByID(id);
 		}
 			return connectDropTarget(
-				<div className="class-space class-box" >
+				<div className="class-space class-box" onClick={this.handleClick}>
 					<div style={{
         position: 'relative',
         width: '100%',
@@ -80,9 +105,9 @@ export default class ClassSpace extends(React.Component){
 					{
 					(id != -1) && <Class name={c.name} id={c.id} index={c.id} color={c.color} teacher={c.teacher} grade={c.grade}/>
 					}
-					{isDrag&& canDrop && isOver && this.renderOverlay('yellow')}	
-					{isDrag&& !isHighlighted && !canDrop && this.renderOverlay('grey')}
-					{isDrag && !canDrop && isHighlighted && this.renderOverlay('red')}		
+					{isChanging&& canDrop && isOver && this.renderOverlay('yellow')}	
+					{isChanging&& !isHighlighted && !canDrop && this.renderOverlay('grey')}
+					{isChanging && !canDrop && isHighlighted && this.renderOverlay('red')}		
 					</div>
 				</div>
 					

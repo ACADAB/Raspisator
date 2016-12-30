@@ -32,10 +32,23 @@ class ClassStore extends EventEmitter{
 
 		this.initEmptyProj = this.initEmptyProj.bind(this);
 
+		this.editing = false;
+		this.editingID = -1;
+
+		this.setable = true;
+
 		this.setMaxListeners(100);
 		this.save = this.save.bind(this);
 
 		this.initEmptyProj();
+		this.startEditing = this.startEditing.bind(this);
+
+		document.addEventListener('click', (e)=>{
+			console.log(e.target);
+			if (!e.target.classList.contains("class-box") && !e.target.parentNode.classList.contains("class-box") && this.editing)
+
+			this.stopEditing();
+		});
 
 	}
 
@@ -192,10 +205,13 @@ class ClassStore extends EventEmitter{
 	}
 
 
-	canDrop(id, x, y, highlight = false, rec= true){
+	canDrop(x, y, highlight = false, rec= true, interID=-1){
 		if (highlight) this.refreshStoppingHighlight(false);
 
+		const id = interID==-1? this.editingID : interID;
+
 		const lesson = this.getClassByID(id);
+		
 
 		if (this.colClasses[y] != lesson.grade){
 			if (highlight)
@@ -223,7 +239,7 @@ class ClassStore extends EventEmitter{
 		const targetID = this.table.table[x][y];
 		const pos = this.classPosition[id];
 		if (highlight) this.emit('change');
-		if (rec && targetID != -1 && pos.isUsed) return this.canDrop(targetID, pos.x, pos.y, false, false);
+		if (rec && targetID != -1 && pos.isUsed) return this.canDrop(pos.x, pos.y, false, false, id);
 		return true;
 	}
 
@@ -324,6 +340,28 @@ class ClassStore extends EventEmitter{
 		this.emit('change');
 	}
 
+	startEditing(id){
+		this.editing = true;
+		this.editingID = id;
+		this.setable = false;
+
+		setTimeout((()=>{this.setable = true}).bind(this), 100);
+
+		console.log('started editing');
+
+		this.emit("change");
+	}
+
+	stopEditing(){
+		this.editing = false;
+		this.editingID = -1;
+
+
+
+		console.log('stopped editing');
+		this.emit('change');
+	}
+
 	//sets class with id=id to the grid with coordinates x,y
 	//supposes, that (x,y) is empty
 	setUsed(id,x,y){
@@ -388,6 +426,12 @@ class ClassStore extends EventEmitter{
 				break;
 			case "SAVE_PROJECT":
 				this.save();
+				break;
+			case "START_EDITING":
+				this.startEditing(action.id);
+				break;
+			case "STOP_EDITING":
+				this.stopEditing();
 				break;
 			default:
 				// statements_def

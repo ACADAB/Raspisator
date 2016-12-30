@@ -1,13 +1,15 @@
 import React from "react";
 import { DragSource } from 'react-dnd';
 import ItemTypes from '../ItemTypes.jsx';
+import * as ClassActions from '../actions/classActions.jsx';
+import classStore from "../stores/classStore.jsx";
 
 const cardSource = {
 	canDrag(props){
-		if (props.notDraggable) return false;
-		else return true;
+		return !props.notDraggable
 	},
 	beginDrag(props) {
+		ClassActions.startEditMode(props.id);
 		return {
 	      id: props.id,
 	      index: props.index
@@ -23,6 +25,7 @@ const cardSource = {
 export default class Class extends(React.Component){
 	constructor(props){
 		super(props);
+		this.handleClick = this.handleClick.bind(this);
 	}
 
 	componentDidMount(){
@@ -31,14 +34,22 @@ export default class Class extends(React.Component){
     	connectDragPreview(img);
 	}
 
+	handleClick(){
+		if (!classStore.editing) this.startEditing();
+	}
+
+	startEditing(){
+		ClassActions.startEditMode(this.props.id);
+	}
+
 	render(){
-		const { grade, teacher, name, color, isDragging, connectDragSource} = this.props;
+		const { grade, teacher, name, color, isDragging, id, connectDragSource} = this.props;
 
 
 		const DOMclasses =color + (isDragging?' class-box class dragging': ' class class-box');
 
 		return connectDragSource(
-			<div className={DOMclasses}>
+			<div className={DOMclasses} onClick={this.handleClick}>
 				{grade}, 
 				{teacher}, 
 				{name}

@@ -22,9 +22,6 @@ var outVal = 0;
 const app = document.getElementById("app");
 
 
-
-
-
 ReactDOM.render((
 	<Router history={hashHistory}>
 		<Route path="/" component={Layout}>
