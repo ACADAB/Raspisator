@@ -63,9 +63,10 @@ ul{
 	
 }
 
-.class:hover{
+.class-box:hover{
 	filter: brightness(85%);
 }
+
 
 .dragging{
 	opacity:0;

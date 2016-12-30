@@ -44,7 +44,6 @@ class ClassStore extends EventEmitter{
 		this.startEditing = this.startEditing.bind(this);
 
 		document.addEventListener('click', (e)=>{
-			console.log(e.target);
 			if (!e.target.classList.contains("class-box") && !e.target.parentNode.classList.contains("class-box") && this.editing)
 
 			this.stopEditing();
@@ -347,7 +346,6 @@ class ClassStore extends EventEmitter{
 
 		setTimeout((()=>{this.setable = true}).bind(this), 100);
 
-		console.log('started editing');
 
 		this.emit("change");
 	}
@@ -356,9 +354,6 @@ class ClassStore extends EventEmitter{
 		this.editing = false;
 		this.editingID = -1;
 
-
-
-		console.log('stopped editing');
 		this.emit('change');
 	}
 

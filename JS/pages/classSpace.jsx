@@ -21,7 +21,6 @@ const cardTarget = {
 	},
 
 	drop : function(props, monitor, component) {
-		console.log('dropped');
 
 		const dragID = monitor.getItem().id;
 		const currID = classStore.table.table[props.x][props.y];
@@ -49,6 +48,7 @@ export default class ClassSpace extends(React.Component){
 		super(props);
 		this.rerender = this.rerender.bind(this);
 		this.handleClick = this.handleClick.bind(this);
+		this.handleHover = this.handleHover.bind(this);
 	}
 
 
@@ -72,8 +72,12 @@ export default class ClassSpace extends(React.Component){
 	}
 
 	handleClick(){
-		console.log('classSpace click', classStore.editing);
 		if (classStore.editing && classStore.setable) cardTarget.drop(this.props, fakeMonitor(),undefined)
+	}
+
+	handleHover(){
+		if (classStore.editing) cardTarget.hover(this.props, fakeMonitor(),undefined)
+	
 	}
 
 	render(){
@@ -95,7 +99,7 @@ export default class ClassSpace extends(React.Component){
 			c = classStore.getClassByID(id);
 		}
 			return connectDropTarget(
-				<div className="class-space class-box" onClick={this.handleClick}>
+				<div className="class-space class-box" onMouseEnter={ this.handleHover} onClick={this.handleClick}>
 					<div style={{
         position: 'relative',
         width: '100%',
