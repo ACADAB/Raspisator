@@ -120,7 +120,49 @@ class USER
            
        }
      }
+   public function get_all_schools()
+   {
+      try
+       {
+		  $result = [];
+          $stmt = $this->db->prepare("SELECT name FROM schools");
+		  $stmt->execute();
+		  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+			 $result[] = $row;
+		  }
+          return $result;
+       }
+	   catch(PDOException $e)
+       {
+          http_response_code(400);
+          echo $e->getMessage();
+		  return [];
 
+           
+       }
+   }
+   public function get_my_schools()
+   {
+      try
+       {
+		  $result = [];
+          $stmt = $this->db->prepare("SELECT name FROM schools JOIN school_user_relation ON school_user_relation.school_id = schools.id where school_user_relation.user_id = :oid");
+		  $stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
+		  $stmt->execute();
+		  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+			 $result[] = $row;
+		  }
+          return $result;
+       }
+	   catch(PDOException $e)
+       {
+          http_response_code(400);
+          echo $e->getMessage();
+		  return [];
+
+           
+       }
+   }
    public function get_lessons($current_project_id)
    {
       try
@@ -181,6 +223,23 @@ class USER
            $stmt = $this->db->prepare("INSERT INTO project_lesson_relation (lesson_id, project_id) VALUES (:pair_id, :project_id)");
 	       $stmt->bindparam(":pair_id", $pair_id, PDO::PARAM_INT);
 	       $stmt->bindparam(":project_id", $project_id, PDO::PARAM_INT);
+	   	   $stmt->execute();
+		   http_response_code(200);
+           return ['success'=>'OK'];
+	   }
+	   catch(PDOException $e)
+	   {
+		   http_response_code(400);//FIX ME NOT SENDING
+           return ['error'=>$e->getMessage()];
+       }
+   }
+   public function set_school_user_relation($school_id, $user_id)
+   {
+	   try
+	   {
+           $stmt = $this->db->prepare("INSERT INTO project_lesson_relation (school_id, user_id) VALUES (:school_id, :user_id)");
+	       $stmt->bindparam(":school_id", $school_id, PDO::PARAM_INT);
+	       $stmt->bindparam(":user_id", $user_id, PDO::PARAM_INT);
 	   	   $stmt->execute();
 		   http_response_code(200);
            return ['success'=>'OK'];
@@ -254,6 +313,25 @@ class USER
                $stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name) VALUES (:oid, :pr_name)");
 	           $stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
                $stmt->bindparam(":pr_name", $p_name);
+	   	       $stmt->execute();
+		       http_response_code(200);
+               return ['success'=>'OK'];
+           }
+       }
+	   catch(PDOException $e)
+	   {
+		   http_response_code(400);//FIX ME NOT SENDING
+           return ['error'=>$e->getMessage()];
+       }
+   }
+   public function add_school($school_name)
+   {
+       try
+	   {
+           if(isset($_SESSION['user_session']))
+           {
+               $stmt = $this->db->prepare("INSERT INTO schools (name) VALUES (:school_name)");
+               $stmt->bindparam(":school_name", $school_name);
 	   	       $stmt->execute();
 		       http_response_code(200);
                return ['success'=>'OK'];
