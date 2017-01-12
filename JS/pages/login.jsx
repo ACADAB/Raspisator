@@ -22,7 +22,7 @@ export default class Login extends(React.Component){
 
 	render(){
 		let a =0;
-		return (
+		return (//TODO: rewrite it with react-bootstrap
 			<div>
 				<h1>Вход</h1>
 				<form onChange={this.updateFormData} method="POST" acceptCharset="utf-8" action="http://localhost/var/www/html/Raspisator/API/register.php">

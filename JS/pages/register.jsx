@@ -19,12 +19,12 @@ export default class Register extends(React.Component){
 		const dat = this.formData;
 		request('register', dat, 'post').then(res=>{
 			hashHistory.push('login');
-		}).catch(e=>alert("This Login/ e-mail is already taken!"));
+		}).catch(e=>{console.log(e)});//fix me!
 	}
 
 	render(){
 		let a =0;
-		return (
+		return (//TODO: rewrite it with react-bootstrap
 			<div>
 				<h1>Регистрация</h1>
 				<form onChange={this.updateFormData} method="POST" acceptCharset="utf-8" action="http://localhost/var/www/html/Raspisator/API/register.php">

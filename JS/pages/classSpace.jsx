@@ -3,9 +3,13 @@ import ItemTypes from '../ItemTypes.jsx';
 import classStore from '../stores/classStore.jsx';
 import * as ClassActions from '../actions/classActions.jsx';
 import { DropTarget } from 'react-dnd';
+import * as Highlight from "../highlightEnum.jsx";
 
+
+console.log(Highlight);
 
 import Class from './class.jsx';
+
 
 function fakeMonitor(){
 	const item = {id:classStore.editingID};
@@ -88,18 +92,23 @@ export default class ClassSpace extends(React.Component){
 		const isDrag = (isDragging == null)? false: true;
 		const isChanging = classStore.editing || isDrag;
 
-
 		if (!isDrag && isChanging) canDrop = classStore.canDrop(x,y);
 
 		const {connectDropTarget} = this.props;
-		const isHighlighted = classStore.stoppingHighlight.table[x][y];
+		const highlight = classStore.stoppingHighlight.table[x][y].getMostVerbose();
+		const isHighlighted = highlight != Highlight.NORMAL;
+		const highlightColor = Highlight.toColor[highlight];
+
+		const overlay = true;
+
+		//console.log(Highlight.toColor[highlight]);
 
 		let c = '';
 		if (id != -1){
 			c = classStore.getClassByID(id);
 		}
 			return connectDropTarget(
-				<div className="class-space class-box" onMouseEnter={ this.handleHover} onClick={this.handleClick}>
+				<div className={"class-space class-box"+(isHighlighted && !overlay? ' '+highlightColor: '')} onMouseEnter={ this.handleHover} onClick={this.handleClick}>
 					<div style={{
         position: 'relative',
         width: '100%',
@@ -107,11 +116,10 @@ export default class ClassSpace extends(React.Component){
       }}>
 					
 					{
-					(id != -1) && <Class name={c.name} id={c.id} index={c.id} color={c.color} teacher={c.teacher} grade={c.grade}/>
+					(id != -1) && <Class name={c.name} id={c.id} index={c.id} color={c.color} teacher={c.teacher} grade={c.grade} borderColor={(!overlay)?highlightColor:''}/>
 					}
-					{isChanging&& canDrop && isOver && this.renderOverlay('yellow')}	
-					{isChanging&& !isHighlighted && !canDrop && this.renderOverlay('grey')}
-					{isChanging && !canDrop && isHighlighted && this.renderOverlay('red')}		
+					{isChanging&& canDrop && isOver && this.renderOverlay('yellow')}			
+					{isChanging&& isHighlighted && overlay && this.renderOverlay(highlightColor)}			
 					</div>
 				</div>
 					

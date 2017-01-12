@@ -1,5 +1,5 @@
 import { EventEmitter} from "events";
-
+import * as Highlight from "../highlightEnum.jsx";
 import dispatcher from '../dispatcher.jsx';
 
 import request from '../API.jsx';
@@ -7,7 +7,7 @@ import request from '../API.jsx';
 //generates a matrix, filled with -1 of size x*y
 function getEmptyTable(x,y, val = -1){
 	var a = [], b;
-	while (a.push(b = []) <= x) while (b.push(val) < y);
+	while (a.push(b = []) <= x) while (b.push((typeof(val))=="function"? val() : val) < y);
 	a.pop();
 	return {width : x, height : y, table : a}
 }
@@ -198,48 +198,75 @@ class ClassStore extends EventEmitter{
 		this.emit('change');
 	}
 
-	refreshStoppingHighlight(change = true){
-		this.stoppingHighlight = getEmptyTable(this.table.width, this.table.height, false);
+	refreshStoppingHighlight(change = true, rebuild = true){
+		if (rebuild){
+			this.stoppingHighlight = getEmptyTable(this.table.width, this.table.height, ()=>Object.freeze(new Highlight.Highlight()));
+			if (this.editingID != -1){
+				const curPos = this.classPosition[this.editingID];
+				if (curPos.isUsed) this.stoppingHighlight.table[curPos.x][curPos.y].highlight(Highlight.CURRENT);
+			}
+		} else {
+			for (let x=0; x < this.stoppingHighlight.width; x++){
+				for (let y=0; y< this.stoppingHighlight.height; y++){
+					this.stoppingHighlight.table[x][y].removeHighlight(Highlight.CONFLICT);
+				}
+			}
+		}
 		if (change) this.emit('change');
 	}
 
+	setCanDrop(x,y,isConflict, highlight){
+		if (isConflict) this.stoppingHighlight.table[x][y].highlight(Highlight.UNAVAILABLE);
+		const curPos = this.classPosition[this.editingID];
+			
+		if (curPos.x == x && curPos.y == y && this.editing && curPos.isUsed){
+
+			if (curPos.isUsed) this.stoppingHighlight.table[curPos.x][curPos.y].highlight(Highlight.CURRENT);
+		}
+
+		return !isConflict;
+	}
 
 	canDrop(x, y, highlight = false, rec= true, interID=-1){
-		if (highlight) this.refreshStoppingHighlight(false);
+		if (highlight) this.refreshStoppingHighlight(false, false);
 
 		const id = interID==-1? this.editingID : interID;
 
 		const lesson = this.getClassByID(id);
-		
+
+		let isConflict = false;
 
 		if (this.colClasses[y] != lesson.grade){
 			if (highlight)
 				for (let i = 0; i< this.table.width; i++){
-					this.stoppingHighlight.table[i][y] = true;
+					this.stoppingHighlight.table[i][y].highlight(Highlight.CONFLICT);
 				}
 
 			if (highlight) this.emit('change');
-			return false;
+			isConflict = true;
 		}
-		let isConflict = false;
 		for (let i=0; i< this.table.height; i++){
-			if (i!=y && this.table.table[x][i] != -1 && this.getClassByID( this.table.table[x][i]).teacher == lesson.teacher){
+			if (i!=y && this.table.table[x][i] != -1 && id!==this.table.table[x][i] && this.getClassByID( this.table.table[x][i]).teacher == lesson.teacher){
 				isConflict = true;
 				if (highlight)
-					this.stoppingHighlight.table[x][i] = true;
+					this.stoppingHighlight.table[x][i].highlight(Highlight.CONFLICT);
+				else 
+					break;
 			}
 		}
 
+		//TODO: add teacher timetable support
+
 		if (isConflict){ 
 				if (highlight) this.emit('change');
-				return false;
+				return this.setCanDrop(x,y,isConflict, highlight);
 		}
 
 		const targetID = this.table.table[x][y];
 		const pos = this.classPosition[id];
 		if (highlight) this.emit('change');
 		if (rec && targetID != -1 && pos.isUsed) return this.canDrop(pos.x, pos.y, false, false, id);
-		return true;
+		return this.setCanDrop(x,y,isConflict, highlight);
 	}
 
 	save(){
@@ -345,6 +372,8 @@ class ClassStore extends EventEmitter{
 		this.setable = false;
 
 		setTimeout((()=>{this.setable = true}).bind(this), 100);
+		this.refreshStoppingHighlight();
+
 
 
 		this.emit("change");
@@ -353,6 +382,8 @@ class ClassStore extends EventEmitter{
 	stopEditing(){
 		this.editing = false;
 		this.editingID = -1;
+
+		this.refreshStoppingHighlight();
 
 		this.emit('change');
 	}

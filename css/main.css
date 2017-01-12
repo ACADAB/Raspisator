@@ -34,12 +34,18 @@ ul{
 	list-style: none;
 }
 
+
+/* Background classes */
 .blue{
 	background-color: lightblue !important;
 }
 
 .red{
 	background-color: #ff0043 !important;
+}
+
+.green{
+	background-color: #28ff3e !important;
 }
 
 .orange{
@@ -57,6 +63,42 @@ ul{
 .grey{
 	background-color: #bc8d8d !important;
 }
+
+.border-blue{
+	border-color: lightblue !important;
+	border:solid 2px;
+}
+
+.border-red{
+	border-color: #ff0043 !important;
+	border:solid 2px;
+}
+
+.border-green{
+	border-color: #28ff3e !important;
+	border:solid 2px;
+}
+
+.border-orange{
+	border-color: #ffad42 !important;	
+	border:solid 2px;
+}
+
+.border-white{
+	border-color: #ffffff !important;	
+	border:solid 2px;
+}
+
+.border-yellow{
+	border-color: #ffd428 !important;
+	border:solid 2px;
+}
+
+.border-grey{
+	border-color: #bc8d8d !important;
+	border:solid 2px;
+}
+
 
 .class:not(:first-child){
 	border-top: 1px solid black;
@@ -81,6 +123,7 @@ ul{
 	width: 100%;
 	zIndex: 1;
 	opacity: 0.5;
+	pointer-events: none;
 }
 
 .class-list{

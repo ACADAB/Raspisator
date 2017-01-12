@@ -39,14 +39,14 @@ export default class Class extends(React.Component){
 	}
 
 	startEditing(){
-		ClassActions.startEditMode(this.props.id);
+		cardSource.beginDrag(this.props);
 	}
 
 	render(){
-		const { grade, teacher, name, color, isDragging, id, connectDragSource} = this.props;
+		const { grade, teacher, name, color, isDragging,borderColor, id, connectDragSource} = this.props;
 
 
-		const DOMclasses =color + (isDragging?' class-box class dragging': ' class class-box');
+		const DOMclasses =color + ((borderColor!='')?(' border-' + borderColor):'') + ' class-box class' + (isDragging?' dragging': '');
 
 		return connectDragSource(
 			<div className={DOMclasses} onClick={this.handleClick}>
