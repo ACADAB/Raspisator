@@ -14,7 +14,10 @@ const cardSource = {
 	      id: props.id,
 	      index: props.index
 	    };
-  }
+ 	},
+ 	endDrag(props) {
+ 		classStore.stopEditing();
+ 	}
 };
 
 @DragSource(ItemTypes.CLASS, cardSource, (connect, monitor) => ({

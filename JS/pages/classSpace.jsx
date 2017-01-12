@@ -21,7 +21,7 @@ function fakeMonitor(){
 
 const cardTarget = {
 	canDrop : function(props, monitor, component){
-		return classStore.canDrop(props.x, props.y);;
+		return classStore.canDrop(props.x, props.y);
 	},
 
 	drop : function(props, monitor, component) {

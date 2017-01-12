@@ -4,6 +4,8 @@ import dispatcher from '../dispatcher.jsx';
 
 import request from '../API.jsx';
 
+window.hig = Highlight
+
 //generates a matrix, filled with -1 of size x*y
 function getEmptyTable(x,y, val = -1){
 	var a = [], b;
@@ -42,6 +44,7 @@ class ClassStore extends EventEmitter{
 
 		this.initEmptyProj();
 		this.startEditing = this.startEditing.bind(this);
+		this.stopEditing = this.stopEditing.bind(this);
 
 		document.addEventListener('click', (e)=>{
 			if (!e.target.classList.contains("class-box") && !e.target.parentNode.classList.contains("class-box") && this.editing)
@@ -218,17 +221,23 @@ class ClassStore extends EventEmitter{
 	setCanDrop(x,y,isConflict, highlight){
 		if (isConflict) this.stoppingHighlight.table[x][y].highlight(Highlight.UNAVAILABLE);
 		const curPos = this.classPosition[this.editingID];
-			
 		if (curPos.x == x && curPos.y == y && this.editing && curPos.isUsed){
 
 			if (curPos.isUsed) this.stoppingHighlight.table[curPos.x][curPos.y].highlight(Highlight.CURRENT);
 		}
-
+		if (highlight) this.emit('change');
 		return !isConflict;
 	}
 
-	canDrop(x, y, highlight = false, rec= true, interID=-1){
+	canDrop(x, y, highlight = false, rec= true, interID=-1, first=false){
+
+		if (!highlight && !first){
+			return !this.stoppingHighlight.table[x][y].hasHighlight(Highlight.UNAVAILABLE);
+		}
+
 		if (highlight) this.refreshStoppingHighlight(false, false);
+
+
 
 		const id = interID==-1? this.editingID : interID;
 
@@ -241,8 +250,6 @@ class ClassStore extends EventEmitter{
 				for (let i = 0; i< this.table.width; i++){
 					this.stoppingHighlight.table[i][y].highlight(Highlight.CONFLICT);
 				}
-
-			if (highlight) this.emit('change');
 			isConflict = true;
 		}
 		for (let i=0; i< this.table.height; i++){
@@ -258,13 +265,12 @@ class ClassStore extends EventEmitter{
 		//TODO: add teacher timetable support
 
 		if (isConflict){ 
-				if (highlight) this.emit('change');
-				return this.setCanDrop(x,y,isConflict, highlight);
+			return this.setCanDrop(x,y,isConflict, highlight);
 		}
 
 		const targetID = this.table.table[x][y];
 		const pos = this.classPosition[id];
-		if (highlight) this.emit('change');
+		
 		if (rec && targetID != -1 && pos.isUsed) return this.canDrop(pos.x, pos.y, false, false, id);
 		return this.setCanDrop(x,y,isConflict, highlight);
 	}
@@ -374,7 +380,11 @@ class ClassStore extends EventEmitter{
 		setTimeout((()=>{this.setable = true}).bind(this), 100);
 		this.refreshStoppingHighlight();
 
-
+		for (let x=0; x < this.stoppingHighlight.width; x++){
+			for (let y=0; y< this.stoppingHighlight.height; y++){
+				this.canDrop(x,y,false,true,-1,true);
+			}
+		}
 
 		this.emit("change");
 	}

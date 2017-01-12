@@ -33,11 +33,12 @@ export class Highlight{
 	}
 
 	highlight(h){
-		this.highlights.push(h);
+		if (!this.hasHighlight(h))
+			this.highlights.push(h);
 	}
 
 	removeHighlight(...a){
-		this.highlights.filterInPlace(e=>{!a.includes(e)}); 
+		this.highlights.filterInPlace(e=>!a.includes(e)); 
 		
 	}
 
