@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
--- http://www.phpmyadmin.net
+-- version 4.6.4deb1+deb.cihar.com~xenial.1
+-- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Янв 13 2017 г., 17:54
+-- Время создания: Янв 13 2017 г., 18:26
 -- Версия сервера: 5.7.16-0ubuntu0.16.04.1
--- Версия PHP: 7.0.13-1~dotdeb+8.1
+-- Версия PHP: 7.0.8-0ubuntu0.16.04.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -77,16 +77,17 @@ INSERT INTO `lessons` (`id`, `subject_id`, `teacher_id`, `grade_id`) VALUES
 CREATE TABLE `projects` (
   `id` int(10) UNSIGNED NOT NULL,
   `owner_id` int(10) UNSIGNED NOT NULL,
-  `project_name` varchar(50) CHARACTER SET utf8 NOT NULL
+  `project_name` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `project_data` json DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Дамп данных таблицы `projects`
 --
 
-INSERT INTO `projects` (`id`, `owner_id`, `project_name`) VALUES
-(1, 27, 'project1(Е классы)'),
-(2, 28, 'project2(Е классы)');
+INSERT INTO `projects` (`id`, `owner_id`, `project_name`, `project_data`) VALUES
+(1, 27, 'project1(Е классы)', NULL),
+(2, 30, 'project2(Е классы)', NULL);
 
 -- --------------------------------------------------------
 
@@ -188,9 +189,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_pass`, `name`) VALUES
-(27, 'g1231234', 'root', '$2y$10$uSnV4KxCkBGp6JvYdrGnfulqIx1SvEbJLxj7Sd5w7bJRu.OsPgdfS', 'G1234re213'),
+(27, 'g1231234', 'lololo', '$2y$10$uSnV4KxCkBGp6JvYdrGnfulqIx1SvEbJLxj7Sd5w7bJRu.OsPgdfS', 'G1234re213'),
 (28, 'acadab', 'newuserrrrr', '$2y$10$zn2lcIXahaicOJtCRELoLuAU0689pzbhc8nrJXyHivW4XzJbI.bDy', 'Greeeg'),
-(29, 'greg', 'lalallalal', '$2y$10$UjYIQWhfAvFOSG2mwgznQ.UAy5S6vQxth45l8tT4wsFQdR0e9IO4C', 'Гриша');
+(29, 'greg', 'lalallalal', '$2y$10$UjYIQWhfAvFOSG2mwgznQ.UAy5S6vQxth45l8tT4wsFQdR0e9IO4C', 'Гриша'),
+(30, 'root', 'root', '$2y$10$sluHNeXvfPFaG4lRkuyGhelCV2O8brIJmX8M4/Z64JZm3hcOWGX9.', 'Дмитрий Викторович Емельяненко');
 
 --
 -- Индексы сохранённых таблиц
@@ -291,7 +293,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
