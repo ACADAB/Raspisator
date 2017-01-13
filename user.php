@@ -16,8 +16,8 @@ class USER
        try
        {
            $new_password = password_hash($upass, PASSWORD_DEFAULT);
-           $stmt = $this->db->prepare("INSERT INTO users(user_name,user_email,user_pass, name, is_maker, is_approved) 
-                                                       VALUES(:uname, :umail, :upass, :name, 0, 1)");
+           $stmt = $this->db->prepare("INSERT INTO users(user_name,user_email,user_pass, name) 
+                                                       VALUES(:uname, :umail, :upass, :name)");
            $stmt->bindparam(":uname", $uname);
            $stmt->bindparam(":name", $name); 
            $stmt->bindparam(":umail", $umail);
@@ -117,6 +117,28 @@ class USER
           $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
 		  $stmt->execute();
 		  $teachers=$stmt->fetchall(PDO::FETCH_ASSOC);
+		  
+		  $all = ['subjects' => $subjects, 'grades' => $grades, 'teachers' => $teachers];
+          return $all;
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+   }
+   public function get_profile_data($)
+   {
+   	   try
+       {
+          $stmt = $this->db->prepare("SELECT user_name, user_email FROM users WHERE user_id = :id");
+          $stmt->bindparam(":id", $_SESSION['user_session'], PDO::PARAM_INT);
+		  $stmt->execute();
+		  $one=$stmt->fetchall(PDO::FETCH_ASSOC);
+		   
+		  $stmt = $this->db->prepare("SELECT grade_name, grade_number FROM grades WHERE school_id = :id");
+          $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
+		  $stmt->execute();
+		  $grades=$stmt->fetchall(PDO::FETCH_ASSOC);
 		  
 		  $all = ['subjects' => $subjects, 'grades' => $grades, 'teachers' => $teachers];
           return $all;
