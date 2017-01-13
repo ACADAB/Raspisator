@@ -286,13 +286,13 @@ class USER
            return ['error'=>$e->getMessage()];
        }
    }
-   public function add_lesson($subject, $teach_id, $grade_id)
+   public function add_lesson($subject_id, $teacher_id, $grade_id)
    {
        try
 	   {
-           $stmt = $this->db->prepare("INSERT INTO lessons (lesson_name, teacher_id, grade_id) VALUES (:subject, :teacher_id, :grade_id)");
-	       $stmt->bindparam(":subject", $subject);
-	       $stmt->bindparam(":teacher_id", $teach_id, PDO::PARAM_INT);
+           $stmt = $this->db->prepare("INSERT INTO lessons (subject_id, teacher_id, grade_id) VALUES (:subject_id, :teacher_id, :grade_id)");
+	       $stmt->bindparam(":subject_id", $subject_id);
+	       $stmt->bindparam(":teacher_id", $teacher_id, PDO::PARAM_INT);
 		   $stmt->bindparam(":grade_id", $grade_id, PDO::PARAM_INT);
 	   	   $stmt->execute();
 		   http_response_code(200);
