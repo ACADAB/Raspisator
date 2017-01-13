@@ -18,6 +18,7 @@ export default class Register extends(React.Component){
 	handleSubmit(event){
 		const dat = this.formData;
 		request('register', dat, 'post').then(res=>{
+			console.log(res);
 			hashHistory.push('login');
 		}).catch(e=>{console.log(e)});//fix me!
 	}

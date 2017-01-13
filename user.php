@@ -126,7 +126,7 @@ class USER
            echo $e->getMessage();
        }
    }
-   public function get_profile_data($)
+   public function get_profile_data($lololo)
    {
    	   try
        {
