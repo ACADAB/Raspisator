@@ -12,20 +12,6 @@ export const toColor = {
 	2:"green"
 };
 
-Array.prototype.filterInPlace = function(condition){
-  let index = 0;
-  let newIndex = 0;
-  while (index < this.length) {
-    const value = this[index];
-    if (condition(value)) this[newIndex++] = value;
-    index++;
-  }
-
-  this.length = newIndex;
-  return this;
-}
-
-
 export class Highlight{
 	constructor(...highlights){
 		this.highlights = highlights;

@@ -14,19 +14,6 @@ function getEmptyTable(x,y, val = -1){
 	return {width : x, height : y, table : a}
 }
 
-
-Array.prototype.getUnique = function(){
-   var u = {}, a = [];
-   for(var i = 0, l = this.length; i < l; ++i){
-      if(u.hasOwnProperty(this[i])) {
-         continue;
-      }
-      a.push(this[i]);
-      u[this[i]] = 1;
-   }
-   return a;
-}
-
 class ClassStore extends EventEmitter{
 	constructor(){
 		super();
@@ -188,8 +175,14 @@ class ClassStore extends EventEmitter{
 		return this.colClasses;		
 	}
 
-	getUnused(){
-		return this.unused;
+	getLessons(used = 'unused',grade = undefined){
+		let res = [];
+		if (used != 'used') res = res.concat(this.unused);
+		if (used != 'unused') res = res.concat(this.used);
+
+		if (grade != undefined) res.filterInPlace((e)=>{return e.grade === grade});
+
+		return res;
 	}
 
 	getLenUnused(){
