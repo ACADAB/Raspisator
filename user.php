@@ -2,6 +2,16 @@
 
 $SUCCESS = ['success'=>true];
 
+function stmt_to_dict($stmt, $index = "id"){
+	$res = [];
+	while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+    {
+	    $res[$row[$index]] = $row;
+    }
+	return $res;
+}
+
+
 class USER
 {
     private $db;
@@ -103,20 +113,20 @@ class USER
    {
    	   try
        {
-          $stmt = $this->db->prepare("SELECT id, name FROM subjects WHERE school_id = :id");
+		   
+		  $stmt = $this->db->prepare("SELECT id, name FROM subjects WHERE school_id = :id");
           $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
 		  $stmt->execute();
-		  $subjects=$stmt->fetchall(PDO::FETCH_ASSOC);
-		   
+		  $subjects = stmt_to_dict($stmt);
 		  $stmt = $this->db->prepare("SELECT id, grade_name, grade_number FROM grades WHERE school_id = :id");
           $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
 		  $stmt->execute();
-		  $grades=$stmt->fetchall(PDO::FETCH_ASSOC);
+		  $grades= stmt_to_dict($stmt);
 		  
 		  $stmt = $this->db->prepare("SELECT id, name FROM users JOIN role_user_school_relation ON role_user_school_relation.user_id = users.user_id WHERE role_user_school_relation.school_id = :id");
           $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
 		  $stmt->execute();
-		  $teachers=$stmt->fetchall(PDO::FETCH_ASSOC);
+		  $teachers= stmt_to_dict($stmt);
 		  
 		  $all = ['subjects' => $subjects, 'grades' => $grades, 'teachers' => $teachers];
           return $all;
@@ -256,23 +266,6 @@ class USER
    public function redirect($url)
    {
        header("Location: $url");
-   }
-   public function set_project_lesson_relation($pair_id, $project_id)
-   {
-	   try
-	   {
-           $stmt = $this->db->prepare("INSERT INTO project_lesson_relation (lesson_id, project_id) VALUES (:pair_id, :project_id)");
-	       $stmt->bindparam(":pair_id", $pair_id, PDO::PARAM_INT);
-	       $stmt->bindparam(":project_id", $project_id, PDO::PARAM_INT);
-	   	   $stmt->execute();
-		   http_response_code(200);
-           return ['success'=>'OK'];
-	   }
-	   catch(PDOException $e)
-	   {
-		   http_response_code(400);//FIX ME NOT SENDING
-           return ['error'=>$e->getMessage()];
-       }
    }
    public function set_school_user_relation($school_id, $user_id)
    {
