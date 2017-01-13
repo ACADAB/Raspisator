@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 import request from './API.jsx';
+import "./ArrayExtensions.jsx";
+
 
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 

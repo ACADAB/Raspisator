@@ -28,7 +28,7 @@ export default class Editor extends(React.Component){
 			<div className="editor">
 				<Col md={2} xs={4} className="class-list">
 					<AddPair/>
-					<ClassList/>
+					<ClassList used="unused"/>
 				</Col>
 				<Col md={16} xs={16}>
 					<Grid/>

@@ -102,7 +102,11 @@ export default class ClassList extends(React.Component){
 	}
 
 	render(){
-		const unused = classStore.getUnused();
+        const { grade, used } = this.props;
+
+
+		const unused = classStore.getLessons(used,grade);
+        
 		const classes = unused.map((c,index) =>
 				<Class name={c.name} id={c.id} index={index} color={c.color} teacher={c.teacher} grade={c.grade} key={c.id}/>
 			)
