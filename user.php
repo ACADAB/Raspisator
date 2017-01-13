@@ -213,15 +213,15 @@ class USER
 		  $result = [];
           $stmt = $this->db->prepare("
 		  	SELECT
-            lessons.id
+            lessons.id,
 			lessons.teacher_id,
 			lessons.subject_id,
 			lessons.grade_id
 			from
 			lessons
-			join project_lesson_relation
-			on project_lesson_relation.lesson_id = lessons.id 
-			where project_lesson_relation.project_id = :current_project_id");
+			join projects
+			on projects.school_id = lessons.school_id 
+			where projects.id = :current_project_id");
           $stmt->bindparam(":current_project_id", $current_project_id, PDO::PARAM_INT);
 		  $stmt->execute();
 		  $result = $stmt->fetchall(PDO::FETCH_ASSOC);
