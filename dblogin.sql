@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Дек 29 2016 г., 19:41
+-- Время создания: Янв 13 2017 г., 17:54
 -- Версия сервера: 5.7.16-0ubuntu0.16.04.1
 -- Версия PHP: 7.0.13-1~dotdeb+8.1
 
@@ -51,7 +51,7 @@ INSERT INTO `grades` (`id`, `grade_number`, `grade_name`, `school_id`) VALUES
 
 CREATE TABLE `lessons` (
   `id` int(10) UNSIGNED NOT NULL,
-  `lesson_name` varchar(20) CHARACTER SET utf8 NOT NULL,
+  `subject_id` int(20) UNSIGNED NOT NULL,
   `teacher_id` int(10) UNSIGNED NOT NULL,
   `grade_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -60,13 +60,13 @@ CREATE TABLE `lessons` (
 -- Дамп данных таблицы `lessons`
 --
 
-INSERT INTO `lessons` (`id`, `lesson_name`, `teacher_id`, `grade_id`) VALUES
-(1, 'Физика', 27, 3),
-(2, 'Физика2', 27, 1),
-(3, 'Алгебра', 28, 2),
-(4, 'Алгебра2', 28, 4),
-(5, 'jkdsnvdjknv', 1, 3),
-(6, 'Maths', 28, 3);
+INSERT INTO `lessons` (`id`, `subject_id`, `teacher_id`, `grade_id`) VALUES
+(1, 1, 27, 3),
+(2, 2, 27, 1),
+(3, 1, 28, 2),
+(4, 2, 28, 4),
+(5, 1, 1, 3),
+(6, 2, 28, 3);
 
 -- --------------------------------------------------------
 
@@ -116,6 +116,20 @@ INSERT INTO `project_lesson_relation` (`id`, `project_id`, `lesson_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `role_user_school_relation`
+--
+
+CREATE TABLE `role_user_school_relation` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `role_id` int(10) UNSIGNED NOT NULL,
+  `school_id` int(10) UNSIGNED NOT NULL,
+  `is_approved` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `schools`
 --
 
@@ -136,23 +150,24 @@ INSERT INTO `schools` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `school_user_relation`
+-- Структура таблицы `subjects`
 --
 
-CREATE TABLE `school_user_relation` (
+CREATE TABLE `subjects` (
   `id` int(10) UNSIGNED NOT NULL,
-  `school_id` int(10) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL
+  `name` tinytext CHARACTER SET utf8 NOT NULL,
+  `school_id` int(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Дамп данных таблицы `school_user_relation`
+-- Дамп данных таблицы `subjects`
 --
 
-INSERT INTO `school_user_relation` (`id`, `school_id`, `user_id`) VALUES
-(1, 1, 27),
-(2, 1, 28),
-(3, 2, 29);
+INSERT INTO `subjects` (`id`, `name`, `school_id`) VALUES
+(1, 'Физика', 1),
+(2, 'Химия', 1),
+(3, 'Алгебра', 1),
+(4, 'А.Я.', 1);
 
 -- --------------------------------------------------------
 
@@ -165,31 +180,17 @@ CREATE TABLE `users` (
   `user_name` varchar(255) NOT NULL,
   `user_email` varchar(60) NOT NULL,
   `user_pass` varchar(255) NOT NULL,
-  `name` tinytext CHARACTER SET utf8 NOT NULL,
-  `is_maker` tinyint(1) NOT NULL,
-  `is_approved` tinyint(1) NOT NULL
+  `name` tinytext CHARACTER SET utf8 NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_pass`, `name`, `is_maker`, `is_approved`) VALUES
-(27, 'g1231234', 'root', '$2y$10$uSnV4KxCkBGp6JvYdrGnfulqIx1SvEbJLxj7Sd5w7bJRu.OsPgdfS', 'G1234re213', 1, 0),
-(28, 'acadab', 'newuserrrrr', '$2y$10$zn2lcIXahaicOJtCRELoLuAU0689pzbhc8nrJXyHivW4XzJbI.bDy', 'Greeeg', 1, 0),
-(29, 'greg', 'lalallalal', '$2y$10$UjYIQWhfAvFOSG2mwgznQ.UAy5S6vQxth45l8tT4wsFQdR0e9IO4C', 'Гриша', 1, 0);
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `user_role_relation`
---
-
-CREATE TABLE `user_role_relation` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `user_id` int(11) UNSIGNED NOT NULL,
-  `role_id` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_pass`, `name`) VALUES
+(27, 'g1231234', 'root', '$2y$10$uSnV4KxCkBGp6JvYdrGnfulqIx1SvEbJLxj7Sd5w7bJRu.OsPgdfS', 'G1234re213'),
+(28, 'acadab', 'newuserrrrr', '$2y$10$zn2lcIXahaicOJtCRELoLuAU0689pzbhc8nrJXyHivW4XzJbI.bDy', 'Greeeg'),
+(29, 'greg', 'lalallalal', '$2y$10$UjYIQWhfAvFOSG2mwgznQ.UAy5S6vQxth45l8tT4wsFQdR0e9IO4C', 'Гриша');
 
 --
 -- Индексы сохранённых таблиц
@@ -220,15 +221,21 @@ ALTER TABLE `project_lesson_relation`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `role_user_school_relation`
+--
+ALTER TABLE `role_user_school_relation`
+  ADD KEY `id` (`id`);
+
+--
 -- Индексы таблицы `schools`
 --
 ALTER TABLE `schools`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `school_user_relation`
+-- Индексы таблицы `subjects`
 --
-ALTER TABLE `school_user_relation`
+ALTER TABLE `subjects`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -240,12 +247,6 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `user_email` (`user_email`),
   ADD UNIQUE KEY `user_email_2` (`user_email`),
   ADD UNIQUE KEY `user_name_2` (`user_name`);
-
---
--- Индексы таблицы `user_role_relation`
---
-ALTER TABLE `user_role_relation`
-  ADD KEY `id` (`id`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -272,25 +273,25 @@ ALTER TABLE `projects`
 ALTER TABLE `project_lesson_relation`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
+-- AUTO_INCREMENT для таблицы `role_user_school_relation`
+--
+ALTER TABLE `role_user_school_relation`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT для таблицы `schools`
 --
 ALTER TABLE `schools`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT для таблицы `school_user_relation`
+-- AUTO_INCREMENT для таблицы `subjects`
 --
-ALTER TABLE `school_user_relation`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `subjects`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
---
--- AUTO_INCREMENT для таблицы `user_role_relation`
---
-ALTER TABLE `user_role_relation`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

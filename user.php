@@ -99,7 +99,33 @@ class USER
            echo $e->getMessage();
        }
    }
-   
+   public function get_school_data($sid)
+   {
+   	   try
+       {
+          $stmt = $this->db->prepare("SELECT name FROM subjects WHERE school_id = :id");
+          $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
+		  $stmt->execute();
+		  $subjects=$stmt->fetchall(PDO::FETCH_ASSOC);
+		   
+		  $stmt = $this->db->prepare("SELECT grade_name, grade_number FROM grades WHERE school_id = :id");
+          $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
+		  $stmt->execute();
+		  $grades=$stmt->fetchall(PDO::FETCH_ASSOC);
+		   
+          $stmt = $this->db->prepare("SELECT name FROM users WHERE school_id = :id");
+          $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
+		  $stmt->execute();
+		  $teachers=$stmt->fetchall(PDO::FETCH_ASSOC);
+		  
+		  $all = ['subjects' => $subjects, 'grades' => $grades, 'teachers' => $teachers];
+          return $all;
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+   }
    public function get_project($current_project_id)
    {
       try
