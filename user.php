@@ -103,15 +103,20 @@ class USER
    {
    	   try
        {
-          $stmt = $this->db->prepare("SELECT name FROM subjects WHERE school_id = :id");
+          $stmt = $this->db->prepare("SELECT id, name FROM subjects WHERE school_id = :id");
           $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
 		  $stmt->execute();
 		  $subjects=$stmt->fetchall(PDO::FETCH_ASSOC);
 		   
-		  $stmt = $this->db->prepare("SELECT school_id, role FROM role WHERE school_id = :id");
+		  $stmt = $this->db->prepare("SELECT id, grade_name, grade_number FROM grades WHERE school_id = :id");
           $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
 		  $stmt->execute();
 		  $grades=$stmt->fetchall(PDO::FETCH_ASSOC);
+		  
+		  $stmt = $this->db->prepare("SELECT id, name FROM users JOIN role_user_school_relation ON role_user_school_relation.user_id = users.user_id WHERE role_user_school_relation.school_id = :id");
+          $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
+		  $stmt->execute();
+		  $teachers=$stmt->fetchall(PDO::FETCH_ASSOC);
 		  
 		  $all = ['subjects' => $subjects, 'grades' => $grades, 'teachers' => $teachers];
           return $all;
@@ -148,11 +153,11 @@ class USER
       try
        {
       $result = [];
-          $stmt = $this->db->prepare("SELECT project_name, project_data FROM projects WHERE id = :id");
+          $stmt = $this->db->prepare("SELECT project_name, project_data, school_id FROM projects WHERE id = :id");
           $stmt->bindparam(":id", $current_project_id, PDO::PARAM_INT);
           $stmt->execute();
           $row = $stmt->fetch(PDO::FETCH_ASSOC);
-          return $row;
+          return ['project'=>$row, 'school'=>$this->get_school_data($row['school_id'])];
        }
        catch(PDOException $e)
        {
@@ -340,14 +345,15 @@ class USER
            return ['error'=>$e->getMessage()];
        }
    }
-   public function add_project($p_name)
+   public function add_project($p_name, $s_id)
    {
        try
 	   {
            if(isset($_SESSION['user_session']))
            {
-               $stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name) VALUES (:oid, :pr_name)");
+               $stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name, school_id) VALUES (:oid, :pr_name, :s_id)");
 	           $stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
+			   $stmt->bindparam(":s_id", $s_id, PDO::PARAM_INT);
                $stmt->bindparam(":pr_name", $p_name);
 	   	       $stmt->execute();
 		       http_response_code(200);
