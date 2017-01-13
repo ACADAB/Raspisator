@@ -224,7 +224,7 @@ class USER
 			where project_lesson_relation.project_id = :current_project_id");
           $stmt->bindparam(":current_project_id", $current_project_id, PDO::PARAM_INT);
 		  $stmt->execute();
-		  $result = $stmt->fetchall(PDO::FETCH_ASSOC)){
+		  $result = $stmt->fetchall(PDO::FETCH_ASSOC);
           return $result;
        }
        catch(PDOException $e)

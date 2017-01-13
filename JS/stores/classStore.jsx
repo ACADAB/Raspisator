@@ -78,7 +78,7 @@ class ClassStore extends EventEmitter{
 		return this.projectLessons;
 	}
 
-	loadProject(project_id){
+	loadProject(project_id){//TODO FIX THE NAMES ACCORDING TO THE FACT THAT WE USE IDs
 
 		this.projectLessons = {};
 
@@ -88,7 +88,7 @@ class ClassStore extends EventEmitter{
 			this.initEmptyProj();
 			this.projectID = project_id;
 			
-			if (res.data.project_data == 'null') {
+			if (res.data.project_data.toLowerCase() == 'null') {
 				this.emit('change');
 				console.log('null data');
 				return;
@@ -140,19 +140,18 @@ class ClassStore extends EventEmitter{
 
 	loadLessons(project_id){
 		return request('getLessons', {'project_id':project_id}).then(res=>{	
-			
 			const dataLen = res.data.length;
 			this.projectLessons = {};
 
 			for (let i =0; i< dataLen; i++){
 				this.projectLessons[parseInt(res.data[i].id)] = {
-					grade : res.data[i].grade_number + res.data[i].grade_name,
-					name : res.data[i].lesson_name,
-					teacher : res.data[i].name
+					grade :  res.data[i].grade_id,//res.data[i].grade_number + res.data[i].grade_name,
+					name : res.data[i].subject_id,//res.data[i].lesson_name,
+					teacher : res.data[i].teacher_id,//res.data[i].name
 				};
 			}
 			return this.projectLessons;
-		});
+		}, (e)=>{console.log(e)});
 	}
 
 	addPair(grade, name, teacher, color, db_id = -1){
