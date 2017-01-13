@@ -148,7 +148,7 @@ class USER
       try
        {
       $result = [];
-          $stmt = $this->db->prepare("SELECT project_name, project_data FROM projects WHERE id = :id");
+          $stmt = $this->db->prepare("SELECT project_name, project_data, school_id FROM projects WHERE id = :id");
           $stmt->bindparam(":id", $current_project_id, PDO::PARAM_INT);
           $stmt->execute();
           $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -340,14 +340,15 @@ class USER
            return ['error'=>$e->getMessage()];
        }
    }
-   public function add_project($p_name)
+   public function add_project($p_name, $s_id)
    {
        try
 	   {
            if(isset($_SESSION['user_session']))
            {
-               $stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name) VALUES (:oid, :pr_name)");
+               $stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name, school_id) VALUES (:oid, :pr_name, :s_id)");
 	           $stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
+			   $stmt->bindparam(":s_id", $s_id, PDO::PARAM_INT);
                $stmt->bindparam(":pr_name", $p_name);
 	   	       $stmt->execute();
 		       http_response_code(200);
