@@ -189,12 +189,12 @@ class USER
       try
        {
 		  $result = [];
-          $stmt = $this->db->prepare("SELECT name FROM schools JOIN school_user_relation ON school_user_relation.school_id = schools.id where school_user_relation.user_id = :oid");
+          $stmt = $this->db->prepare("SELECT schools.name FROM schools JOIN role_user_school_relation 
+		  ON role_user_school_relation.school_id = schools.id and role_user_school_relation.user_id = :oid");
 		  $stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
 		  $stmt->execute();
-		  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			 $result[] = $row;
-		  }
+		  var_dump($result);
+		  $result = $stmt->fetchall(PDO::FETCH_ASSOC);
           return $result;
        }
 	   catch(PDOException $e)
@@ -213,7 +213,8 @@ class USER
 		  $result = [];
           $stmt = $this->db->prepare("
 		  	SELECT
-            lessons.teacher_id,
+            lessons.id
+			lessons.teacher_id,
 			lessons.subject_id,
 			lessons.grade_id
 			from
@@ -223,9 +224,7 @@ class USER
 			where project_lesson_relation.project_id = :current_project_id");
           $stmt->bindparam(":current_project_id", $current_project_id, PDO::PARAM_INT);
 		  $stmt->execute();
-		  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			 $result[] = $row;
-		  }
+		  $result = $stmt->fetchall(PDO::FETCH_ASSOC)){
           return $result;
        }
        catch(PDOException $e)
@@ -287,13 +286,13 @@ class USER
            return ['error'=>$e->getMessage()];
        }
    }
-   public function add_lesson($subject, $teach_id, $grade_id)
+   public function add_lesson($subject_id, $teacher_id, $grade_id)
    {
        try
 	   {
-           $stmt = $this->db->prepare("INSERT INTO lessons (lesson_name, teacher_id, grade_id) VALUES (:subject, :teacher_id, :grade_id)");
-	       $stmt->bindparam(":subject", $subject);
-	       $stmt->bindparam(":teacher_id", $teach_id, PDO::PARAM_INT);
+           $stmt = $this->db->prepare("INSERT INTO lessons (subject_id, teacher_id, grade_id) VALUES (:subject_id, :teacher_id, :grade_id)");
+	       $stmt->bindparam(":subject_id", $subject_id);
+	       $stmt->bindparam(":teacher_id", $teacher_id, PDO::PARAM_INT);
 		   $stmt->bindparam(":grade_id", $grade_id, PDO::PARAM_INT);
 	   	   $stmt->execute();
 		   http_response_code(200);
