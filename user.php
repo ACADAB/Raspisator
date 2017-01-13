@@ -108,15 +108,10 @@ class USER
 		  $stmt->execute();
 		  $subjects=$stmt->fetchall(PDO::FETCH_ASSOC);
 		   
-		  $stmt = $this->db->prepare("SELECT grade_name, grade_number FROM grades WHERE school_id = :id");
+		  $stmt = $this->db->prepare("SELECT school_id, role FROM role WHERE school_id = :id");
           $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
 		  $stmt->execute();
 		  $grades=$stmt->fetchall(PDO::FETCH_ASSOC);
-		   
-          $stmt = $this->db->prepare("SELECT name FROM users WHERE school_id = :id");
-          $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
-		  $stmt->execute();
-		  $teachers=$stmt->fetchall(PDO::FETCH_ASSOC);
 		  
 		  $all = ['subjects' => $subjects, 'grades' => $grades, 'teachers' => $teachers];
           return $all;
@@ -126,21 +121,21 @@ class USER
            echo $e->getMessage();
        }
    }
-   public function get_profile_data($)
+   public function get_profile_data()
    {
    	   try
        {
-          $stmt = $this->db->prepare("SELECT user_name, user_email FROM users WHERE user_id = :id");
+          $stmt = $this->db->prepare("SELECT user_name, user_email, name FROM users WHERE user_id = :id");
           $stmt->bindparam(":id", $_SESSION['user_session'], PDO::PARAM_INT);
 		  $stmt->execute();
 		  $one=$stmt->fetchall(PDO::FETCH_ASSOC);
 		   
-		  $stmt = $this->db->prepare("SELECT grade_name, grade_number FROM grades WHERE school_id = :id");
+		  $stmt = $this->db->prepare("SELECT school_id, role_id, is_approved FROM role_user_school_relation WHERE user_id = :id");
           $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
 		  $stmt->execute();
-		  $grades=$stmt->fetchall(PDO::FETCH_ASSOC);
+		  $two=$stmt->fetchall(PDO::FETCH_ASSOC);
 		  
-		  $all = ['subjects' => $subjects, 'grades' => $grades, 'teachers' => $teachers];
+		  $all = ['one' => $one, 'two' => $two];
           return $all;
        }
        catch(PDOException $e)
@@ -217,20 +212,14 @@ class USER
        {
 		  $result = [];
           $stmt = $this->db->prepare("
-		  	select
-            lessons.id,
-			lessons.lesson_name,
-			grades.grade_name,
-			grades.grade_number,
-			users.name
+		  	SELECT
+            lessons.teacher_id,
+			lessons.subject_id,
+			lessons.grade_id
 			from
 			lessons
-			join grades
-			on grades.id = lessons.grade_id
 			join project_lesson_relation
 			on project_lesson_relation.lesson_id = lessons.id 
-			join users
-			on users.user_id = lessons.teacher_id
 			where project_lesson_relation.project_id = :current_project_id");
           $stmt->bindparam(":current_project_id", $current_project_id, PDO::PARAM_INT);
 		  $stmt->execute();
