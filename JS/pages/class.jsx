@@ -29,6 +29,12 @@ export default class Class extends(React.Component){
 	constructor(props){
 		super(props);
 		this.handleClick = this.handleClick.bind(this);
+		const grade = classStore.school.grades[props.grade];
+		const subject = classStore.school.subjects[props.name];
+		const teacher = classStore.school.teachers[props.teacher];
+		this.grade = grade.grade_number + grade.grade_name;
+		this.subject = subject.name;
+		this.teacher = teacher.name;
 	}
 
 	componentDidMount(){
@@ -46,16 +52,16 @@ export default class Class extends(React.Component){
 	}
 
 	render(){
-		const { grade, teacher, name, color, isDragging,borderColor, id, connectDragSource} = this.props;
+		const { teacher, name, color, isDragging,borderColor, id, connectDragSource} = this.props;
 
 
 		const DOMclasses =color + ((borderColor!='')?(' border-' + borderColor):'') + ' class-box class' + (isDragging?' dragging': '');
 
 		return connectDragSource(
 			<div className={DOMclasses} onClick={this.handleClick}>
-				{grade}, 
-				{teacher}, 
-				{name}
+				{this.grade}, 
+				{this.teacher}, 
+				{this.subject}
 			</div>
 			);
 	}

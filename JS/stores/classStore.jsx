@@ -64,7 +64,7 @@ class ClassStore extends EventEmitter{
 
 		this.table = getEmptyTable(6,this.colClasses.length);
 
-
+		this.school = {grades:{}, subjects:{}, teachers:{}}
 		this.refreshStoppingHighlight(false);
 
 	}
@@ -78,11 +78,8 @@ class ClassStore extends EventEmitter{
 		return this.projectLessons;
 	}
 
-	loadSchoolData(project_id){
 
-	}
-
-	loadProject(project_id){//TODO FIX THE NAMES ACCORDING TO THE FACT THAT WE USE IDs
+	loadProject(project_id){
 
 		this.projectLessons = {};
 
@@ -92,14 +89,17 @@ class ClassStore extends EventEmitter{
 			this.initEmptyProj();
 			this.projectID = project_id;
 			
+			this.school = res.data.school;
+
 			console.log('resp ',res.data)
-			if (res.data.project_data.toLowerCase() == 'null') {
+			if (res.data.project.project_data.toLowerCase() == 'null') {
 				this.emit('change');
 				console.log('null data');
 				return;
 			}
-			const data = JSON.parse(res.data.project_data);
+			const data = JSON.parse(res.data.project.project_data);
 			const usedLen = data.lessons.filter((lesson)=>lesson.isUsed).length;
+
 			this.project_name = res.data.project_name;
 			this.unused = Array(data.lessons.length - usedLen);
 			this.used = Array(usedLen);

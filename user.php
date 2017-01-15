@@ -123,10 +123,10 @@ class USER
 		  $stmt->execute();
 		  $grades= stmt_to_dict($stmt);
 		  
-		  $stmt = $this->db->prepare("SELECT id, name FROM users JOIN role_user_school_relation ON role_user_school_relation.user_id = users.user_id WHERE role_user_school_relation.school_id = :id");
+		  $stmt = $this->db->prepare("SELECT users.user_id, name FROM users JOIN role_user_school_relation ON role_user_school_relation.user_id = users.user_id WHERE role_user_school_relation.school_id = :id");
           $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
 		  $stmt->execute();
-		  $teachers= stmt_to_dict($stmt);
+		  $teachers= stmt_to_dict($stmt, 'user_id');
 		  
 		  $all = ['subjects' => $subjects, 'grades' => $grades, 'teachers' => $teachers];
           return $all;
