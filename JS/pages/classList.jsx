@@ -71,33 +71,21 @@ const cardTarget = {
                 return;
             }
 
-            console.log('hover ', component.poses, dragIndex, hoverIndex);
             // Time to actually perform the action
             
             const hover_db_id = classStore.unused[component.poses[dragIndex]].db_id;
-            console.log(component.poses[dragIndex], component.poses[hoverIndex]);
             if (component.poses[dragIndex]< component.poses[hoverIndex]){
                 let i =0;
                 while(i < component.poses[hoverIndex]){
                     if (classStore.unused[i].db_id == hover_db_id){
-                        console.log(i,component.poses[hoverIndex]);
-                        ClassActions.swapByIndex(i, component.poses[hoverIndex]);
+                        ClassActions.swapByIndex(i, component.poses[hoverIndex], false);
                         i = 0;
                         continue;
                     }
                     i++;
                 }
             } else {
-                let i = component.poses.length-1;
-                while(i > component.poses[hoverIndex]){
-                    if (classStore.unused[i].db_id == hover_db_id){
-                        console.log(i,component.poses[hoverIndex]);
-                        ClassActions.swapByIndex(i, component.poses[hoverIndex]);
-                        i = component.poses.length-1;
-                        continue;
-                    }
-                    i--;
-                }
+                ClassActions.swapByIndex(component.poses[dragIndex], component.poses[hoverIndex],false);
             }
             
             monitor.getItem().index = hoverIndex;

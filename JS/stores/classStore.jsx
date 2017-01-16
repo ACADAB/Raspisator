@@ -84,7 +84,7 @@ class ClassStore extends EventEmitter{
 		this.projectLessons = {};
 
 		this.loadLessons(project_id).then(
-			()=>request('getProject', {'project_id':project_id})).then(res=>{	
+			()=>request('getProject', {'project_id':project_id, 'return_school_data':true})).then(res=>{	
 
 			this.initEmptyProj();
 			this.projectID = project_id;
@@ -92,7 +92,7 @@ class ClassStore extends EventEmitter{
 			this.school = res.data.school;
 
 			console.log('resp ',res.data)
-			if (res.data.project.project_data.toLowerCase() == 'null') {
+			if ((''+res.data.project.project_data).toLowerCase() == 'null') {
 				this.emit('change');
 				console.log('null data');
 				return;
@@ -239,7 +239,7 @@ class ClassStore extends EventEmitter{
 
 
 		const id = interID==-1? this.editingID : interID;
-
+		
 		const lesson = this.getClassByID(id);
 
 		let isConflict = false;
@@ -293,7 +293,7 @@ class ClassStore extends EventEmitter{
 		}
 		//console.log(toSave);
 		//TODO: display something if we get error or ok status.
-		request('saveProject',{'data': JSON.stringify(toSave), 'project_id':this.projectID},"post");
+		request('saveProject',{'data': JSON.stringify(toSave), 'project_id':this.projectID},"post").then(res=>{console.log(res)});
 	}
 
 	moveUnusedItem(from,to){

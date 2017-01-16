@@ -1,14 +1,15 @@
 import dispatcher from '../dispatcher.jsx';
 
-export function swapByIndex(i1,i2){
+export function swapByIndex(i1,i2, stopEdit = true){
 	dispatcher.dispatch({
 		type: 'SWAP_UNUSED_CLASS_BY_INDEX',
 		i1: i1,
 		i2: i2
 	});
-	dispatcher.dispatch({
-		type: 'STOP_EDITING'
-	});
+	if (stopEdit)
+		dispatcher.dispatch({
+			type: 'STOP_EDITING'
+		});
 } 
 
 export function swapByID(i1,i2){
@@ -68,7 +69,7 @@ export function startEditMode(id){
 	});
 } 
 
-export function stopEditMode(id){
+export function stopEditMode(){
 	dispatcher.dispatch({
 		type: 'STOP_EDITING'
 	});
