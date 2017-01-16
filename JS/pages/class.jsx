@@ -52,16 +52,19 @@ export default class Class extends(React.Component){
 	}
 
 	render(){
-		const { teacher, name, color, isDragging,borderColor, id, connectDragSource} = this.props;
+		const { teacher, name, color, amount, isDragging,borderColor, id, connectDragSource} = this.props;
+		let isAmount = false;
+		if (amount && amount>1)
+			isAmount = true;
 
-
-		const DOMclasses =color + ((borderColor!='')?(' border-' + borderColor):'') + ' class-box class' + (isDragging?' dragging': '');
+		const DOMclasses =color + ((borderColor!='')?(' border-' + borderColor):'') + ' class-box class' + ((isDragging && !(isAmount && amount>1))?' dragging': '');
 
 		return connectDragSource(
 			<div className={DOMclasses} onClick={this.handleClick}>
 				{this.grade}, 
 				{this.teacher}, 
 				{this.subject}
+				{isAmount && ','+(isDragging?(amount-1):amount) }
 			</div>
 			);
 	}

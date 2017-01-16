@@ -106,10 +106,29 @@ export default class ClassList extends(React.Component){
 
 
 		const unused = classStore.getLessons(used,grade);
-        
-		const classes = unused.map((c,index) =>
+
+        let unique = {};
+        for (let i =0; i< unused.length; i++){
+            const les = unused[i];
+            if (les.db_id in unique)
+                unique[les.db_id].count+=1
+            else
+                unique[les.db_id] = {c:les, count: 1};
+        }
+
+
+        let classes = []
+        for (let db_id in unique){
+            const {c, count}  = unique[db_id];
+            classes.push(
+                    <Class name={c.name} id={c.id} index={classes.length} color={c.color} teacher={c.teacher} grade={c.grade} amount={count} key={c.id}/>
+                )
+        }
+		/*const classes = unused.map((c,index) =>
 				<Class name={c.name} id={c.id} index={index} color={c.color} teacher={c.teacher} grade={c.grade} key={c.id}/>
 			)
+        */
+
 		const {connectDropTarget} = this.props;
 		return connectDropTarget( 
                 <div className="class-list">
