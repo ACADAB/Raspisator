@@ -28,12 +28,12 @@ const cardTarget = {
             // Determine mouse position
             const clientOffset = monitor.getClientOffset();
 
-            const numClasses = classStore.getLenUnused();
+            const numClasses = component.poses.length;
 
             // get class height to to count the changes amount
             const classHeight = (r=>r.bottom - r.top)(thisRect)/numClasses;
             //get index of hovered class
-            const hoverIndex = Math.floor((clientOffset.y-thisRect.top)/ classHeight);
+            let hoverIndex = Math.floor((clientOffset.y-thisRect.top)/ classHeight);
             
             // Don't replace items with themselves
             if (dragIndex === hoverIndex) {
@@ -63,17 +63,43 @@ const cardTarget = {
 
             // Dragging downwards
             if (dragIndex == hoverIndex - 1 && hoverClientY < hoverMiddleY) {
-              return;
+                return;
             }
 
             // Dragging upwards
             if (dragIndex == hoverIndex + 1 && hoverClientY > hoverMiddleY) {
-              return;
+                return;
             }
 
+            console.log('hover ', component.poses, dragIndex, hoverIndex);
             // Time to actually perform the action
-            ClassActions.swapByIndex(dragIndex, hoverIndex);
-
+            
+            const hover_db_id = classStore.unused[component.poses[dragIndex]].db_id;
+            console.log(component.poses[dragIndex], component.poses[hoverIndex]);
+            if (component.poses[dragIndex]< component.poses[hoverIndex]){
+                let i =0;
+                while(i < component.poses[hoverIndex]){
+                    if (classStore.unused[i].db_id == hover_db_id){
+                        console.log(i,component.poses[hoverIndex]);
+                        ClassActions.swapByIndex(i, component.poses[hoverIndex]);
+                        i = 0;
+                        continue;
+                    }
+                    i++;
+                }
+            } else {
+                let i = component.poses.length-1;
+                while(i > component.poses[hoverIndex]){
+                    if (classStore.unused[i].db_id == hover_db_id){
+                        console.log(i,component.poses[hoverIndex]);
+                        ClassActions.swapByIndex(i, component.poses[hoverIndex]);
+                        i = component.poses.length-1;
+                        continue;
+                    }
+                    i--;
+                }
+            }
+            
             monitor.getItem().index = hoverIndex;
             //console.log(this);
         }
@@ -113,21 +139,27 @@ export default class ClassList extends(React.Component){
             if (les.db_id in unique)
                 unique[les.db_id].count+=1
             else
-                unique[les.db_id] = {c:les, count: 1};
+                unique[les.db_id] = {c:les, count: 1, firstPos: i};
         }
 
 
-        let classes = []
-        for (let db_id in unique){
-            const {c, count}  = unique[db_id];
+        let classes = [];
+        let poses = []
+        for (let i =0; i< unused.length; i++){
+            const db_id = unused[i].db_id;
+            const {c, count, firstPos} = unique[db_id];
+            if (firstPos!=i) continue;
             classes.push(
                     <Class name={c.name} id={c.id} index={classes.length} color={c.color} teacher={c.teacher} grade={c.grade} amount={count} key={c.id}/>
                 )
+            poses.push(firstPos);
         }
 		/*const classes = unused.map((c,index) =>
 				<Class name={c.name} id={c.id} index={index} color={c.color} teacher={c.teacher} grade={c.grade} key={c.id}/>
 			)
         */
+
+        this.poses = poses;
 
 		const {connectDropTarget} = this.props;
 		return connectDropTarget( 

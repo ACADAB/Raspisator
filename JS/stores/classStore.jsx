@@ -175,7 +175,10 @@ class ClassStore extends EventEmitter{
 
 	//now this just duplicates this.getGrades, but nay change =)
 	getColNames(){
-		return this.colClasses;		
+		return this.colClasses.map(id=>{
+			const grade = this.school.grades[id];
+			return grade.grade_number + grade.grade_name;
+		});		
 	}
 
 	getLessons(used = 'unused',grade = undefined){
@@ -300,6 +303,9 @@ class ClassStore extends EventEmitter{
 			if (from < to){
 
 				const tmp = this.unused[minInd];
+
+				//this.unused.filter(()=>)
+
 				for (let i =minInd+1; i<=maxInd; i+=1 ){
 					this.unused[i-1] = this.unused[i];
 					this.classPosition[this.unused[i-1].id].index = i-1;
