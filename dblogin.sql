@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Янв 13 2017 г., 19:58
+-- Время создания: Янв 16 2017 г., 19:48
 -- Версия сервера: 5.7.16-0ubuntu0.16.04.1
 -- Версия PHP: 7.0.13-1~dotdeb+8.1
 
@@ -79,17 +79,24 @@ CREATE TABLE `projects` (
   `id` int(10) UNSIGNED NOT NULL,
   `owner_id` int(10) UNSIGNED NOT NULL,
   `project_name` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `project_data` json DEFAULT NULL,
-  `school_id` int(10) UNSIGNED NOT NULL
+  `project_data` int(11) DEFAULT NULL,
+  `school_id` int(10) UNSIGNED DEFAULT NULL,
+  `start` date DEFAULT NULL,
+  `finish` date DEFAULT NULL,
+  `creation_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Дамп данных таблицы `projects`
 --
 
-INSERT INTO `projects` (`id`, `owner_id`, `project_name`, `project_data`, `school_id`) VALUES
-(1, 27, 'project1(Е классы)', NULL, 1),
-(2, 30, 'project2(Е классы)', NULL, 1);
+INSERT INTO `projects` (`id`, `owner_id`, `project_name`, `project_data`, `school_id`, `start`, `finish`, `creation_time`) VALUES
+(1, 27, 'project1(Е классы)', NULL, 1, NULL, NULL, '2017-01-16 17:43:02'),
+(2, 30, 'project2(Е классы)', NULL, 1, NULL, NULL, '2017-01-16 17:43:02'),
+(4, 27, 'аощльдва', NULL, 1, NULL, NULL, '2017-01-16 17:43:02'),
+(5, 27, 'аощльдва', NULL, 1, NULL, NULL, '2017-01-16 17:43:02'),
+(6, 27, 'аощльдва', NULL, 1, '2017-10-11', '2017-11-11', '2017-01-16 17:43:02'),
+(7, 27, 'аощлsasasasьдва', NULL, 1, '2017-10-11', '2017-11-11', '2017-01-16 17:43:02');
 
 -- --------------------------------------------------------
 
@@ -104,6 +111,17 @@ CREATE TABLE `role_user_school_relation` (
   `school_id` int(10) UNSIGNED NOT NULL,
   `is_approved` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Дамп данных таблицы `role_user_school_relation`
+--
+
+INSERT INTO `role_user_school_relation` (`id`, `user_id`, `role_id`, `school_id`, `is_approved`) VALUES
+(1, 27, 1, 1, 1),
+(2, 28, 1, 1, 1),
+(3, 29, 1, 1, 1),
+(4, 30, 1, 1, 1),
+(5, 27, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -124,6 +142,31 @@ INSERT INTO `schools` (`id`, `name`) VALUES
 (1, '179 МИОО'),
 (2, '58 ШК'),
 (3, '13337');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `school_time`
+--
+
+CREATE TABLE `school_time` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `school_id` int(10) UNSIGNED NOT NULL,
+  `lesson` int(10) UNSIGNED NOT NULL,
+  `start_time` time DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Дамп данных таблицы `school_time`
+--
+
+INSERT INTO `school_time` (`id`, `school_id`, `lesson`, `start_time`) VALUES
+(27, 1, 0, '09:00:00'),
+(28, 1, 1, '09:50:00'),
+(29, 1, 2, '10:55:00'),
+(30, 1, 3, '11:45:00'),
+(31, 1, 4, '13:00:00'),
+(32, 1, 5, '14:00:00');
 
 -- --------------------------------------------------------
 
@@ -167,7 +210,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_pass`, `name`) VALUES
 (27, 'g1231234', 'lololo', '$2y$10$uSnV4KxCkBGp6JvYdrGnfulqIx1SvEbJLxj7Sd5w7bJRu.OsPgdfS', 'G1234re213'),
-(28, 'acadab', 'newuserrrrr', '$2y$10$zn2lcIXahaicOJtCRELoLuAU0689pzbhc8nrJXyHivW4XzJbI.bDy', 'Greeeg'),
+(28, 'acadab', 'acadab', '$2y$10$sluHNeXvfPFaG4lRkuyGhelCV2O8brIJmX8M4/Z64JZm3hcOWGX9.', 'Greeeg'),
 (29, 'greg', 'lalallalal', '$2y$10$UjYIQWhfAvFOSG2mwgznQ.UAy5S6vQxth45l8tT4wsFQdR0e9IO4C', 'Гриша'),
 (30, 'root', 'root', '$2y$10$sluHNeXvfPFaG4lRkuyGhelCV2O8brIJmX8M4/Z64JZm3hcOWGX9.', 'Дмитрий Викторович Емельяненко');
 
@@ -197,12 +240,19 @@ ALTER TABLE `projects`
 -- Индексы таблицы `role_user_school_relation`
 --
 ALTER TABLE `role_user_school_relation`
+  ADD UNIQUE KEY `id_2` (`id`),
   ADD KEY `id` (`id`);
 
 --
 -- Индексы таблицы `schools`
 --
 ALTER TABLE `schools`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `school_time`
+--
+ALTER TABLE `school_time`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -239,17 +289,22 @@ ALTER TABLE `lessons`
 -- AUTO_INCREMENT для таблицы `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT для таблицы `role_user_school_relation`
 --
 ALTER TABLE `role_user_school_relation`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT для таблицы `schools`
 --
 ALTER TABLE `schools`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT для таблицы `school_time`
+--
+ALTER TABLE `school_time`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT для таблицы `subjects`
 --

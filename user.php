@@ -158,16 +158,19 @@ class USER
            echo $e->getMessage();
        }
    }
-   public function get_project($current_project_id)
+   public function get_project($current_project_id, $return_school_info)
    {
       try
        {
-      $result = [];
-          $stmt = $this->db->prepare("SELECT project_name, project_data, school_id FROM projects WHERE id = :id");
+      	$result = [];
+          $stmt = $this->db->prepare("SELECT project_name, project_data, school_id, owner_id, start, finish, creation_time FROM projects WHERE id = :id");
           $stmt->bindparam(":id", $current_project_id, PDO::PARAM_INT);
           $stmt->execute();
           $row = $stmt->fetch(PDO::FETCH_ASSOC);
-          return ['project'=>$row, 'school'=>$this->get_school_data($row['school_id'])];
+		  if($return_school_info)
+          	  return ['project'=>$row, 'school'=>$this->get_school_data($row['school_id'])];
+		  else
+			  return $row;
        }
        catch(PDOException $e)
        {
@@ -267,13 +270,15 @@ class USER
    {
        header("Location: $url");
    }
-   public function set_school_user_relation($school_id, $user_id)
+   public function set_role_user_school_relation($school_id, $user_id, $role_id, $is_approved)
    {
 	   try
 	   {
-           $stmt = $this->db->prepare("INSERT INTO project_lesson_relation (school_id, user_id) VALUES (:school_id, :user_id)");
-	       $stmt->bindparam(":school_id", $school_id, PDO::PARAM_INT);
+           $stmt = $this->db->prepare("INSERT INTO role_user_school_relation (user_id, role_id, school_id, is_approved) VALUES (:user_id, :role_id, :school_id, :is_approved)");
 	       $stmt->bindparam(":user_id", $user_id, PDO::PARAM_INT);
+		   $stmt->bindparam(":role_id", $role_id, PDO::PARAM_INT);
+		   $stmt->bindparam(":school_id", $school_id, PDO::PARAM_INT);
+	       $stmt->bindparam(":is_approved", $is_approved, PDO::PARAM_INT);
 	   	   $stmt->execute();
 		   http_response_code(200);
            return ['success'=>'OK'];
@@ -326,10 +331,7 @@ class USER
 		   $stmt->bindparam(":pid", $project_id, PDO::PARAM_INT);
 	   	   $stmt->execute();
            
-           $stmt = $this->db->prepare("DELETE FROM project_lesson_relation WHERE project_id = :pid");
-	   	   $stmt->bindparam(":pid", $project_id, PDO::PARAM_INT);
-           $stmt->execute();
-		   http_response_code(200);
+   		   http_response_code(200);
            return ['success'=>'OK'];
 	   }
 	   catch(PDOException $e)
@@ -338,16 +340,18 @@ class USER
            return ['error'=>$e->getMessage()];
        }
    }
-   public function add_project($p_name, $s_id)
+   public function add_project($p_name, $s_id, $start, $finish)
    {
        try
 	   {
            if(isset($_SESSION['user_session']))
            {
-               $stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name, school_id) VALUES (:oid, :pr_name, :s_id)");
+               $stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name, school_id, start, finish) VALUES (:oid, :pr_name, :s_id, :start, :finish)");
 	           $stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
 			   $stmt->bindparam(":s_id", $s_id, PDO::PARAM_INT);
                $stmt->bindparam(":pr_name", $p_name);
+			   $stmt->bindparam(":start", $start);
+			   $stmt->bindparam(":finish", $finish);
 	   	       $stmt->execute();
 		       http_response_code(200);
                return ['success'=>'OK'];
@@ -367,6 +371,56 @@ class USER
            {
                $stmt = $this->db->prepare("INSERT INTO schools (name) VALUES (:school_name)");
                $stmt->bindparam(":school_name", $school_name);
+	   	       $stmt->execute();
+		       http_response_code(200);
+               return ['success'=>'OK'];
+           }
+       }
+	   catch(PDOException $e)
+	   {
+		   http_response_code(400);//FIX ME NOT SENDING
+           return ['error'=>$e->getMessage()];
+       }
+   }
+   public function approve($rel_id)
+   {
+       try
+	   {
+           if(isset($_SESSION['user_session']))
+           {
+               $stmt = $this->db->prepare("UPDATE role_user_school_relation SET is_approved=1 WHERE id = :rid");
+               $stmt->bindparam(":rid", $rel_id, PDO::PARAM_INT);
+	   	       $stmt->execute();
+		       http_response_code(200);
+               return ['success'=>'OK'];
+           }
+       }
+	   catch(PDOException $e)
+	   {
+		   http_response_code(400);//FIX ME NOT SENDING
+           return ['error'=>$e->getMessage()];
+       }
+   }
+   public function add_school_timetable($timetable, $school_id)
+   {
+       try
+	   {
+           if(isset($_SESSION['user_session']))
+           {
+			   //var_dump ($timetable);
+			   //var_dump ($timetable);
+			   $t = json_decode($timetable);
+			   // var_dump ($t[1]);
+			   $s = "INSERT INTO school_time (school_id, lesson, start_time) VALUES ";
+			   for($i = 0; $i < count($t); $i=$i+1)
+			   {
+			       $s=$s."(".$school_id.",".$i.",".'\''.$t[$i].'\''.")";
+				   if($i != count($t)-1)
+					   $s=$s.',';
+			   }
+			   echo $s;
+               $stmt = $this->db->prepare($s);
+               $stmt->bindparam(":rid", $rel_id, PDO::PARAM_INT);
 	   	       $stmt->execute();
 		       http_response_code(200);
                return ['success'=>'OK'];
