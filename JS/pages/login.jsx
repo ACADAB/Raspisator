@@ -1,6 +1,7 @@
 import React from "react";
 import FormData from 'react-form-data';
 import request from '../API.jsx';
+import {Form, FormControl, FormGroup, Col, ControlLabel} from 'react-bootstrap';
 import * as AccountActions from '../actions/accountActions.jsx';
 
 import {Button} from 'react-bootstrap';
@@ -24,14 +25,30 @@ export default class Login extends(React.Component){
 		let a =0;
 		return (//TODO: rewrite it with react-bootstrap
 			<div>
-				<h1>Вход</h1>
-				<form onChange={this.updateFormData} method="POST" acceptCharset="utf-8" action="http://localhost/var/www/html/Raspisator/API/register.php">
-					<label>Имя пользователя / E-mail</label><br/>
-					<input type="e-mail" name="name"/><br/>
-					<label>Пароль</label><br/>
-					<input type="password" name="password"/><br/>
-					<Button bsStyle='success' type='button' className="btn" onClick={e => this.handleSubmit(e)}>OК</Button>
-				</form>
+				
+				<Form horizontal onChange={this.updateFormData} method="POST" acceptCharset="utf-8" action="http://localhost/var/www/html/Raspisator/API/register.php">
+					<FormGroup>
+						<Col mdOffset={2}><h1>Вход</h1></Col>
+					</FormGroup>
+					<FormGroup>
+						<Col sm={3} md={3} componentClass={ControlLabel}>Имя пользователя / E-mail</Col>
+						<Col sm={10} md={3}>
+							<FormControl type="e-mail" name="name"/>
+						</Col>
+					</FormGroup>
+					<FormGroup>
+						<Col sm={3} md={3} componentClass={ControlLabel}>Пароль</Col>
+						<Col sm={10} md={3}>
+							<FormControl type="password" name="password"/>
+						</Col>
+					</FormGroup>
+					<FormGroup>
+						<Col mdOffset={3}>
+							<Button bsStyle='success' type='button' className="btn" pullRight={true} onClick={e => this.handleSubmit(e)}>OК</Button>
+						</Col>
+					</FormGroup>
+					
+				</Form>
 			</div>
 			);
 	}

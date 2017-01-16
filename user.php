@@ -207,11 +207,10 @@ class USER
       try
        {
 		  $result = [];
-          $stmt = $this->db->prepare("SELECT schools.name FROM schools JOIN role_user_school_relation 
+          $stmt = $this->db->prepare("SELECT schools.name, schools.id FROM schools JOIN role_user_school_relation 
 		  ON role_user_school_relation.school_id = schools.id and role_user_school_relation.user_id = :oid");
 		  $stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
 		  $stmt->execute();
-		  var_dump($result);
 		  $result = $stmt->fetchall(PDO::FETCH_ASSOC);
           return $result;
        }
@@ -354,7 +353,7 @@ class USER
 			   $stmt->bindparam(":finish", $finish);
 	   	       $stmt->execute();
 		       http_response_code(200);
-               return ['success'=>'OK'];
+               return ['success'=>'OK', 'project_id' => $this->db->lastInsertId()];
            }
        }
 	   catch(PDOException $e)
@@ -413,7 +412,7 @@ class USER
 			   // var_dump ($t[1]);
 			   $s = "INSERT INTO school_time (school_id, lesson, start_time) VALUES ";
 			   for($i = 0; $i < count($t); $i=$i+1)
-			   {
+			   {//todo: fix this to be secure
 			       $s=$s."(".$school_id.",".$i.",".'\''.$t[$i].'\''.")";
 				   if($i != count($t)-1)
 					   $s=$s.',';

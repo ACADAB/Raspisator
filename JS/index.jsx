@@ -14,6 +14,7 @@ import Login from './pages/login.jsx';
 import Editor from './pages/editor.jsx';
 import Index from './pages/index.jsx';
 import Home from './pages/home.jsx';
+import NewProject from './pages/newProject.jsx';
 import NotFound from './pages/404.jsx';
 
 //import properties from './settings.jsx';
@@ -30,6 +31,7 @@ ReactDOM.render((
 			<IndexRoute component={Index}></IndexRoute>
 			<Route path="projects" component={Projects}></Route>
 			<Route path="register" component={Register}></Route>
+			<Route path="newProject" component={NewProject}></Route>
 			<Route path="logout" component={Logout}></Route>
 			<Route path="login" component={Login}></Route>
 			<Route path="home" component={Home}></Route>

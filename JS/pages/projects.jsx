@@ -1,6 +1,7 @@
 import React from "react";
 import request from '../API.jsx';
 import Project from './project.jsx';
+import {Link} from 'react-router';
 
 export default class projects extends(React.Component){
 	constructor(props){
@@ -26,6 +27,7 @@ export default class projects extends(React.Component){
 				<ul>
 					{list}
 				</ul>
+				<Link to="newProject">Новый проект</Link>
 			</div>
 			);
 	}

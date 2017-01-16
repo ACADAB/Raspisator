@@ -1,6 +1,5 @@
 import React from "react";
 import request from "../API.jsx";
-import {Link} from 'react-router';
 import AccountStore from '../stores/accountStore.jsx';
 
 import {Nav, NavItem, Grid, Row, Navbar} from 'react-bootstrap';
