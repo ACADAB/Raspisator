@@ -358,7 +358,7 @@ class USER
        }
 	   catch(PDOException $e)
 	   {
-		   http_response_code(400);//FIX ME NOT SENDING
+		   //http_response_code(400);//FIX ME NOT SENDING
            return ['error'=>$e->getMessage()];
        }
    }

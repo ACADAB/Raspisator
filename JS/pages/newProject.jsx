@@ -3,7 +3,7 @@ import FormData from 'react-form-data';
 import DatePicker from 'react-bootstrap-date-picker';
 import request from '../API.jsx';
 import { hashHistory } from 'react-router';
-import {Form, FormControl, Button, FormGroup, Col, ControlLabel} from 'react-bootstrap';
+import {Form, FormControl, Alert, Button, FormGroup, Col, ControlLabel} from 'react-bootstrap';
 
 export default class NewProject extends(React.Component){
 	constructor(props){
@@ -16,21 +16,49 @@ export default class NewProject extends(React.Component){
 		}
 		this.updateFormData = FormData.updateFormData.bind(this);
 		this.setFormData = FormData.setFormData.bind(this);
-		this.state = {schools:[]};
+		this.state = {schools:[], alertMessage:''};
 	}
 
 	componentWillMount(){
-		request('getMySchools').then(res=>{this.setState({schools : res.data})});
+		request('getMySchools').then(res=>{this.setState({schools : res.data, alertMessage:''})});
 		
+	}
+
+	//validates data, returns false if it's ok or an error message else 
+	validateFormData(data){
+		if (data.s_id == "-1") return 'Вы должны выбрать школу';
+		if (data.p_name == '') return 'Вы должны выбрать проект';
+		if (data.start == '') return 'Вы должны указать дату начала';
+		if (data.finish == '') return 'Вы должны указать дату конца';
+		return false;
 	}
 
 	handleSubmit(event){
 		const dat = this.formData;
 		console.log(dat);
-		request('addProject', dat, 'post').then(res=>{
-			console.log(res);
-			//hashHistory.push('login');
-		}).catch(e=>{console.log(e)});//fix me!
+		const validation = this.validateFormData(dat);
+
+		if (validation){
+			this.setState({schools:this.state.schools, alertMessage: validation})
+		} else 
+			request('addProject', dat, 'post').then(res=>{
+				console.log(res);
+				//hashHistory.push('login');
+			}).catch(e=>{console.log(e)});//fix me!
+	}
+
+	renderAlert(message){
+		if (typeof(message) == "string" && message.length > 0){
+			return ( 
+				<div>
+				<br />
+					<Alert bsStyle="danger">
+						<h4>Ошибка!</h4>
+						<p>{message}</p>
+					</Alert>
+				</div>
+			)
+		} else return <div></div>
 	}
 
 	render(){
@@ -50,7 +78,8 @@ export default class NewProject extends(React.Component){
 					</FormGroup>
 					<FormGroup>
 						<ControlLabel>Школа</ControlLabel>
-						<FormControl componentClass="select" type="select" name="p_name">
+						<FormControl placeholder="select" componentClass="select" type="select" name="s_id">
+							<option value="-1">---</option>
 							{schoolOptions}
 						</FormControl>
 					</FormGroup>
@@ -63,6 +92,7 @@ export default class NewProject extends(React.Component){
 						<DatePicker onChange={(e)=>{this.formData.finish = e.slice(0,10)}} name='finish'/>
 					</FormGroup>
 					<Button type='button'  onClick={e => this.handleSubmit(e)}>Создать</Button>
+					{this.renderAlert(this.state.alertMessage)}
 				</Form>
 			</div>
 			);
