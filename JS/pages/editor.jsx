@@ -4,7 +4,7 @@ import ClassList from './classList.jsx';
 import Grid from './grid.jsx';
 import {Col,Row} from 'react-bootstrap';
 import * as ClassActions from '../actions/classActions.jsx';
-
+import {Link} from 'react-router';
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -32,6 +32,7 @@ export default class Editor extends(React.Component){
 				</div>
 				<Col md={16} xs={16}>
 					<Grid/>
+					<Link to={"projectPreferences/"+this.props.params.id}>Параметры проекта</Link>
 					<Button className="pull-right" onClick={ClassActions.save}> Save </ Button>
 				</Col>
 				<ItemPreview key="__preview" name="Item" />
