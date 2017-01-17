@@ -253,6 +253,37 @@ class USER
            
        }
    }
+
+
+   public function get_school_lessons($school_id)
+   {
+      try
+       {
+      $result = [];
+          $stmt = $this->db->prepare("
+        SELECT
+            lessons.id,
+      lessons.teacher_id,
+      lessons.subject_id,
+      lessons.grade_id
+      from
+      lessons 
+      where lessons.school_id = :school_id");
+          $stmt->bindparam(":school_id", $school_id, PDO::PARAM_INT);
+      $stmt->execute();
+      $result = $stmt->fetchall(PDO::FETCH_ASSOC);
+          return $result;
+       }
+       catch(PDOException $e)
+       {
+          http_response_code(400);
+          echo $e->getMessage();
+      return [];
+
+           
+       }
+   }
+
    public function is_loggedin()
    {
       if(isset($_SESSION['user_session']))

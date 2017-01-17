@@ -23,6 +23,7 @@ tr:not(:last-child) .class-space{
        -moz-box-sizing: border-box;
             box-sizing: border-box;
     font-size: 12px;
+    border-radius: 3px;
 	width:100%;
 	padding: 5px;
 	/*border-color: black;
@@ -126,8 +127,15 @@ ul{
 	pointer-events: none;
 }
 
+.margined{
+	margin-right:10px;
+}
+
 .class-list{
-	height: 100%;
+	height: 80vh;
+	width:200px;
+	border-radius: 5px;
+	float:left;
 }
 
 
@@ -149,6 +157,7 @@ ul{
 	-webkit-transform: rotate(3deg);
 	-moz-transform: rotate(3deg);
 }
+
 
 table{
 	-moz-user-select: none;

@@ -49,6 +49,7 @@ class ClassStore extends EventEmitter{
 		this.classPosition = {};
 
 		this.maxID = -1; 
+		this.schoolID = -1;
 
 		let grades = [];
 
@@ -78,12 +79,16 @@ class ClassStore extends EventEmitter{
 		return this.projectLessons;
 	}
 
+	getGradeName(id, delim=''){
+		const grade = this.school.grades[id];
+		return grade.grade_number+delim+ grade.grade_name;
+	}
 
 	loadProject(project_id){
 
 		this.projectLessons = {};
 
-		this.loadLessons(project_id).then(
+		return this.loadLessons(project_id).then(
 			()=>request('getProject', {'project_id':project_id, 'return_school_data':true})).then(res=>{	
 
 			this.initEmptyProj();
@@ -97,6 +102,7 @@ class ClassStore extends EventEmitter{
 				console.log('null data');
 				return;
 			}
+			this.schoolID = res.data.project.school_id;
 			const data = JSON.parse(res.data.project.project_data);
 			const usedLen = data.lessons.filter((lesson)=>lesson.isUsed).length;
 
@@ -145,6 +151,23 @@ class ClassStore extends EventEmitter{
 	loadLessons(project_id){
 		return request('getLessons', {'project_id':project_id}).then(res=>{	
 			const dataLen = res.data.length;
+			this.projectLessons = {};
+
+			for (let i =0; i< dataLen; i++){
+				this.projectLessons[parseInt(res.data[i].id)] = {
+					grade :  res.data[i].grade_id,//res.data[i].grade_number + res.data[i].grade_name,
+					name : res.data[i].subject_id,//res.data[i].lesson_name,
+					teacher : res.data[i].teacher_id,//res.data[i].name
+				};
+			}
+			return this.projectLessons;
+		}, (e)=>{console.log(e)});
+	}
+
+	loadAllLessons(school_id){
+		return request('getSchoolLessons', {'school_id':school_id}).then(res=>{	
+			const dataLen = res.data.length;
+			console.log(res);
 			this.projectLessons = {};
 
 			for (let i =0; i< dataLen; i++){

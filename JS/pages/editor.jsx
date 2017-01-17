@@ -26,10 +26,10 @@ export default class Editor extends(React.Component){
 	render(){
 		return (
 			<div className="editor">
-				<Col md={2} xs={4} className="class-list">
+				<div className="class-list margined">
 					<AddPair/>
 					<ClassList used="unused"/>
-				</Col>
+				</div>
 				<Col md={16} xs={16}>
 					<Grid/>
 					<Button className="pull-right" onClick={ClassActions.save}> Save </ Button>
