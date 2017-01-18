@@ -52,7 +52,7 @@ export class ItemPreview  extends( React.Component) {
                 style={getItemStyles(currentOffset)}
             >
                 <div className="preview-class-wrapper class-box">
-                    <Class name={c.name} id={c.id} color={c.color} teacher={c.teacher} grade={c.grade}/>
+                    <Class db_id={c.db_id} id={c.id} color={c.color}/>
                 </div>
             </div>
         );

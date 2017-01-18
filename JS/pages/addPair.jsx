@@ -60,7 +60,6 @@ export default class AddPair extends(React.Component){
     render(){
         const lessons_arr = classStore.getAvailableLessons();
         const {bd_id, color} = this.formData;
-        const currentLesson = lessons_arr[bd_id];
         let lessons = [];
 
         let isFirst = true;
@@ -106,7 +105,7 @@ export default class AddPair extends(React.Component){
                                 </FormControl>
                                 <Button type='submit'> OK </Button>
                             </FormGroup>
-                            {bd_id != -1 && <Class notDraggable name={currentLesson.name} color={color} teacher={currentLesson.teacher} grade={currentLesson.grade}/>}
+                            {bd_id != -1 && <Class notDraggable color={color} db_id={bd_id}/>}
                         </form>
                     </Modal.Body>
                     <Modal.Footer>

@@ -20,6 +20,7 @@ import { default as ItemPreview } from './classPreview.jsx';
 export default class Editor extends(React.Component){
 	constructor(props){
 		super(props);
+		classStore.initEmptyProj();
 		classStore.loadProject(props.params.id);
 	}
 

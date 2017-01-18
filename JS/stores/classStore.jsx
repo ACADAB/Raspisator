@@ -53,23 +53,20 @@ class ClassStore extends EventEmitter{
 
 		let grades = [];
 
-		for (let id in this.projectLessons){
-			grades.push(this.projectLessons[id].grade);
-		}
-
-		grades = grades.getUnique();
-		grades.sort();
-
 		this.colClasses = grades;
 
 
-		this.table = getEmptyTable(6,this.colClasses.length);
+		this.updateTable();
 
 		this.school = {grades:{}, subjects:{}, teachers:{}}
 		this.refreshStoppingHighlight(false);
 
 	}
 
+
+	updateTable(){
+		this.table = getEmptyTable(6,this.colClasses.length);
+	}
 
 	getGrades(){
 		return this.colClasses;
@@ -94,6 +91,20 @@ class ClassStore extends EventEmitter{
 			this.initEmptyProj();
 			this.projectID = project_id;
 			
+			let grades = [];
+			for (let id in this.projectLessons){
+				grades.push(this.projectLessons[id].grade);
+			}
+
+			grades = grades.getUnique();
+			grades.sort();
+
+			this.colClasses = grades;
+
+			this.updateTable();
+
+			this.refreshStoppingHighlight(false);
+
 			this.school = res.data.school;
 
 			console.log('resp ',res.data)
@@ -131,7 +142,9 @@ class ClassStore extends EventEmitter{
 					grade: projLesson.grade,
 					name: projLesson.name,
 					teacher: projLesson.teacher,
-					color: resLesson.color
+					color: resLesson.color,
+					verbose: ('verbose' in resLesson)?resLesson.verbose:false
+					//to be compatible with the old project format 
 				}
 
 				this.setClassByPos(resLesson,lesson,false);
@@ -142,9 +155,9 @@ class ClassStore extends EventEmitter{
 					y : resLesson.y
 				};
 			}
-
+			this.makeVerboseLessons();
 			this.emit('change');
-		}).catch(err=>{console.log(err);});
+		})//.catch(err=>{console.log(err);});
 	}
 
 
@@ -177,19 +190,34 @@ class ClassStore extends EventEmitter{
 					teacher : res.data[i].teacher_id,//res.data[i].name
 				};
 			}
+			this.makeVerboseLessons();
 			return this.projectLessons;
 		}, (e)=>{console.log(e)});
 	}
+	makeVerboseLessons(){
+		let allFound = {};
+		for (let i =0; i< this.unused.length; i++){
+			if (this.unused[i].verbose){
+				allFound[this.unused[i].db_id] = true;
+			}
+		}
+		for(let id in this.projectLessons){
+			if (!(id in allFound)) {
+				this.addPair('','','','yellow',id, true);
+			} 
+		}
+	}
 
-	addPair(grade, name, teacher, color, db_id = -1){
+	addPair(grade, name, teacher, color, db_id = -1, verbose = false){
 		this.maxID += 1;
-		this.unused.push({
+		this.unused.push({//todo: remove unused properties e.g. grade, name, teachers
 			id : this.maxID,
 			db_id : db_id,
 			grade : grade,
 			name : name,
 			teacher : teacher,
-			color : color
+			color : color,
+			verbose : verbose
 		});
 		this.classPosition[this.maxID] = {isUsed : false, index : this.unused.length-1, x : -1, y : -1};		
 		this.emit('change');
@@ -206,10 +234,10 @@ class ClassStore extends EventEmitter{
 
 	getLessons(used = 'unused',grade = undefined){
 		let res = [];
-		if (used != 'used') res = res.concat(this.unused);
-		if (used != 'unused') res = res.concat(this.used);
+		if (used != 'used') res = res.concat(this.unused.map((e,index)=>Object.assign({used:false, unusedIndex: index}, e)));
+		if (used != 'unused') res = res.concat(this.used.map(e=>Object.assign({used:true}, e)));
 
-		if (grade != undefined) res.filterInPlace((e)=>{return e.grade === grade});
+		if (grade != undefined) res.filterInPlace((e)=>{return this.projectLessons[e.db_id].grade === grade});
 
 		return res;
 	}

@@ -22,7 +22,7 @@ export default class ProjectPreferences extends(React.Component){
 		this.grades = [];
 		this.state = {};
 		classStore.loadProject(props.params.id).then(()=>{
-			//fix me! need the "add" button
+			//TODO: add the "add" button
 			for (let grade in classStore.school.grades){
 				this.grades.push(grade);
 			}
@@ -38,7 +38,6 @@ export default class ProjectPreferences extends(React.Component){
 				<ClassList used="all" grade={gradeId} />
 			</div>
 		);
-		console.log(this.grades, gradeLists);
 		return (
 			<div>
 				<div className="grid-wrapper">

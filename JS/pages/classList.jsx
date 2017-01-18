@@ -18,7 +18,9 @@ const cardTarget = {
     },
 
     hover(props, monitor, component) {
-
+        const dragId =  monitor.getItem().id;
+        if (props.grade != undefined && props.grade != classStore.getClassByID(dragId).grade)
+            return;
         const dragID  = monitor.getItem().id;
         if (! classStore.classPosition[dragID].isUsed){
             const dragIndex = monitor.getItem().index;
@@ -72,7 +74,7 @@ const cardTarget = {
             }
 
             // Time to actually perform the action
-            
+            console.log(hoverIndex, dragIndex);
             const hover_db_id = classStore.unused[component.poses[dragIndex]].db_id;
             if (component.poses[dragIndex]< component.poses[hoverIndex]){
                 let i =0;
@@ -124,10 +126,14 @@ export default class ClassList extends(React.Component){
         let unique = {};
         for (let i =0; i< unused.length; i++){
             const les = unused[i];
-            if (les.db_id in unique)
-                unique[les.db_id].count+=1
-            else
-                unique[les.db_id] = {c:les, count: 1, firstPos: i};
+            if (les.db_id in unique){
+                unique[les.db_id].count+=!les.verbose;
+                if (unique[les.db_id].firstPos == -1 || (unique[les.db_id].firstPos != -1 && les.firstPos< unique[les.db_id].firstPos)){
+                    unique[les.db_id].firstPos=(les.used)? -1: les.unusedIndex;
+                }
+            } else{
+                unique[les.db_id] = {c:les, count: 1, firstPos: (les.used)? -1: les.unusedIndex};
+            }
         }
 
 
@@ -136,9 +142,9 @@ export default class ClassList extends(React.Component){
         for (let i =0; i< unused.length; i++){
             const db_id = unused[i].db_id;
             const {c, count, firstPos} = unique[db_id];
-            if (firstPos!=i) continue;
+            if ( !unused[i].used && firstPos!=unused[i].unusedIndex) continue;
             classes.push(
-                    <Class name={c.name} id={c.id} index={classes.length} color={c.color} teacher={c.teacher} grade={c.grade} amount={count} key={c.id}/>
+                    <Class db_id={db_id} index={classes.length} color={c.color} id={c.id} amount={count} key={c.id}/>
                 )
             poses.push(firstPos);
         }

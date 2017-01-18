@@ -116,7 +116,7 @@ export default class ClassSpace extends(React.Component){
       }}>
 					
 					{
-					(id != -1) && <Class name={c.name} id={c.id} index={c.id} color={c.color} teacher={c.teacher} grade={c.grade} borderColor={(!overlay)?highlightColor:''}/>
+					(id != -1) && <Class id={c.id} index={c.id} db_id={c.db_id} color={c.color} borderColor={(!overlay)?highlightColor:''}/>
 					}
 					{isChanging&& canDrop && isOver && this.renderOverlay('yellow')}			
 					{isChanging&& isHighlighted && overlay && this.renderOverlay(highlightColor)}			

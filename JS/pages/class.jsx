@@ -12,7 +12,7 @@ const cardSource = {
 		ClassActions.startEditMode(props.id);
 		return {
 	      id: props.id,
-	      index: props.index
+	      index: props.index,
 	    };
  	},
  	endDrag(props) {
@@ -29,9 +29,14 @@ export default class Class extends(React.Component){
 	constructor(props){
 		super(props);
 		this.handleClick = this.handleClick.bind(this);
-		const grade = classStore.school.grades[props.grade];
-		const subject = classStore.school.subjects[props.name];
-		const teacher = classStore.school.teachers[props.teacher];
+
+
+		const db_id = props.db_id;
+			
+		const lesson = classStore.projectLessons[db_id];
+		const grade = classStore.school.grades[lesson.grade];
+		const subject = classStore.school.subjects[lesson.name];
+		const teacher = classStore.school.teachers[lesson.teacher];
 		this.grade = grade.grade_number + grade.grade_name;
 		this.subject = subject.name;
 		this.teacher = teacher.name;
