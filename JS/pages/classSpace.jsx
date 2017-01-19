@@ -61,11 +61,13 @@ export default class ClassSpace extends(React.Component){
 	}
 
 	componentWillMount(){
-		classStore.on('change', this.rerender)
+		classStore.on('change', this.rerender);
+		classStore.on('changeHighlight', this.rerender);
 	}
 
 	componentWillUnmount(){
 		classStore.removeListener('change', this.rerender );
+		classStore.removeListener('changeHighlight', this.rerender );
 	}
 
 

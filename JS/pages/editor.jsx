@@ -10,7 +10,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 //import { default as TouchBackend } from 'react-dnd-touch-backend';
 import classStore from '../stores/classStore.jsx';
-import { Button } from 'react-bootstrap'
+import { Button, Glyphicon } from 'react-bootstrap'
 
 import AddPair from './addPair.jsx'
 
@@ -29,7 +29,7 @@ export default class Editor extends(React.Component){
 			<div className="editor">
 				<div className="class-list margined">
 					<AddPair/>
-					<ClassList used="unused"/>
+					<ClassList used="unused" hideVerbose/>
 				</div>
 				<Col md={16} xs={16}>
 					<Grid/>

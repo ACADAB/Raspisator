@@ -43,7 +43,7 @@ class ClassStore extends EventEmitter{
 
 	initEmptyProj(){
 		
-
+		this.removed = {};
 		this.unused = [];
 		this.used = [];
 		this.classPosition = {};
@@ -107,13 +107,14 @@ class ClassStore extends EventEmitter{
 
 			this.school = res.data.school;
 
+			this.schoolID = res.data.project.school_id;
+
 			console.log('resp ',res.data)
 			if ((''+res.data.project.project_data).toLowerCase() == 'null') {
 				this.emit('change');
 				console.log('null data');
 				return;
 			}
-			this.schoolID = res.data.project.school_id;
 			const data = JSON.parse(res.data.project.project_data);
 			const usedLen = data.lessons.filter((lesson)=>lesson.isUsed).length;
 
@@ -265,7 +266,7 @@ class ClassStore extends EventEmitter{
 				}
 			}
 		}
-		if (change) this.emit('change');
+		if (change) this.emit('changeHighlight');
 	}
 
 	setCanDrop(x,y,isConflict, highlight){
@@ -275,12 +276,29 @@ class ClassStore extends EventEmitter{
 
 			if (curPos.isUsed) this.stoppingHighlight.table[curPos.x][curPos.y].highlight(Highlight.CURRENT);
 		}
-		if (highlight) this.emit('change');
+		if (highlight) this.emit('changeHighlight');
 		return !isConflict;
 	}
 
-	canDrop(x, y, highlight = false, rec= true, interID=-1, first=false){
+	deleteById(id){
+		const pos = this.classPosition[id];
+		if (pos.used){
+			this.setToUnused(id, false);
+			this.unused.splice(-1);
+		
+		}
+		else {
+			for (let i = pos.index+1; i < this.unused.length; i++){
+				this.classPosition[this.unused[i].id].index = i-1;
+			}
+			this.unused.splice(pos.index);
+		}
+		delete this.classPosition[id];
+		this.removed[id] = true;
+		this.emit('change');
+	}
 
+	canDrop(x, y, highlight = false, rec= true, interID=-1, first=false){
 		if (!highlight && !first){
 			return !this.stoppingHighlight.table[x][y].hasHighlight(Highlight.UNAVAILABLE);
 		}
@@ -328,11 +346,13 @@ class ClassStore extends EventEmitter{
 	save(){
 		let lessons = [];
 		for(let i=0; i<= this.maxID; i++){
+			if (i in this.removed) continue;
 			let lesson = this.classPosition[i];
 			const classDesc = this.getClassByPos(lesson);
 
 			lesson.db_id = classDesc.db_id;
 			lesson.color = classDesc.color;
+			lesson.verbose = classDesc.verbose;
 
 			lessons.push(lesson);
 		}
@@ -439,7 +459,7 @@ class ClassStore extends EventEmitter{
 			}
 		}
 
-		this.emit("change");
+		this.emit("changeHighlight");
 	}
 
 	stopEditing(){
@@ -448,7 +468,7 @@ class ClassStore extends EventEmitter{
 
 		this.refreshStoppingHighlight();
 
-		this.emit('change');
+		this.emit('changeHighlight');
 	}
 
 	//sets class with id=id to the grid with coordinates x,y
@@ -478,7 +498,7 @@ class ClassStore extends EventEmitter{
 		this.emit('change');
 	}
 	
-	setToUnused(id){
+	setToUnused(id, change = true){
 		const pos = this.classPosition[id];
 
 		if (pos.isUsed){
@@ -491,7 +511,7 @@ class ClassStore extends EventEmitter{
 
 			this.unused.push(this.used[pos.index]);
 			this.used.splice(pos.index,1);
-			this.emit('change');
+			if (change) this.emit('change');
 		}
 	}
 

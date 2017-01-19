@@ -74,7 +74,7 @@ const cardTarget = {
             }
 
             // Time to actually perform the action
-            console.log(hoverIndex, dragIndex);
+            /*
             const hover_db_id = classStore.unused[component.poses[dragIndex]].db_id;
             if (component.poses[dragIndex]< component.poses[hoverIndex]){
                 let i =0;
@@ -89,7 +89,8 @@ const cardTarget = {
             } else {
                 ClassActions.swapByIndex(component.poses[dragIndex], component.poses[hoverIndex],false);
             }
-            
+            */
+            ClassActions.swapByIndex(component.poses[dragIndex], component.poses[hoverIndex],false);
             monitor.getItem().index = hoverIndex;
             //console.log(this);
         }
@@ -117,22 +118,24 @@ export default class ClassList extends(React.Component){
 		classStore.removeListener('change', this.rerender );
 	}
 
-	render(){
-        const { grade, used } = this.props;
-
+	render(){//TODO: optimization store the counts and verbose lessons in the unique arrays
+        const { grade, used, hideVerbose} = this.props;
 
 		const unused = classStore.getLessons(used,grade);
 
         let unique = {};
         for (let i =0; i< unused.length; i++){
             const les = unused[i];
+            if(hideVerbose && les.verbose){ 
+                continue;
+            };
             if (les.db_id in unique){
                 unique[les.db_id].count+=!les.verbose;
                 if (unique[les.db_id].firstPos == -1 || (unique[les.db_id].firstPos != -1 && les.firstPos< unique[les.db_id].firstPos)){
                     unique[les.db_id].firstPos=(les.used)? -1: les.unusedIndex;
                 }
             } else{
-                unique[les.db_id] = {c:les, count: 1, firstPos: (les.used)? -1: les.unusedIndex};
+                unique[les.db_id] = {c:les, count: 0+!les.verbose, firstPos: (les.used)? -1: les.unusedIndex};
             }
         }
 
@@ -141,12 +144,20 @@ export default class ClassList extends(React.Component){
         let poses = []
         for (let i =0; i< unused.length; i++){
             const db_id = unused[i].db_id;
+            if (!(db_id in unique)) continue;
             const {c, count, firstPos} = unique[db_id];
-            if ( !unused[i].used && firstPos!=unused[i].unusedIndex) continue;
+
+            //console.log(c, unused[i]);
+
+            // we want to show only stacked and sorted by verbose
+            if ( !unused[i].verbose) continue;
+            
+            //if ( unused[i].used || firstPos!=unused[i].unusedIndex) continue;
             classes.push(
-                    <Class db_id={db_id} index={classes.length} color={c.color} id={c.id} amount={count} key={c.id}/>
+                    <Class db_id={db_id} index={classes.length} color={c.color} id={c.id} amount={count} showAll={!hideVerbose} key={c.id}/>
                 )
-            poses.push(firstPos);
+            //poses.push(firstPos);
+            poses.push(unused[i].unusedIndex);
         }
 		/*const classes = unused.map((c,index) =>
 				<Class name={c.name} id={c.id} index={index} color={c.color} teacher={c.teacher} grade={c.grade} key={c.id}/>
@@ -154,7 +165,6 @@ export default class ClassList extends(React.Component){
         */
 
         this.poses = poses;
-
 		const {connectDropTarget} = this.props;
 		return connectDropTarget( 
                 <div className="class-list">

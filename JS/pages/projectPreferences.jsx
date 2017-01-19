@@ -4,7 +4,7 @@ import ClassList from './classList.jsx';
 import classStore from '../stores/classStore.jsx';
 import {Col,Row} from 'react-bootstrap';
 import * as ClassActions from '../actions/classActions.jsx';
-
+import {Link} from 'react-router';
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -45,6 +45,7 @@ export default class ProjectPreferences extends(React.Component){
 					<ItemPreview key="__preview" name="Item" />
 				</div>
 				<Button className="pull-right" onClick={ClassActions.save}> Save </ Button>
+				<Link to={"editor/"+this.props.params.id}>Редактирование расписания</Link>
 			</div>
 			);//
 	}

@@ -44,7 +44,7 @@ export default class Login extends(React.Component){
 					</FormGroup>
 					<FormGroup>
 						<Col mdOffset={3}>
-							<Button bsStyle='success' type='button' className="btn" pullRight={true} onClick={e => this.handleSubmit(e)}>OК</Button>
+							<Button bsStyle='success' type='button' className="btn" onClick={e => this.handleSubmit(e)}>OК</Button>
 						</Col>
 					</FormGroup>
 					
