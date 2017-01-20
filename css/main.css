@@ -135,12 +135,18 @@ ul{
 	height: 80vh;
 	width:200px;
 	border-radius: 5px;
-	float:left;
 }
 
 
-.grid-wrapper{
+.class-list-container{
 	overflow-x: auto;
+	overflow-y: hidden;
+	white-space:nowrap
+}
+
+.class-list-container > *{
+	display:inline-block;
+	vertical-align:top;
 }
 
 .preview{
@@ -164,4 +170,18 @@ table{
 	-khtml-user-select: none;
 	-webkit-user-select: none;
 	user-select: none;
+}
+
+.save-btn{
+	position: fixed;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	width: 100px;
+	height: 40px;
+	top: calc(95vh - 100px);
+	left: calc(95vw - 100px);
+
+}
+.save-btn-hover{
+	box-shadow: 0 0 10px rgba(96, 173, 1,1);
+	background-color: rgb(96, 173, 1);
 }

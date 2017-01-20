@@ -77,7 +77,6 @@ class USER
       try
        {
           $result = [];
-          echo($data);
           $stmt = $this->db->prepare("UPDATE projects SET project_data = :pd WHERE id = :pid");
           $stmt->bindparam(":pid", $id, PDO::PARAM_INT);
           $stmt->bindparam(":pd", $data);

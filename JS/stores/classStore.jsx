@@ -209,8 +209,18 @@ class ClassStore extends EventEmitter{
 		}
 	}
 
+	removeUnused(db_id){
+		for (let i=0; i< this.unused.length; i++){
+			if (this.unused[i].db_id === db_id && !this.unused[i].verbose){
+				this.deleteById(this.unused[i].id);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	addPair(grade, name, teacher, color, db_id = -1, verbose = false){
-		this.maxID += 1;
+		this.maxID += 1;//FIX we need grade to be correct
 		this.unused.push({//todo: remove unused properties e.g. grade, name, teachers
 			id : this.maxID,
 			db_id : db_id,
@@ -284,14 +294,14 @@ class ClassStore extends EventEmitter{
 		const pos = this.classPosition[id];
 		if (pos.used){
 			this.setToUnused(id, false);
-			this.unused.splice(-1);
+			this.unused.splice(-1,1);
 		
 		}
 		else {
 			for (let i = pos.index+1; i < this.unused.length; i++){
 				this.classPosition[this.unused[i].id].index = i-1;
 			}
-			this.unused.splice(pos.index);
+			this.unused.splice(pos.index,1);
 		}
 		delete this.classPosition[id];
 		this.removed[id] = true;
