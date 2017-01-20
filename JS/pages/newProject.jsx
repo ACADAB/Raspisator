@@ -95,7 +95,7 @@ export default class NewProject extends(React.Component){
 					</FormGroup>
 					<FormGroup>
 						<ControlLabel>Уроков в день</ControlLabel>
-						<FormControl type="text" name="lessons_per_day"/>
+						<FormControl type="number" name="lessons_per_day"/>
 					</FormGroup>
 					<Button type='button'  onClick={e => this.handleSubmit(e)}>Создать</Button>
 					{this.renderAlert(this.state.alertMessage)}

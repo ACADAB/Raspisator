@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4deb1+deb.cihar.com~xenial.1
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2
+-- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Янв 16 2017 г., 21:41
+-- Время создания: Янв 20 2017 г., 17:46
 -- Версия сервера: 5.7.16-0ubuntu0.16.04.1
--- Версия PHP: 7.0.8-0ubuntu0.16.04.3
+-- Версия PHP: 7.0.13-1~dotdeb+8.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- База данных: `dblogin`
 --
-CREATE DATABASE IF NOT EXISTS `dblogin` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `dblogin`;
 
 -- --------------------------------------------------------
 
@@ -68,6 +66,7 @@ INSERT INTO `lessons` (`id`, `subject_id`, `teacher_id`, `grade_id`, `school_id`
 (2, 2, 27, 1, 1),
 (3, 1, 28, 2, 1),
 (4, 2, 28, 4, 1),
+(5, 1, 1, 3, 1),
 (6, 2, 28, 3, 1);
 
 -- --------------------------------------------------------
@@ -80,24 +79,29 @@ CREATE TABLE `projects` (
   `id` int(10) UNSIGNED NOT NULL,
   `owner_id` int(10) UNSIGNED NOT NULL,
   `project_name` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `project_data` json DEFAULT NULL,
+  `project_data` int(11) DEFAULT NULL,
   `school_id` int(10) UNSIGNED DEFAULT NULL,
   `start` date DEFAULT NULL,
   `finish` date DEFAULT NULL,
-  `creation_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `creation_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lessons_per_day` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Дамп данных таблицы `projects`
 --
 
-INSERT INTO `projects` (`id`, `owner_id`, `project_name`, `project_data`, `school_id`, `start`, `finish`, `creation_time`) VALUES
-(1, 27, 'project1(Е классы)', NULL, 1, NULL, NULL, '2017-01-16 17:43:02'),
-(2, 30, 'project2(Е классы)', '{"table": {"table": [[-1, -1, -1, -1], [-1, -1, -1, -1], [0, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1]], "width": 6, "height": 4}, "grades": ["1", "2", "3", "4"], "lessons": [{"x": 2, "y": 0, "color": "red", "db_id": "2", "index": 0, "isUsed": true}, {"x": -1, "y": -1, "color": "red", "db_id": "2", "index": 0, "isUsed": false}, {"x": -1, "y": -1, "color": "red", "db_id": "2", "index": 1, "isUsed": false}, {"x": -1, "y": -1, "color": "yellow", "db_id": "3", "index": 2, "isUsed": false}, {"x": -1, "y": -1, "color": "yellow", "db_id": "3", "index": 3, "isUsed": false}, {"x": -1, "y": -1, "color": "blue", "db_id": "6", "index": 4, "isUsed": false}, {"x": -1, "y": -1, "color": "blue", "db_id": "6", "index": 5, "isUsed": false}, {"x": -1, "y": -1, "color": "yellow", "db_id": "1", "index": 6, "isUsed": false}]}', 1, NULL, NULL, '2017-01-16 17:43:02'),
-(4, 27, 'аощльдва', NULL, 1, NULL, NULL, '2017-01-16 17:43:02'),
-(5, 27, 'аощльдва', NULL, 1, NULL, NULL, '2017-01-16 17:43:02'),
-(6, 27, 'аощльдва', NULL, 1, '2017-10-11', '2017-11-11', '2017-01-16 17:43:02'),
-(7, 27, 'аощлsasasasьдва', NULL, 1, '2017-10-11', '2017-11-11', '2017-01-16 17:43:02');
+INSERT INTO `projects` (`id`, `owner_id`, `project_name`, `project_data`, `school_id`, `start`, `finish`, `creation_time`, `lessons_per_day`) VALUES
+(1, 27, 'project1(Е классы)', NULL, 1, NULL, NULL, '2017-01-16 17:43:02', 5),
+(2, 30, 'project2(Е классы)', NULL, 1, NULL, NULL, '2017-01-16 17:43:02', 6),
+(4, 27, 'аощльдва', NULL, 1, NULL, NULL, '2017-01-16 17:43:02', 7),
+(5, 27, 'аощльдва', NULL, 1, NULL, NULL, '2017-01-16 17:43:02', 5),
+(6, 27, 'аощльдва', NULL, 1, '2017-10-11', '2017-11-11', '2017-01-16 17:43:02', 6),
+(7, 27, 'аощлsasasasьдва', NULL, 1, '2017-10-11', '2017-11-11', '2017-01-16 17:43:02', 5),
+(8, 27, 'lalalalalal', NULL, 1, '2017-01-23', '2017-01-28', '2017-01-20 16:32:02', 6),
+(9, 27, 'аощльдва', NULL, 1, '2017-10-11', '2017-11-11', '2017-01-20 16:50:05', 17),
+(10, 27, 'lol', NULL, 1, '2017-01-11', '2017-01-21', '2017-01-20 17:03:09', 123),
+(11, 27, 'sukscsc', NULL, 1, '2017-01-01', '2017-01-03', '2017-01-20 17:43:46', 139);
 
 -- --------------------------------------------------------
 
@@ -290,12 +294,12 @@ ALTER TABLE `lessons`
 -- AUTO_INCREMENT для таблицы `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT для таблицы `role_user_school_relation`
 --
 ALTER TABLE `role_user_school_relation`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT для таблицы `schools`
 --

@@ -41,7 +41,8 @@ export default class Layout extends(React.Component){
 			if (currentPath == undefined) currentPath = 'users';
 			menu = [
 				<NavItem eventKey="home" key={0}>Home</NavItem>,
-				<NavItem eventKey="projects" key={1}>Projects</NavItem>
+				<NavItem eventKey="projects" key={1}>Projects</NavItem>,
+				<NavItem eventKey="schedule" key={2}>Schedule</NavItem>
 			];
 			login = [
 				<NavItem key={0}>Hello, {this.state.account.name}</NavItem>,
