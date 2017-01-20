@@ -1,15 +1,21 @@
 import openpyxl
+import datetime
 import sys
 import requests
 from openpyxl.styles import colors
 from openpyxl.styles import Font, Color
-import simplejson as json
+import json as json
+days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat']
 r = requests.get("http://localhost/var/www/html/Raspisator/API/getProject.php?project_id="+sys.argv[1]+"&return_school_data="+sys.argv[2])
 r = json.loads(r.text)
+lpd = int(r['project']['lessons_per_day'])
+startdate = datetime.datetime.strptime(r['project']['start'], '%Y-%m-%d')
+finishdate = datetime.datetime.strptime(r['project']['finish'], '%Y-%m-%d')
+print(startdate.weekday())
 les = requests.get("http://localhost/var/www/html/Raspisator/API/getLessons.php?project_id="+sys.argv[1])
 les = json.loads(les.text)
 les = {i['id'] : i for i in les}
-print(les)
+print(lpd)
 grades = r['school']['grades']
 teachers = r['school']['teachers']
 subjects = r['school']['subjects']
@@ -18,15 +24,19 @@ a = json.loads('{"table": {"table": [[-1, -1, -1, -1], [0, 4, -1, -1], [-1, -1, 
 wb = openpyxl.workbook.Workbook()
 ws = wb.active
 for i in range(len(a['grades'])):
-     ws[str(unichr(ord('A')+i))+'1'] = grades[a['grades'][i]]['grade_number'] + grades[a['grades'][i]]['grade_name']
-     t = ws[str(unichr(ord('A')+i))+'1']
+     ws[str(unichr(ord('A')+i+2))+'1'] = grades[a['grades'][i]]['grade_number'] + grades[a['grades'][i]]['grade_name']
+     t = ws[str(unichr(ord('A')+i+2))+'1']
      t.font = Font(color=colors.BLACK, bold=True)
 for i in range(len(a['table']['table'])):
      for j in range(len(a['table']['table'][i])):
+          if(i % lpd == 0 and j == 0):
+               for k in range(lpd):
+                    ws['B'+str(lpd*i+k+2)] = k+1
+               ws['A'+str(i+2)] = days[(startdate+datetime.timedelta(days=i//lpd)).weekday()]
           if(a['table']['table'][i][j] != -1):
                temp = a['lessons'][a['table']['table'][i][j]]['db_id']
                print(temp)
                st = ""
                st = st + subjects[les[temp]['subject_id']]['name'] + ' (' + teachers[les[temp]['teacher_id']]['name'] + ')'
-               ws[str(unichr(ord('A')+j))+str(i+2)] = st
+               ws[str(unichr(ord('A')+j+2))+str(i+1+i//lpd)] = st
 wb.save("ex.xlsx")
