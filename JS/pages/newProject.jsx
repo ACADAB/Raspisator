@@ -12,7 +12,8 @@ export default class NewProject extends(React.Component){
 			p_name:'',
 			s_id:-1,
 			start:'',
-			finish:''
+			finish:'',
+			lessons_per_day:'',
 		}
 		this.updateFormData = FormData.updateFormData.bind(this);
 		this.setFormData = FormData.setFormData.bind(this);
@@ -30,6 +31,7 @@ export default class NewProject extends(React.Component){
 		if (data.p_name == '') return 'Вы должны выбрать проект';
 		if (data.start == '') return 'Вы должны указать дату начала';
 		if (data.finish == '') return 'Вы должны указать дату конца';
+		if (data.lessons_per_day == '') return 'Вы должны указать количество уроков в день';
 		return false;
 	}
 
@@ -90,6 +92,10 @@ export default class NewProject extends(React.Component){
 					<FormGroup>
 						<ControlLabel>Дата конца</ControlLabel>
 						<DatePicker onChange={(e)=>{this.formData.finish = e.slice(0,10)}} name='finish'/>
+					</FormGroup>
+					<FormGroup>
+						<ControlLabel>Уроков в день</ControlLabel>
+						<FormControl type="text" name="lessons_per_day"/>
 					</FormGroup>
 					<Button type='button'  onClick={e => this.handleSubmit(e)}>Создать</Button>
 					{this.renderAlert(this.state.alertMessage)}

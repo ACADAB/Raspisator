@@ -370,15 +370,16 @@ class USER
            return ['error'=>$e->getMessage()];
        }
    }
-   public function add_project($p_name, $s_id, $start, $finish)
+   public function add_project($p_name, $s_id, $start, $finish, $lessons_per_day)
    {
        try
 	   {
            if(isset($_SESSION['user_session']))
            {
-               $stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name, school_id, start, finish) VALUES (:oid, :pr_name, :s_id, :start, :finish)");
+               $stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name, school_id, start, finish, lessons_per_day) VALUES (:oid, :pr_name, :s_id, :start, :finish, :lpd)");
 	           $stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
 			   $stmt->bindparam(":s_id", $s_id, PDO::PARAM_INT);
+			   $stmt->bindparam(":lpd", $lessons_per_day, PDO::PARAM_INT);
                $stmt->bindparam(":pr_name", $p_name);
 			   $stmt->bindparam(":start", $start);
 			   $stmt->bindparam(":finish", $finish);
