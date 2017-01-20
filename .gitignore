@@ -1,0 +1,4 @@
+node_modules/
+db_connection.ini
+JS/settings.jsx
+JS/scripts.min.js
