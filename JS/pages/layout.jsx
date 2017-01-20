@@ -1,12 +1,14 @@
 import React from "react";
 import request from "../API.jsx";
 import AccountStore from '../stores/accountStore.jsx';
+import Login from './login.jsx'
 
 import {Nav, NavItem, Grid, Row, Navbar} from 'react-bootstrap';
 
 export default class Layout extends(React.Component){
 	constructor(props){
 		super(props);
+		this.handleSelect = this.handleSelect.bind(this);
 		this.state = {
 			account: AccountStore.getAccount()
 		};
@@ -23,7 +25,14 @@ export default class Layout extends(React.Component){
 		AccountStore.updateAccount();
 	}
 
+	openLoginDialog(){
+		this.loginDialog.open();
+	}
+	
 	handleSelect(to){
+		if (to === 'login'){
+			this.openLoginDialog();
+		} else
 		AccountStore.redirect(to);
 	}
 
@@ -62,7 +71,7 @@ export default class Layout extends(React.Component){
 
 		return (	
 				<div>
-
+					<Login ref={(ref)=>{this.loginDialog = ref}}/>
 					<Grid>
 						<Row>
 							<Navbar>
