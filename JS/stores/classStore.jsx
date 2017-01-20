@@ -204,7 +204,7 @@ class ClassStore extends EventEmitter{
 		}
 		for(let id in this.projectLessons){
 			if (!(id in allFound)) {
-				this.addPair('','','','yellow',id, true);
+				this.addPair(this.projectLessons[id].grade,'','','yellow',id, true);
 			} 
 		}
 	}
@@ -353,6 +353,7 @@ class ClassStore extends EventEmitter{
 			lesson.db_id = classDesc.db_id;
 			lesson.color = classDesc.color;
 			lesson.verbose = classDesc.verbose;
+
 
 			lessons.push(lesson);
 		}
