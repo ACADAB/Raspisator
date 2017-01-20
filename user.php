@@ -207,7 +207,7 @@ class USER
       try
        {
 		  $result = [];
-          $stmt = $this->db->prepare("SELECT schools.name, schools.id FROM schools JOIN role_user_school_relation 
+          $stmt = $this->db->prepare("SELECT DISTINCT schools.name, schools.id FROM schools JOIN role_user_school_relation 
 		  ON role_user_school_relation.school_id = schools.id and role_user_school_relation.user_id = :oid");
 		  $stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
 		  $stmt->execute();
