@@ -58,26 +58,38 @@ export default class Class extends(React.Component){
 	}
 
 
-	renderCounter(){
-		return(
-			<Glyphicon onClick={e=>{console.log(e)}} glyph="chevron-right"/>
-		);
-	}
-
-	render(){
-		const { teacher, name, color, amount, renderCounter, showAll, isDragging,borderColor, id, connectDragSource} = this.props;
+	renderCounter(buttons){
+		const { amount, showAll,isDragging } = this.props;
 		let isAmount = false;
 		if (amount && (showAll || amount>1))
 			isAmount = true;
-		const DOMclasses =color + ((borderColor!='')?(' border-' + borderColor):'') + ' class-box class' + ((isDragging && !(isAmount && amount>1))?' dragging': '');
+		if (buttons)
+			return(
+				<div>
+					<Glyphicon onClick={e=>{console.log(e)}} glyph="chevron-left"/>
+					{isAmount && (isDragging?(amount-1):amount) }
+					<Glyphicon onClick={e=>{console.log(e)}} glyph="chevron-right"/>
+				</div>
+			)
+		else {
+			return(
+				<div>
+					{isAmount && ','+(isDragging?(amount-1):amount) }
+				</div>
+				)
+		}
+	}
 
+	render(){
+		const { teacher, name, color ,isDragging,  renderCounter,borderColor, id, connectDragSource} = this.props;
+		const DOMclasses =color + ((borderColor!='')?(' border-' + borderColor):'') + ' class-box class' + ((isDragging && !(isAmount && amount>1))?' dragging': '');
 		return connectDragSource(
 			<div className={DOMclasses} onClick={this.handleClick}>
 				{this.grade}, 
 				{this.teacher}, 
 				{this.subject}
-				{isAmount && ','+(isDragging?(amount-1):amount) }
-				{renderCounter && this.renderCounter}
+				
+				{this.renderCounter(renderCounter)}
 			</div>
 			);
 	}
