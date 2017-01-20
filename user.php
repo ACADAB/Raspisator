@@ -163,7 +163,7 @@ class USER
       try
        {
       	$result = [];
-          $stmt = $this->db->prepare("SELECT project_name, project_data, school_id, owner_id, start, finish, creation_time FROM projects WHERE id = :id");
+          $stmt = $this->db->prepare("SELECT project_name, project_data, school_id, owner_id, start, finish, creation_time, lessons_per_day FROM projects WHERE id = :id");
           $stmt->bindparam(":id", $current_project_id, PDO::PARAM_INT);
           $stmt->execute();
           $row = $stmt->fetch(PDO::FETCH_ASSOC);
