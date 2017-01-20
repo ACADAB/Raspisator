@@ -90,6 +90,7 @@ const cardTarget = {
                 ClassActions.swapByIndex(component.poses[dragIndex], component.poses[hoverIndex],false);
             }
             */
+            console.log(dragIndex, hoverIndex);
             ClassActions.swapByIndex(component.poses[dragIndex], component.poses[hoverIndex],false);
             monitor.getItem().index = hoverIndex;
             //console.log(this);
@@ -127,6 +128,7 @@ export default class ClassList extends(React.Component){
         for (let i =0; i< unused.length; i++){
             const les = unused[i];
             if(hideVerbose && les.verbose){ 
+                console.log('conti');
                 continue;
             };
             if (les.db_id in unique){
@@ -135,10 +137,12 @@ export default class ClassList extends(React.Component){
                     unique[les.db_id].firstPos=(les.used)? -1: les.unusedIndex;
                 }
             } else{
+                console.log(les);
                 unique[les.db_id] = {c:les, count: 0+!les.verbose, firstPos: (les.used)? -1: les.unusedIndex};
             }
         }
 
+        console.log(unique);
 
         let classes = [];
         let poses = []
