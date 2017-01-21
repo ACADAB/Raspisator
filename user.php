@@ -163,7 +163,7 @@ class USER
       try
        {
       	$result = [];
-          $stmt = $this->db->prepare("SELECT project_name, project_data, school_id, owner_id, start, finish, creation_time, lessons_per_day FROM projects WHERE id = :id");
+          $stmt = $this->db->prepare("SELECT id, project_name, project_data, school_id, owner_id, start, finish, creation_time, lessons_per_day FROM projects WHERE id = :id");
           $stmt->bindparam(":id", $current_project_id, PDO::PARAM_INT);
           $stmt->execute();
           $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -249,12 +249,15 @@ class USER
           http_response_code(400);
           echo $e->getMessage();
 		  return [];
-
+;
            
        }
    }
-
-
+   public function save($p_id)
+   {
+      $command = escapeshellcmd('python /var/www/html/Raspisator/saveToXcell.py '. $p_id);
+	  shell_exec($command);
+   }
    public function get_school_lessons($school_id)
    {
       try
