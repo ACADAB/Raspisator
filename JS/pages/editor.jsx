@@ -31,7 +31,7 @@ export default class Editor extends(React.Component){
 				<Button className="btn-success save-btn" onClick={ClassActions.save}> Save </ Button>
 				<div className="class-list-container">
 					<div className="class-list margined">
-						<AddPair/>
+						
 						<ClassList used="unused" hideVerbose/>
 					</div>
 					<Col md={16} xs={16}>

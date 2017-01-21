@@ -75,17 +75,17 @@ export default class Class extends(React.Component){
 		
 		if (buttons)
 			return(
-				<div>
+				<strong className="pull-right">
 					<Glyphicon onClick={this.removeCopy} glyph="chevron-left"/>
 					{isDragging?(''+(amount-1)):''+amount }
 					<Glyphicon onClick={this.addCopy} glyph="chevron-right"/>
-				</div>
+				</strong>
 			)
 		else {
 			return(
-				<div>
-					{isAmount && ','+(isDragging?(amount-1):amount) }
-				</div>
+				<strong className="pull-right">
+					{isAmount && (isDragging?(amount-1):amount) }
+				</strong>
 				)
 		}
 	}

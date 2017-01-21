@@ -6,12 +6,16 @@ import request from '../API.jsx';
 
 window.hig = Highlight
 
-//generates a matrix, filled with -1 of size x*y
+//generates a matrix, filled with val of size x*y
 function getEmptyTable(x,y, val = -1){
 	var a = [], b;
 	while (a.push(b = []) <= x) while (b.push((typeof(val))=="function"? val() : val) < y);
 	a.pop();
 	return {width : x, height : y, table : a}
+}
+
+function daydiff(first, second) {
+    return Math.round((second-first)/(1000*60*60*24));
 }
 
 class ClassStore extends EventEmitter{
@@ -26,7 +30,7 @@ class ClassStore extends EventEmitter{
 
 		this.setable = true;
 
-		this.setMaxListeners(100);
+		this.setMaxListeners(1000);
 		this.save = this.save.bind(this);
 
 		this.initEmptyProj();
@@ -54,9 +58,12 @@ class ClassStore extends EventEmitter{
 		let grades = [];
 
 		this.colClasses = grades;
-
+		
+		this.lpd = 1;
+		this.startDate = new Date();
 
 		this.updateTable();
+
 
 		this.school = {grades:{}, subjects:{}, teachers:{}}
 		this.refreshStoppingHighlight(false);
@@ -64,8 +71,8 @@ class ClassStore extends EventEmitter{
 	}
 
 
-	updateTable(){
-		this.table = getEmptyTable(6,this.colClasses.length);
+	updateTable(length=1){
+		this.table = getEmptyTable(length,this.colClasses.length);
 	}
 
 	getGrades(){
@@ -79,6 +86,12 @@ class ClassStore extends EventEmitter{
 	getGradeName(id, delim=''){
 		const grade = this.school.grades[id];
 		return grade.grade_number+delim+ grade.grade_name;
+	}
+
+	fillTableFromData(newTable){
+		for (let x=0; x< Math.min(newTable.width, this.table.width); x++)
+			for (let y=0; y< Math.min(newTable.height, this.table.height); y++)
+				this.table.table[x][y] = newTable.table[x][y];
 	}
 
 	loadProject(project_id){
@@ -101,7 +114,13 @@ class ClassStore extends EventEmitter{
 
 			this.colClasses = grades;
 
-			this.updateTable();
+			this.startDate = new Date( res.data.project.start);
+			const numDays = daydiff(this.startDate, new Date(res.data.project.finish))+1;
+			
+			this.lpd = parseInt(res.data.project.lessons_per_day);
+
+
+			this.updateTable(this.lpd*numDays);
 
 			this.refreshStoppingHighlight(false);
 
@@ -125,7 +144,7 @@ class ClassStore extends EventEmitter{
 			this.refreshStoppingHighlight(false);
 			
 
-			this.table = data.table;
+			this.fillTableFromData(data.table);
 
 
 			const dataLen = data.lessons.length;

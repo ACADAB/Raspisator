@@ -53,6 +53,7 @@ export default class Login extends(React.Component){
 	
 	render(){
 		let a =0;
+		console.log('alert:',this.state.alertMessage);
 		return (//TODO: rewrite it with react-bootstrap
 			<div>
 				<Modal show={this.state.showModal} onHide={this.close}>

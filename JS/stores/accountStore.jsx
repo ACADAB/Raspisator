@@ -60,7 +60,7 @@ class AccountStore extends EventEmitter{
 				request('login', action.data, 'post').then(res=>{
 					this.setAccountFromResponse(res);
 					this.redirectToIndex();
-				}).catch(e=>console.log(e));
+				}).catch(this.setGuest());
 				break;
 			case "LOGOUT":
 				request('logout').then(res=>{

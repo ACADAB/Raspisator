@@ -1,7 +1,7 @@
 
 .class-box{
 	width:150px;
-	height:40px;
+	height:30px;
 
 	-webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
@@ -170,6 +170,18 @@ table{
 	-khtml-user-select: none;
 	-webkit-user-select: none;
 	user-select: none;
+}
+
+.editor td {
+	padding: 0px !important;
+}
+
+.table-head{
+	background-color: #d69c46;
+	/*position: fixed;*/
+}
+.table-head > th {
+	padding:3px;
 }
 
 .save-btn{

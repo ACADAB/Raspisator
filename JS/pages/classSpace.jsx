@@ -53,11 +53,15 @@ export default class ClassSpace extends(React.Component){
 		this.rerender = this.rerender.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 		this.handleHover = this.handleHover.bind(this);
+
+		this.oldID = -1;
+		this.oldHighlight = Highlight.toColor[Highlight.NORMAL];
 	}
 
 
 	rerender(){
-		this.setState({});
+		if (this.oldID != this.getCurrentId() || this.oldHighlight != this.getCurrentHighlight()[0])
+			this.setState({});
 	}
 
 	componentWillMount(){
@@ -86,24 +90,40 @@ export default class ClassSpace extends(React.Component){
 	
 	}
 
+	getCurrentId(){
+		const {x,y} = this.props;
+		return classStore.table.table[x][y];
+	}
+
+	getCurrentHighlight(){
+		const {x,y} = this.props;
+		const highlight = classStore.stoppingHighlight.table[x][y].getMostVerbose();
+		
+		const isHighlighted = highlight != Highlight.NORMAL;
+		return [Highlight.toColor[highlight],isHighlighted];
+	}
+
 	render(){
 		const {x, y, isOver, isDragging} = this.props;
 		let canDrop = this.props.canDrop;
 
-		const id = classStore.table.table[x][y];
+		const id = this.getCurrentId();
+		
 		const isDrag = (isDragging == null)? false: true;
 		const isChanging = classStore.editing || isDrag;
 
 		if (!isDrag && isChanging) canDrop = classStore.canDrop(x,y);
 
 		const {connectDropTarget} = this.props;
-		const highlight = classStore.stoppingHighlight.table[x][y].getMostVerbose();
-		const isHighlighted = highlight != Highlight.NORMAL;
-		const highlightColor = Highlight.toColor[highlight];
+
+		const [highlightColor,isHighlighted] = this.getCurrentHighlight();
 
 		const overlay = true;
 
 		//console.log(Highlight.toColor[highlight]);
+		
+		this.oldID = id;
+		this.oldHighlight = highlightColor;
 
 		let c = '';
 		if (id != -1){
