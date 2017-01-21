@@ -54,9 +54,9 @@ for i in range(len(a['table']['table'])):
                     ws.column_dimensions['B'].width = max(ws.column_dimensions['B'].width, len(str(k+1))+1)
                ws.merge_cells('A'+str(i+2+i//lpd)+':'+'A'+str(i+1+lpd+i//lpd))
                if(i != 0):
-                    ws.merge_cells('A'+str(i+2)+':'+str(unichr(ord('A')+len(grades)+1))+str(i+2))
-                    ws['A'+str(i+2)].fill = PatternFill(bgColor="9E9E9E", fill_type = "lightUp")          
-               ws['A'+str(i+2)].alignment = Alignment(wrap_text = True, horizontal = 'center', vertical = 'center')
+                    ws.merge_cells('A'+str(i+1+i//lpd)+':'+str(unichr(ord('A')+len(grades)+1))+str(i+1+i//lpd))
+                    ws['A'+str(i+1+i//lpd)].fill = PatternFill(start_color="9E9E9E", end_color="9E9E9E", fill_type = "solid")     
+               ws['A'+str(i+2+i//lpd)].alignment = Alignment(wrap_text = True, horizontal = 'center', vertical = 'center')
                ws['A'+str(i+2+i//lpd)] = days[(startdate+datetime.timedelta(days=i//lpd)).weekday()]+"\n"+str((startdate+datetime.timedelta(days=i//lpd)).date().day)+" "+months[(startdate+datetime.timedelta(days=i//lpd)).date().month-1]
           if(a['table']['table'][i][j] != -1):
                temp = a['lessons'][a['table']['table'][i][j]]['db_id']
