@@ -9,7 +9,7 @@ import {Link} from 'react-router';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 //import { default as TouchBackend } from 'react-dnd-touch-backend';
-import { Button } from 'react-bootstrap'
+import { Button , ButtonGroup} from 'react-bootstrap'
 
 import AddPair from './addPair.jsx'
 
@@ -44,7 +44,9 @@ export default class ProjectPreferences extends(React.Component){
 					{gradeLists}
 					<ItemPreview key="__preview" name="Item" />
 				</div>
-				<Button className="save-btn btn-success" onClick={ClassActions.save}> Save </ Button>
+				<ButtonGroup className="fixed-buttons">
+					<Button className="save-btn btn-success" onClick={ClassActions.save}> Сохранить </ Button>
+				</ButtonGroup>
 				<Link to={"editor/"+this.props.params.id}>Редактирование расписания</Link>
 			</div>
 			);//
