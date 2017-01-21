@@ -70,11 +70,9 @@ export default class Class extends(React.Component){
 	}
 
 
-	renderCounter(buttons){
-		const { amount, showAll,isDragging } = this.props;
-		let isAmount = false;
-		if (amount && (showAll || amount>1))
-			isAmount = true;
+	renderCounter(buttons, isAmount){
+		const { amount,isDragging } = this.props;
+		
 		if (buttons)
 			return(
 				<div>
@@ -93,7 +91,11 @@ export default class Class extends(React.Component){
 	}
 
 	render(){
-		const { teacher, name, color ,isDragging,  renderCounter,borderColor, id, connectDragSource} = this.props;
+		const { teacher, name, color, showAll ,isDragging, amount, renderCounter,borderColor, id, connectDragSource} = this.props;
+		let isAmount = false;
+		if (amount && (showAll || amount>1))
+			isAmount = true;
+
 		const DOMclasses =color + ((borderColor!='')?(' border-' + borderColor):'') + ' class-box class' + ((isDragging && !(isAmount && amount>1))?' dragging': '');
 		return connectDragSource(
 			<div className={DOMclasses} onClick={this.handleClick}>
@@ -101,7 +103,7 @@ export default class Class extends(React.Component){
 				{this.teacher}, 
 				{this.subject}
 				
-				{this.renderCounter(renderCounter)}
+				{this.renderCounter(renderCounter,isAmount)}
 			</div>
 			);
 	}
