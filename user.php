@@ -255,7 +255,7 @@ class USER
    }
    public function save($p_id)
    {
-      $command = escapeshellcmd('python /var/www/html/Raspisator/saveToXcell.py '. $p_id);
+      $command = escapeshellcmd('python /var/www/html/Raspisator/saveToXcell.py '. $p_id.' > log.txt');
 	  shell_exec($command);
    }
    public function get_school_lessons($school_id)

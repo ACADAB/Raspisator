@@ -185,15 +185,19 @@ table{
 }
 
 .save-btn{
+	width: 120px;
+	height: 40px;
+}
+
+
+.load-btn{
+	width: 120px;
+	height: 40px;
+}
+
+.fixed-buttons{
 	position: fixed;
 	box-shadow: 0 0 10px rgba(0,0,0,0.5);
-	width: 100px;
-	height: 40px;
 	top: calc(95vh - 100px);
-	left: calc(95vw - 100px);
-
-}
-.save-btn-hover{
-	box-shadow: 0 0 10px rgba(96, 173, 1,1);
-	background-color: rgb(96, 173, 1);
+	left: calc(95vw - 240px);
 }
