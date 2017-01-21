@@ -4,6 +4,8 @@ import DatePicker from 'react-bootstrap-date-picker';
 import request from '../API.jsx';
 import { hashHistory } from 'react-router';
 import {Form, FormControl, Alert, Button, FormGroup, Col, ControlLabel} from 'react-bootstrap';
+import renderAlert from './alert.jsx';
+
 
 export default class NewProject extends(React.Component){
 	constructor(props){
@@ -49,20 +51,6 @@ export default class NewProject extends(React.Component){
 			}).catch(e=>{console.log(e)});//fix me!
 	}
 
-	renderAlert(message){
-		if (typeof(message) == "string" && message.length > 0){
-			return ( 
-				<div>
-				<br />
-					<Alert bsStyle="danger">
-						<h4>Ошибка!</h4>
-						<p>{message}</p>
-					</Alert>
-				</div>
-			)
-		} else return <div></div>
-	}
-
 	render(){
 		let a =0;
 
@@ -98,7 +86,7 @@ export default class NewProject extends(React.Component){
 						<FormControl type="number" name="lessons_per_day"/>
 					</FormGroup>
 					<Button type='button'  onClick={e => this.handleSubmit(e)}>Создать</Button>
-					{this.renderAlert(this.state.alertMessage)}
+					{renderAlert(this.state.alertMessage)}
 				</Form>
 			</div>
 			);

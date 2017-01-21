@@ -31,7 +31,9 @@ export default class Class extends(React.Component){
 	constructor(props){
 		super(props);
 		this.handleClick = this.handleClick.bind(this);
-
+		this.addCopy = this.addCopy.bind(this);
+		this.removeCopy = this.removeCopy.bind(this);
+		
 		const db_id = props.db_id;
 			
 		const lesson = classStore.projectLessons[db_id];
@@ -39,9 +41,19 @@ export default class Class extends(React.Component){
 		const subject = classStore.school.subjects[lesson.name];
 		const teacher = classStore.school.teachers[lesson.teacher];
 		this.grade = grade.grade_number + grade.grade_name;
+		this.gradeID = lesson.grade;
 		this.subject = subject.name;
 		this.teacher = teacher.name;
 	}
+
+	addCopy(){
+		classStore.addPair(this.gradeID, '', '', this.props.color, this.props.db_id);
+	}
+
+	removeCopy(){
+		classStore.removeUnused(this.props.db_id);
+	}
+
 
 	componentDidMount(){
 		var connectDragPreview = this.props.connectDragPreview;
@@ -58,26 +70,38 @@ export default class Class extends(React.Component){
 	}
 
 
-	renderCounter(){
-		return(
-			<Glyphicon onClick={e=>{console.log(e)}} glyph="chevron-right"/>
-		);
-	}
-
-	render(){
-		const { teacher, name, color, amount, renderCounter, showAll, isDragging,borderColor, id, connectDragSource} = this.props;
+	renderCounter(buttons){
+		const { amount, showAll,isDragging } = this.props;
 		let isAmount = false;
 		if (amount && (showAll || amount>1))
 			isAmount = true;
-		const DOMclasses =color + ((borderColor!='')?(' border-' + borderColor):'') + ' class-box class' + ((isDragging && !(isAmount && amount>1))?' dragging': '');
+		if (buttons)
+			return(
+				<div>
+					<Glyphicon onClick={this.removeCopy} glyph="chevron-left"/>
+					{isDragging?(''+(amount-1)):''+amount }
+					<Glyphicon onClick={this.addCopy} glyph="chevron-right"/>
+				</div>
+			)
+		else {
+			return(
+				<div>
+					{isAmount && ','+(isDragging?(amount-1):amount) }
+				</div>
+				)
+		}
+	}
 
+	render(){
+		const { teacher, name, color ,isDragging,  renderCounter,borderColor, id, connectDragSource} = this.props;
+		const DOMclasses =color + ((borderColor!='')?(' border-' + borderColor):'') + ' class-box class' + ((isDragging && !(isAmount && amount>1))?' dragging': '');
 		return connectDragSource(
 			<div className={DOMclasses} onClick={this.handleClick}>
 				{this.grade}, 
 				{this.teacher}, 
 				{this.subject}
-				{isAmount && ','+(isDragging?(amount-1):amount) }
-				{renderCounter && this.renderCounter}
+				
+				{this.renderCounter(renderCounter)}
 			</div>
 			);
 	}

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
--- http://www.phpmyadmin.net
+-- version 4.6.4deb1+deb.cihar.com~xenial.1
+-- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Янв 20 2017 г., 17:46
+-- Время создания: Янв 21 2017 г., 00:14
 -- Версия сервера: 5.7.16-0ubuntu0.16.04.1
--- Версия PHP: 7.0.13-1~dotdeb+8.1
+-- Версия PHP: 7.0.8-0ubuntu0.16.04.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- База данных: `dblogin`
 --
+CREATE DATABASE IF NOT EXISTS `dblogin` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `dblogin`;
 
 -- --------------------------------------------------------
 
@@ -26,6 +28,7 @@ SET time_zone = "+00:00";
 -- Структура таблицы `grades`
 --
 
+DROP TABLE IF EXISTS `grades`;
 CREATE TABLE `grades` (
   `id` int(10) UNSIGNED NOT NULL,
   `grade_number` int(10) UNSIGNED NOT NULL,
@@ -33,6 +36,11 @@ CREATE TABLE `grades` (
   `school_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Очистить таблицу перед добавлением данных `grades`
+--
+
+TRUNCATE TABLE `grades`;
 --
 -- Дамп данных таблицы `grades`
 --
@@ -49,6 +57,7 @@ INSERT INTO `grades` (`id`, `grade_number`, `grade_name`, `school_id`) VALUES
 -- Структура таблицы `lessons`
 --
 
+DROP TABLE IF EXISTS `lessons`;
 CREATE TABLE `lessons` (
   `id` int(10) UNSIGNED NOT NULL,
   `subject_id` int(20) UNSIGNED NOT NULL,
@@ -58,6 +67,11 @@ CREATE TABLE `lessons` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Очистить таблицу перед добавлением данных `lessons`
+--
+
+TRUNCATE TABLE `lessons`;
+--
 -- Дамп данных таблицы `lessons`
 --
 
@@ -66,7 +80,6 @@ INSERT INTO `lessons` (`id`, `subject_id`, `teacher_id`, `grade_id`, `school_id`
 (2, 2, 27, 1, 1),
 (3, 1, 28, 2, 1),
 (4, 2, 28, 4, 1),
-(5, 1, 1, 3, 1),
 (6, 2, 28, 3, 1);
 
 -- --------------------------------------------------------
@@ -75,11 +88,12 @@ INSERT INTO `lessons` (`id`, `subject_id`, `teacher_id`, `grade_id`, `school_id`
 -- Структура таблицы `projects`
 --
 
+DROP TABLE IF EXISTS `projects`;
 CREATE TABLE `projects` (
   `id` int(10) UNSIGNED NOT NULL,
   `owner_id` int(10) UNSIGNED NOT NULL,
   `project_name` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `project_data` int(11) DEFAULT NULL,
+  `project_data` json DEFAULT NULL,
   `school_id` int(10) UNSIGNED DEFAULT NULL,
   `start` date DEFAULT NULL,
   `finish` date DEFAULT NULL,
@@ -88,12 +102,17 @@ CREATE TABLE `projects` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Очистить таблицу перед добавлением данных `projects`
+--
+
+TRUNCATE TABLE `projects`;
+--
 -- Дамп данных таблицы `projects`
 --
 
 INSERT INTO `projects` (`id`, `owner_id`, `project_name`, `project_data`, `school_id`, `start`, `finish`, `creation_time`, `lessons_per_day`) VALUES
 (1, 27, 'project1(Е классы)', NULL, 1, NULL, NULL, '2017-01-16 17:43:02', 5),
-(2, 30, 'project2(Е классы)', NULL, 1, NULL, NULL, '2017-01-16 17:43:02', 6),
+(2, 30, 'project2(Е классы)', '{"table": {"table": [[-1, -1, -1, -1], [-1, 5, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1]], "width": 6, "height": 4}, "grades": ["1", "2", "3", "4"], "lessons": [{"x": -1, "y": -1, "color": "yellow", "db_id": "1", "index": 0, "isUsed": false, "verbose": true}, {"x": -1, "y": -1, "color": "yellow", "db_id": "2", "index": 1, "isUsed": false, "verbose": true}, {"x": -1, "y": -1, "color": "yellow", "db_id": "3", "index": 2, "isUsed": false, "verbose": true}, {"x": -1, "y": -1, "color": "yellow", "db_id": "4", "index": 3, "isUsed": false, "verbose": true}, {"x": -1, "y": -1, "color": "yellow", "db_id": "6", "index": 4, "isUsed": false, "verbose": true}, {"x": 1, "y": 1, "color": "red", "db_id": "3", "index": 0, "isUsed": true, "verbose": false}, {"x": -1, "y": -1, "color": "yellow", "db_id": "3", "index": 5, "isUsed": false, "verbose": false}, {"x": -1, "y": -1, "color": "yellow", "db_id": "3", "index": 6, "isUsed": false, "verbose": false}, {"x": -1, "y": -1, "color": "yellow", "db_id": "3", "index": 7, "isUsed": false, "verbose": false}, {"x": -1, "y": -1, "color": "yellow", "db_id": "1", "index": 8, "isUsed": false, "verbose": false}, {"x": -1, "y": -1, "color": "yellow", "db_id": "1", "index": 9, "isUsed": false, "verbose": false}, {"x": -1, "y": -1, "color": "yellow", "db_id": "1", "index": 10, "isUsed": false, "verbose": false}, {"x": -1, "y": -1, "color": "yellow", "db_id": "1", "index": 11, "isUsed": false, "verbose": false}, {"x": -1, "y": -1, "color": "yellow", "db_id": "6", "index": 12, "isUsed": false, "verbose": false}, {"x": -1, "y": -1, "color": "yellow", "db_id": "6", "index": 13, "isUsed": false, "verbose": false}, {"x": -1, "y": -1, "color": "yellow", "db_id": "6", "index": 14, "isUsed": false, "verbose": false}]}', 1, NULL, NULL, '2017-01-16 17:43:02', 6),
 (4, 27, 'аощльдва', NULL, 1, NULL, NULL, '2017-01-16 17:43:02', 7),
 (5, 27, 'аощльдва', NULL, 1, NULL, NULL, '2017-01-16 17:43:02', 5),
 (6, 27, 'аощльдва', NULL, 1, '2017-10-11', '2017-11-11', '2017-01-16 17:43:02', 6),
@@ -101,7 +120,8 @@ INSERT INTO `projects` (`id`, `owner_id`, `project_name`, `project_data`, `schoo
 (8, 27, 'lalalalalal', NULL, 1, '2017-01-23', '2017-01-28', '2017-01-20 16:32:02', 6),
 (9, 27, 'аощльдва', NULL, 1, '2017-10-11', '2017-11-11', '2017-01-20 16:50:05', 17),
 (10, 27, 'lol', NULL, 1, '2017-01-11', '2017-01-21', '2017-01-20 17:03:09', 123),
-(11, 27, 'sukscsc', NULL, 1, '2017-01-01', '2017-01-03', '2017-01-20 17:43:46', 139);
+(11, 27, 'sukscsc', NULL, 1, '2017-01-01', '2017-01-03', '2017-01-20 17:43:46', 139),
+(12, 30, 'asdfasdf', '{"table": {"table": [[-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1]], "width": 6, "height": 4}, "grades": ["1", "2", "3", "4"], "lessons": [{"x": -1, "y": -1, "color": "yellow", "db_id": "1", "index": 0, "isUsed": false, "verbose": true}, {"x": -1, "y": -1, "color": "yellow", "db_id": "2", "index": 1, "isUsed": false, "verbose": true}, {"x": -1, "y": -1, "color": "yellow", "db_id": "3", "index": 2, "isUsed": false, "verbose": true}, {"x": -1, "y": -1, "color": "yellow", "db_id": "4", "index": 3, "isUsed": false, "verbose": true}, {"x": -1, "y": -1, "color": "yellow", "db_id": "6", "index": 4, "isUsed": false, "verbose": true}, {"x": -1, "y": -1, "color": "red", "db_id": "4", "index": 5, "isUsed": false, "verbose": false}, {"x": -1, "y": -1, "color": "red", "db_id": "4", "index": 6, "isUsed": false, "verbose": false}]}', 1, '2017-01-01', '2017-01-04', '2017-01-20 15:14:41', 321);
 
 -- --------------------------------------------------------
 
@@ -109,6 +129,7 @@ INSERT INTO `projects` (`id`, `owner_id`, `project_name`, `project_data`, `schoo
 -- Структура таблицы `role_user_school_relation`
 --
 
+DROP TABLE IF EXISTS `role_user_school_relation`;
 CREATE TABLE `role_user_school_relation` (
   `id` int(11) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
@@ -117,6 +138,11 @@ CREATE TABLE `role_user_school_relation` (
   `is_approved` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Очистить таблицу перед добавлением данных `role_user_school_relation`
+--
+
+TRUNCATE TABLE `role_user_school_relation`;
 --
 -- Дамп данных таблицы `role_user_school_relation`
 --
@@ -134,11 +160,17 @@ INSERT INTO `role_user_school_relation` (`id`, `user_id`, `role_id`, `school_id`
 -- Структура таблицы `schools`
 --
 
+DROP TABLE IF EXISTS `schools`;
 CREATE TABLE `schools` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(80) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Очистить таблицу перед добавлением данных `schools`
+--
+
+TRUNCATE TABLE `schools`;
 --
 -- Дамп данных таблицы `schools`
 --
@@ -154,6 +186,7 @@ INSERT INTO `schools` (`id`, `name`) VALUES
 -- Структура таблицы `school_time`
 --
 
+DROP TABLE IF EXISTS `school_time`;
 CREATE TABLE `school_time` (
   `id` int(10) UNSIGNED NOT NULL,
   `school_id` int(10) UNSIGNED NOT NULL,
@@ -161,6 +194,11 @@ CREATE TABLE `school_time` (
   `start_time` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Очистить таблицу перед добавлением данных `school_time`
+--
+
+TRUNCATE TABLE `school_time`;
 --
 -- Дамп данных таблицы `school_time`
 --
@@ -179,12 +217,18 @@ INSERT INTO `school_time` (`id`, `school_id`, `lesson`, `start_time`) VALUES
 -- Структура таблицы `subjects`
 --
 
+DROP TABLE IF EXISTS `subjects`;
 CREATE TABLE `subjects` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` tinytext CHARACTER SET utf8 NOT NULL,
   `school_id` int(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Очистить таблицу перед добавлением данных `subjects`
+--
+
+TRUNCATE TABLE `subjects`;
 --
 -- Дамп данных таблицы `subjects`
 --
@@ -201,6 +245,7 @@ INSERT INTO `subjects` (`id`, `name`, `school_id`) VALUES
 -- Структура таблицы `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `user_name` varchar(255) NOT NULL,
@@ -209,6 +254,11 @@ CREATE TABLE `users` (
   `name` tinytext CHARACTER SET utf8 NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Очистить таблицу перед добавлением данных `users`
+--
+
+TRUNCATE TABLE `users`;
 --
 -- Дамп данных таблицы `users`
 --
@@ -294,7 +344,7 @@ ALTER TABLE `lessons`
 -- AUTO_INCREMENT для таблицы `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT для таблицы `role_user_school_relation`
 --

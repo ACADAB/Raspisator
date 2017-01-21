@@ -3,32 +3,51 @@ import FormData from 'react-form-data';
 import request from '../API.jsx';
 import {Form, Modal, Button, FormGroup, FormControl, Col, ControlLabel} from 'react-bootstrap';
 import * as AccountActions from '../actions/accountActions.jsx';
+import AccountStore from '../stores/accountStore.jsx';
+import renderAlert from './alert.jsx';
 
+
+const defData = {
+			password:"",
+			name:""
+		};
 
 export default class Login extends(React.Component){
 	constructor(props){
 		super(props);
-		this.state = { showModal: false };
-		this.formData = {
-			password:"",
-			name:""
-		}
+		this.state = { showModal: false,  alertMessage: ''};
+		this.formData = defData;
 		this.updateFormData = FormData.updateFormData.bind(this);
 		this.setFormData = FormData.setFormData.bind(this);
 		this.close = this.close.bind(this);
         this.open = this.open.bind(this);
+        this.closeIfLoggedIn = this.closeIfLoggedIn.bind(this);
 	}
+
+	componentWillMount(){
+		AccountStore.on('change', this.closeIfLoggedIn);
+	}
+
+	componentWillUnmount(){
+		AccountStore.removeListener('change', this.closeIfLoggedIn );
+	}
+
+	closeIfLoggedIn(){
+		if (AccountStore.account.isLoggedIn) this.close();
+		else this.setState({showModal: this.state.showModal, alertMessage: 'Неверная пара логин/пароль'});
+	}
+
 	handleSubmit(event){
 		const dat = this.formData;
 		AccountActions.login(dat);	
 	}
 	close() {
-        this.setState({ showModal: false });
-        this.formData = Object.create(defClass);
+        this.setState({ showModal: false , alertMessage: ''});
+        this.formData = Object.create(defData);
     }
 
     open() {
-        this.setState({ showModal: true });
+        this.setState({ showModal: true , alertMessage:''});
     }
 	
 	
@@ -38,22 +57,19 @@ export default class Login extends(React.Component){
 			<div>
 				<Modal show={this.state.showModal} onHide={this.close}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Add Lesson</Modal.Title>
+                        <Modal.Title>Вход</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
 						<Form horizontal onChange={this.updateFormData} method="POST" acceptCharset="utf-8" action="http://localhost/var/www/html/Raspisator/API/register.php">
 							<FormGroup>
-								<Col mdOffset={2}><h1>Вход</h1></Col>
-							</FormGroup>
-							<FormGroup>
-								<Col sm={3} md={3} componentClass={ControlLabel}>Имя пользователя / E-mail</Col>
-								<Col sm={10} md={3}>
+								<Col sm={5} md={5} componentClass={ControlLabel}>Имя пользователя / E-mail</Col>
+								<Col sm={5} md={5}>
 									<FormControl type="e-mail" name="name"/>
 								</Col>
 							</FormGroup>
 							<FormGroup>
-								<Col sm={3} md={3} componentClass={ControlLabel}>Пароль</Col>
-								<Col sm={10} md={3}>
+								<Col sm={5} md={5} componentClass={ControlLabel}>Пароль</Col>
+								<Col sm={5} md={5}>
 									<FormControl type="password" name="password"/>
 								</Col>
 							</FormGroup>
@@ -64,6 +80,7 @@ export default class Login extends(React.Component){
 							</FormGroup>
 					
 						</Form>
+						{renderAlert(this.state.alertMessage)}
 					</Modal.Body>
                 </Modal>
 				<br/>

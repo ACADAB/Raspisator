@@ -27,16 +27,18 @@ export default class Editor extends(React.Component){
 	render(){
 		return (
 			<div className="editor">
-				<div className="class-list margined">
-					<AddPair/>
-					<ClassList used="unused" hideVerbose/>
+				<Link to={"projectPreferences/"+this.props.params.id}>Параметры проекта</Link>
+				<Button className="btn-success save-btn" onClick={ClassActions.save}> Save </ Button>
+				<div className="class-list-container">
+					<div className="class-list margined">
+						<AddPair/>
+						<ClassList used="unused" hideVerbose/>
+					</div>
+					<Col md={16} xs={16}>
+						<Grid/>
+					</Col>
+					<ItemPreview key="__preview" name="Item" />
 				</div>
-				<Col md={16} xs={16}>
-					<Grid/>
-					<Link to={"projectPreferences/"+this.props.params.id}>Параметры проекта</Link>
-					<Button className="pull-right" onClick={ClassActions.save}> Save </ Button>
-				</Col>
-				<ItemPreview key="__preview" name="Item" />
 			</div>
 			);//
 	}

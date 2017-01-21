@@ -40,11 +40,11 @@ export default class ProjectPreferences extends(React.Component){
 		);
 		return (
 			<div>
-				<div className="grid-wrapper">
+				<div className="class-list-container">
 					{gradeLists}
 					<ItemPreview key="__preview" name="Item" />
 				</div>
-				<Button className="pull-right" onClick={ClassActions.save}> Save </ Button>
+				<Button className="save-btn btn-success" onClick={ClassActions.save}> Save </ Button>
 				<Link to={"editor/"+this.props.params.id}>Редактирование расписания</Link>
 			</div>
 			);//
