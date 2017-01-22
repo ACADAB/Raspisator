@@ -60,7 +60,7 @@ export default class NewProject extends(React.Component){
 
 		return (//TODO: rewrite it with react-bootstrap
 			<div>
-				<h1>Новый проект</h1>
+				<h1>Новый проект расписания</h1>
 				<Form onChange={this.updateFormData} method="POST" acceptCharset="utf-8" action="http://localhost/var/www/html/Raspisator/API/register.php">
 					<FormGroup>
 						<ControlLabel>Название проекта</ControlLabel>
@@ -74,15 +74,15 @@ export default class NewProject extends(React.Component){
 						</FormControl>
 					</FormGroup>
 					<FormGroup>
-						<ControlLabel>Дата начала</ControlLabel>
+						<ControlLabel>Дата начала расписания</ControlLabel>
 						<DatePicker onChange={(e)=>{this.formData.start = e.slice(0,10)}} name='start'/>
 					</FormGroup>
 					<FormGroup>
-						<ControlLabel>Дата конца</ControlLabel>
+						<ControlLabel>Дата конца расписания (недельного)</ControlLabel>
 						<DatePicker onChange={(e)=>{this.formData.finish = e.slice(0,10)}} name='finish'/>
 					</FormGroup>
 					<FormGroup>
-						<ControlLabel>Уроков в день</ControlLabel>
+						<ControlLabel>Уроков в день(максимально)</ControlLabel>
 						<FormControl type="number" name="lessons_per_day"/>
 					</FormGroup>
 					<Button type='button'  onClick={e => this.handleSubmit(e)}>Создать</Button>
