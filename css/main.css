@@ -184,15 +184,27 @@ table{
 	padding:3px;
 }
 
+.class-list-fixed{
+	position: fixed;
+	left: 10px;
+	background-color: #bad4ff;
+	padding: 5px;
+	width: auto;
+	align-content: center;
+	
+}
+
 .save-btn{
 	width: 120px;
 	height: 40px;
+	
 }
 
 
 .load-btn{
 	width: 120px;
 	height: 40px;
+	z-index: 10;
 }
 
 .fixed-buttons{
@@ -200,4 +212,10 @@ table{
 	box-shadow: 0 0 10px rgba(0,0,0,0.5);
 	top: calc(95vh - 100px);
 	left: calc(95vw - 240px);
+	z-index: 10;
+}
+
+.lessons-header{
+	text-align: center;
+
 }

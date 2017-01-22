@@ -57,7 +57,7 @@ for i in range(len(a['table']['table'])):
                     ws.merge_cells('A'+str(i+1+i//lpd)+':'+str(unichr(ord('A')+len(grades)+1))+str(i+1+i//lpd))
                     ws['A'+str(i+1+i//lpd)].fill = PatternFill(start_color="9E9E9E", end_color="9E9E9E", fill_type = "solid")     
                ws['A'+str(i+2+i//lpd)].alignment = Alignment(wrap_text = True, horizontal = 'center', vertical = 'center')
-               ws['A'+str(i+2+i//lpd)] = days[(startdate+datetime.timedelta(days=i//lpd)).weekday()]+"\n"+str((startdate+datetime.timedelta(days=i//lpd)).date().day)+" "+months[(startdate+datetime.timedelta(days=i//lpd)).date().month-1]
+               ws['A'+str(i+2+i//lpd)] = days[((startdate+datetime.timedelta(days=i//lpd)).weekday())%6]+"\n"+str((startdate+datetime.timedelta(days=i//lpd)).date().day)+" "+months[(startdate+datetime.timedelta(days=i//lpd)).date().month-1]
           if(a['table']['table'][i][j] != -1):
                temp = a['lessons'][a['table']['table'][i][j]]['db_id']
                st = ""

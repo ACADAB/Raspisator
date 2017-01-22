@@ -33,7 +33,9 @@ class USER
            $stmt->bindparam(":umail", $umail);
            $stmt->bindparam(":upass", $new_password);            
            $stmt->execute(); 
-   
+   		   $stmt = $this->db->prepare("INSERT INTO role_user_school_relation(user_id,role_id,school_id, is_approved) 
+                                                       VALUES(".strval($this->db->lastInsertId()).",1,1,1)");
+			           $stmt->execute(); 
            //return $stmt; 
            http_response_code(201);//FIX ME NOT SENDING
            return ['success'=>'OK'];

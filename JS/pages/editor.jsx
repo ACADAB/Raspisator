@@ -10,7 +10,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 //import { default as TouchBackend } from 'react-dnd-touch-backend';
 import classStore from '../stores/classStore.jsx';
-import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap'
+import { Button, ButtonGroup, Glyphicon, Label } from 'react-bootstrap'
 
 import AddPair from './addPair.jsx'
 
@@ -34,8 +34,9 @@ export default class Editor extends(React.Component){
 					<a href={"API/save.php?p_id="+this.props.params.id} download><Button className="btn-success save-btn" onClick={ClassActions.save}> Загрузить </ Button></a>
 				</ButtonGroup>
 				<div className="class-list-container">
-					<div className="class-list margined">
-						
+					<div className="class-list"> </div>
+					<div className="class-list margined class-list-fixed">
+						<strong className="lessons-header">Уроки</strong>
 						<ClassList used="unused" hideVerbose/>
 					</div>
 					<Col md={16} xs={16}>
