@@ -1,6 +1,6 @@
 import axios from 'axios';
 import queryString from 'query-string';
-
+import alertStore from './stores/alertStore.jsx';
 //requests from API/$url.php, sending $data, using $method
 //returns a promise, wich returns the response  
 
@@ -11,8 +11,11 @@ Array.prototype.remove = function(from, to) {
   return this.push.apply(this, rest);
 };
 
-export default function request (url, data={}, method='get') {
+export default function request (url, data={}, method='get', a = undefined, success_a = undefined, error_a = undefined) {
 	let path = document.location.pathname;
+
+	if (a !== undefined)
+		alertStore.addAlert(a);
 
 	path = path.split('/');
 	if (path[path.length-1].indexOf('index.php') >= 0) path.remove(-1);
@@ -33,5 +36,20 @@ export default function request (url, data={}, method='get') {
 		config['params'] = data;
 	} 
 	//console.log(config);
-	return axios(config);
+
+
+	const res = axios(config);
+
+	if (a!==undefined){
+		return res.then((resp)=>{
+				alertStore.removeAlert(a);
+				alertStore.addAlert(success_a);
+				return resp;
+			}, (resp)=>{
+				alertStore.removeAlert(a);
+				alertStore.addAlert(error_a);
+				return resp; 
+			})
+	} else 
+		return res;
 }

@@ -23,7 +23,10 @@ export default class Register extends(React.Component){
 	}
 	handleSubmit(event){
 		const dat = this.formData;
-		request('register', dat, 'post').then(res=>{
+		const overlayAlert = {message: 'Регистрация пользователя', wait:true, type: 'warning'};
+		const successAlert = {message: 'Пользователь успешно зарегистрирован', wait:false, type: 'success'};
+		const errorAlert = {message: 'Ошибка при регистрации пользователя', wait:false, type: 'danger'};
+		request('register', dat, 'post', overlayAlert, successAlert, errorAlert).then(res=>{
 			console.log(res);
 			hashHistory.push('home');
 		}).catch(e=>{console.log(e)});//fix me!

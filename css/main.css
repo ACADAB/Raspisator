@@ -215,7 +215,75 @@ table{
 	z-index: 10;
 }
 
+.alert-container-fixed{
+	position: fixed;
+	/*top: calc(95vh - 100px);*/
+	width: 240px;
+	left: calc(98vw - 240px);
+	z-index: 10;
+}
+
 .lessons-header{
 	text-align: center;
 
+}
+
+
+.alert-overlay{
+	border-radius:7px;
+	padding:5px;
+	opacity:0.7;
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	height: 35px;
+	/*border: 1px solid black;*/
+}
+.alert-overlay:hover{
+	opacity: 1.0;
+}
+/*
+.alert-danger{
+	background-color: #ff0043;
+	border: 1px solid #dd0033;
+}
+*/
+.alert-message{
+	display: inline-block;
+	float: left;
+}
+
+/*React spinner*/
+.react-spinner {
+  position: relative;
+  width: 25px;
+  height: 25px;
+  top: 11px;
+  left: 50%;
+}
+
+.react-spinner_bar {
+  -webkit-animation: react-spinner_spin 1.2s linear infinite;
+  -moz-animation: react-spinner_spin 1.2s linear infinite;
+  animation: react-spinner_spin 1.2s linear infinite;
+  border-radius: 5px;
+  background-color: black;
+  position: absolute;
+  width: 20%;
+  height: 7.8%;
+  top: -3.9%;
+  left: -10%;
+}
+
+@keyframes react-spinner_spin {
+ 0% { opacity: 1; }
+ 100% { opacity: 0.15; }
+}
+
+@-moz-keyframes react-spinner_spin {
+ 0% { opacity: 1; }
+ 100% { opacity: 0.15; }
+}
+
+@-webkit-keyframes react-spinner_spin {
+ 0% { opacity: 1; }
+ 100% { opacity: 0.15; }
 }

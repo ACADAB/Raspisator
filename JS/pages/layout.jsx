@@ -3,6 +3,8 @@ import request from "../API.jsx";
 import AccountStore from '../stores/accountStore.jsx';
 import Login from './login.jsx'
 
+import OverlayLayout from './overlayLayout.jsx';
+
 import {Nav, NavItem, Grid, Row, Navbar} from 'react-bootstrap';
 
 export default class Layout extends(React.Component){
@@ -87,7 +89,7 @@ export default class Layout extends(React.Component){
 							</Navbar>
 					
 					
-
+							<OverlayLayout />
 							{this.props.children}
 						</Row>
 					</Grid>

@@ -98,8 +98,14 @@ class ClassStore extends EventEmitter{
 
 		this.projectLessons = {};
 
+
+		const overlayAlert = {message: 'Загрузка проекта', wait:true, type: 'warning'};
+		const successAlert = {message: 'Проект загружен', wait:false, type: 'success'};
+		const errorAlert = {message: 'Ошибка при загрузке проекта', wait:false, type: 'danger'};
+
+
 		return this.loadLessons(project_id).then(
-			()=>request('getProject', {'project_id':project_id, 'return_school_data':true})).then(res=>{	
+			()=>request('getProject', {'project_id':project_id, 'return_school_data':true}, 'get', overlayAlert, successAlert, errorAlert)).then(res=>{	
 
 			this.initEmptyProj();
 			this.projectID = project_id;
@@ -182,7 +188,13 @@ class ClassStore extends EventEmitter{
 
 
 	loadLessons(project_id){
-		return request('getLessons', {'project_id':project_id}).then(res=>{	
+
+		const overlayAlert = {message: 'Загрузка уроков', wait:true, type: 'warning'};
+		const successAlert = {message: 'Уроки загружены', wait:false, type: 'success'};
+		const errorAlert = {message: 'Ошибка при загрузке уроков', wait:false, type: 'danger'};
+
+
+		return request('getLessons', {'project_id':project_id},'get', overlayAlert, successAlert, errorAlert).then(res=>{	
 			const dataLen = res.data.length;
 			this.projectLessons = {};
 
