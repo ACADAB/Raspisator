@@ -8,7 +8,6 @@ export default class OverlayAlert extends(React.Component){
 	constructor(props){
 		super(props);
 		this.remove = this.remove.bind(this);
-		console.log('rendering overlay alert');
 		//this.mixins = [Router.Navigation]
 	}
 

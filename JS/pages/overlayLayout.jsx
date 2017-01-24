@@ -15,7 +15,7 @@ export default class OverlayLayout extends(React.Component){
 	}
 
 	rerender(){
-		this.setState({});
+		this.forceUpdate();//setState({});
 	}
 
 	componentWillMount(){

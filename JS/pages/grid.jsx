@@ -79,11 +79,11 @@ export default class Grid extends(React.Component){
 		}
 		return (
 				<div class='grid-wrapper'>
-					<Table responsive draggable={false}>
-						<thead draggable={false}>
+					<Table responsive draggable='false'>
+						<thead draggable='false'>
 							{rows_head}
 						</thead>
-						<tbody draggable={false}>
+						<tbody draggable='false'>
 							{rows}
 						</tbody>
 					</Table>

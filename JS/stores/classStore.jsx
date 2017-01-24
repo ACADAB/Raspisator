@@ -146,7 +146,8 @@ class ClassStore extends EventEmitter{
 			this.project_name = res.data.project_name;
 			this.unused = Array(data.lessons.length - usedLen);
 			this.used = Array(usedLen);
-			this.colClasses = data.grades;
+			if (data.grades.length > 0)
+				this.colClasses = data.grades;
 			this.refreshStoppingHighlight(false);
 			
 
@@ -454,6 +455,7 @@ class ClassStore extends EventEmitter{
 	}
 
 	getClassByID(id){
+		//console.log(id);
 		return this.getClassByPos(this.classPosition[id]);
 	}
 
