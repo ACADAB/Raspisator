@@ -405,8 +405,13 @@ class ClassStore extends EventEmitter{
 			grades: this.colClasses
 		}
 		//console.log(toSave);
-		//TODO: display something if we get error or ok status.
-		request('saveProject',{'data': JSON.stringify(toSave), 'project_id':this.projectID},"post").then(res=>{console.log(res)});
+		
+		const overlayAlert = {message: 'Сохранение проекта', wait:true, type: 'warning'};
+		const successAlert = {message: 'Проект Сохранён', wait:false, type: 'success'};
+		const errorAlert = {message: 'Ошибка при сохранении проекта', wait:false, type: 'danger'};
+
+
+		request('saveProject',{'data': JSON.stringify(toSave), 'project_id':this.projectID},"post", overlayAlert, successAlert, errorAlert).then(res=>{console.log(res)});
 	}
 
 	moveUnusedItem(from,to){
