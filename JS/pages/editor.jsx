@@ -26,20 +26,20 @@ export default class Editor extends(React.Component){
 
 	render(){
 		return (
-			<div className="editor">
+			<div className="editor noselect" draggable='false'>
 				<Link to={"projectPreferences/"+this.props.params.id}>Параметры проекта</Link>
 				
 				<ButtonGroup className="fixed-buttons">
 					<Button className="btn-success save-btn" onClick={ClassActions.save}> Сохранить </ Button>
 					<a href={"API/save.php?p_id="+this.props.params.id} download><Button className="btn-success save-btn" onClick={ClassActions.save}> Загрузить </ Button></a>
 				</ButtonGroup>
-				<div className="class-list-container">
-					<div className="class-list"> </div>
-					<div className="class-list margined class-list-fixed">
+				<div className="class-list-container" draggable='false'>
+					<div className="class-list" draggable='false'> </div>
+					<div draggable='false' className="class-list margined class-list-fixed">
 						<strong className="lessons-header">Уроки</strong>
 						<ClassList used="unused" hideVerbose/>
 					</div>
-					<Col md={16} xs={16}>
+					<Col draggable='false' md={16} xs={16}>
 						<Grid/>
 					</Col>
 					<ItemPreview key="__preview" name="Item" />

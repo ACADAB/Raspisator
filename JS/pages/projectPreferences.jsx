@@ -42,6 +42,7 @@ export default class ProjectPreferences extends(React.Component){
 		);
 		return (
 			<div>
+				<p>Укажите количество уроков у каждого класса</p>
 				<div className="class-list-container">
 					{gradeLists}
 					<ItemPreview key="__preview" name="Item" />

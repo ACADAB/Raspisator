@@ -27,7 +27,7 @@ export default class projects extends(React.Component){
 				<ul>
 					{list}
 				</ul>
-				<Link to="newProject">Новый проект</Link>
+				<Link to="newProject">Новое расписание</Link>
 			</div>
 			);
 	}

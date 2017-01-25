@@ -1,6 +1,6 @@
 import React from 'react';
 import DragLayer from 'react-dnd/lib/DragLayer';
-import Class from './class.jsx';
+import ClassUnsource from './class_unsource.jsx';
 import classStore from '../stores/classStore.jsx';
 
 function collect (monitor) {
@@ -52,7 +52,7 @@ export class ItemPreview  extends( React.Component) {
                 style={getItemStyles(currentOffset)}
             >
                 <div className="preview-class-wrapper class-box">
-                    <Class db_id={c.db_id} id={c.id} color={c.color}/>
+                    <ClassUnsource db_id={c.db_id} id={c.id} color={c.color} />
                 </div>
             </div>
         );

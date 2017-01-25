@@ -61,7 +61,7 @@ export default class ClassSpace extends(React.Component){
 
 	rerender(){
 		if (this.oldID != this.getCurrentId() || this.oldHighlight != this.getCurrentHighlight()[0])
-			this.setState({});
+			this.forceUpdate();//this.setState({});
 	}
 
 	componentWillMount(){

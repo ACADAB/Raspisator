@@ -21,20 +21,21 @@ export default class Login extends(React.Component){
 		this.setFormData = FormData.setFormData.bind(this);
 		this.close = this.close.bind(this);
         this.open = this.open.bind(this);
-        this.closeIfLoggedIn = this.closeIfLoggedIn.bind(this);
+        this.alert = this.alert.bind(this);
 	}
 
 	componentWillMount(){
-		AccountStore.on('change', this.closeIfLoggedIn);
+		AccountStore.on('login_success', this.close);
+		AccountStore.on('login_fail', this.alert);
 	}
 
 	componentWillUnmount(){
-		AccountStore.removeListener('change', this.closeIfLoggedIn );
+		AccountStore.removeListener('login_fail', this.alert );
+		AccountStore.removeListener('login_success', this.close );
 	}
 
-	closeIfLoggedIn(){
-		if (AccountStore.account.isLoggedIn) this.close();
-		else this.setState({showModal: this.state.showModal, alertMessage: 'Неверная пара логин/пароль'});
+	alert(isLoggedIn){
+		this.setState({showModal: this.state.showModal, alertMessage: 'Неверная пара логин/пароль'});
 	}
 
 	handleSubmit(event){
@@ -53,7 +54,6 @@ export default class Login extends(React.Component){
 	
 	render(){
 		let a =0;
-		console.log('alert:',this.state.alertMessage);
 		return (//TODO: rewrite it with react-bootstrap
 			<div>
 				<Modal show={this.state.showModal} onHide={this.close}>

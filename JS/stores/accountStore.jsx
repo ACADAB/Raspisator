@@ -33,7 +33,8 @@ class AccountStore extends EventEmitter{
 	}
 
 	redirectToLogin(){
-		this.redirect('login');
+		console.log('redirtolog!');
+		this.redirect('home');
 	}
 
 	redirectToIndex(){
@@ -57,10 +58,19 @@ class AccountStore extends EventEmitter{
 
 		switch (action.type) {
 			case "LOGIN":
-				request('login', action.data, 'post').then(res=>{
-					this.setAccountFromResponse(res);
-					this.redirectToIndex();
-				}).catch(this.setGuest());
+				try{
+					request('login', action.data, 'post').then(res=>{
+						this.setAccountFromResponse(res);
+						this.redirectToIndex();
+						this.emit('login_success');
+					},(res)=>{
+						this.setGuest();
+						this.emit('login_fail');
+					});
+				} catch (e){
+					this.setGuest();
+					this.emit('login_fail');
+				}
 				break;
 			case "LOGOUT":
 				request('logout').then(res=>{

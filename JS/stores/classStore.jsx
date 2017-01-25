@@ -98,8 +98,14 @@ class ClassStore extends EventEmitter{
 
 		this.projectLessons = {};
 
+
+		const overlayAlert = {message: 'Загрузка проекта', wait:true, type: 'warning'};
+		const successAlert = {message: 'Проект загружен', wait:false, type: 'success'};
+		const errorAlert = {message: 'Ошибка при загрузке проекта', wait:false, type: 'danger'};
+
+
 		return this.loadLessons(project_id).then(
-			()=>request('getProject', {'project_id':project_id, 'return_school_data':true})).then(res=>{	
+			()=>request('getProject', {'project_id':project_id, 'return_school_data':true}, 'get', overlayAlert, successAlert, errorAlert)).then(res=>{	
 
 			this.initEmptyProj();
 			this.projectID = project_id;
@@ -140,7 +146,8 @@ class ClassStore extends EventEmitter{
 			this.project_name = res.data.project_name;
 			this.unused = Array(data.lessons.length - usedLen);
 			this.used = Array(usedLen);
-			this.colClasses = data.grades;
+			if (data.grades.length > 0)
+				this.colClasses = data.grades;
 			this.refreshStoppingHighlight(false);
 			
 
@@ -182,7 +189,13 @@ class ClassStore extends EventEmitter{
 
 
 	loadLessons(project_id){
-		return request('getLessons', {'project_id':project_id}).then(res=>{	
+
+		const overlayAlert = {message: 'Загрузка уроков', wait:true, type: 'warning'};
+		const successAlert = {message: 'Уроки загружены', wait:false, type: 'success'};
+		const errorAlert = {message: 'Ошибка при загрузке уроков', wait:false, type: 'danger'};
+
+
+		return request('getLessons', {'project_id':project_id},'get', overlayAlert, successAlert, errorAlert).then(res=>{	
 			const dataLen = res.data.length;
 			this.projectLessons = {};
 
@@ -393,8 +406,13 @@ class ClassStore extends EventEmitter{
 			grades: this.colClasses
 		}
 		//console.log(toSave);
-		//TODO: display something if we get error or ok status.
-		request('saveProject',{'data': JSON.stringify(toSave), 'project_id':this.projectID},"post").then(res=>{console.log(res)});
+		
+		const overlayAlert = {message: 'Сохранение проекта', wait:true, type: 'warning'};
+		const successAlert = {message: 'Проект Сохранён', wait:false, type: 'success'};
+		const errorAlert = {message: 'Ошибка при сохранении проекта', wait:false, type: 'danger'};
+
+
+		request('saveProject',{'data': JSON.stringify(toSave), 'project_id':this.projectID},"post", overlayAlert, successAlert, errorAlert).then(res=>{console.log(res)});
 	}
 
 	moveUnusedItem(from,to){
@@ -437,6 +455,7 @@ class ClassStore extends EventEmitter{
 	}
 
 	getClassByID(id){
+		//console.log(id);
 		return this.getClassByPos(this.classPosition[id]);
 	}
 
