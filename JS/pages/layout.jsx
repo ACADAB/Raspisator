@@ -31,6 +31,10 @@ export default class Layout extends(React.Component){
 		this.loginDialog.open();
 	}
 	
+	openLogoutDialog(){
+		this.logoutDialog.open();
+	}
+	
 	handleSelect(to){
 		if (to === 'login'){
 			this.openLoginDialog();
