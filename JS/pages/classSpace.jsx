@@ -1,4 +1,4 @@
-import React from "react";
+		import React from "react";
 import ItemTypes from '../ItemTypes.jsx';
 import classStore from '../stores/classStore.jsx';
 import * as ClassActions from '../actions/classActions.jsx';
