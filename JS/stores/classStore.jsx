@@ -109,15 +109,24 @@ class ClassStore extends EventEmitter{
 
 			this.initEmptyProj();
 			this.projectID = project_id;
-			
+
+			this.school = res.data.school;
+
+			this.schoolID = res.data.project.school_id;
+
+
 			let grades = [];
 			for (let id in this.projectLessons){
 				grades.push(this.projectLessons[id].grade);
 			}
 
 			grades = grades.getUnique();
-			grades.sort();
-
+			grades.sort((a,b)=>{
+				const g1 = this.school.grades[a];
+				const g2 = this.school.grades[b];
+				//console.log(a,g1,b,g2 ,parseInt(g1.grade_number) > parseInt(g2.grade_number));
+				return parseInt(g1.grade_number) > parseInt(g2.grade_number);
+			});
 			this.colClasses = grades;
 
 			this.startDate = new Date( res.data.project.start);
@@ -130,9 +139,6 @@ class ClassStore extends EventEmitter{
 
 			this.refreshStoppingHighlight(false);
 
-			this.school = res.data.school;
-
-			this.schoolID = res.data.project.school_id;
 
 			console.log('resp ',res.data)
 			if ((''+res.data.project.project_data).toLowerCase() == 'null') {

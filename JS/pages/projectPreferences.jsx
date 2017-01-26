@@ -28,6 +28,12 @@ export default class ProjectPreferences extends(React.Component){
 			for (let grade in classStore.school.grades){
 				this.grades.push(grade);
 			}
+			this.grades.sort((a,b)=>{
+				const g1 = classStore.school.grades[a];
+				const g2 = classStore.school.grades[b];
+				//console.log(a,g1,b,g2 ,parseInt(g1.grade_number) > parseInt(g2.grade_number));
+				return parseInt(g1.grade_number) > parseInt(g2.grade_number);
+			})
 			this.setState({});
 		}).then(()=>{classStore.loadAllLessons(classStore.schoolID)});
 	}
