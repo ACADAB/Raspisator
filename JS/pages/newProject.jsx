@@ -79,7 +79,7 @@ export default class NewProject extends(React.Component){
 					</FormGroup>
 					<FormGroup>
 						<ControlLabel>Дата конца расписания (недельного)</ControlLabel>
-						<DatePicker onChange={(e)=>{this.formData.finish = e.slice(0,10)}} name='finish'/>
+						<DatePicker dateFormat="DD-MM-YYYY" dayLabels={ ['Вс','Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']} onChange={(e)=>{this.formData.finish = e.slice(0,10)}} name='finish'/>
 					</FormGroup>
 					<FormGroup>
 						<ControlLabel>Уроков в день(максимально)</ControlLabel>
