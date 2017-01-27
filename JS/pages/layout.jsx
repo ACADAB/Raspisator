@@ -48,8 +48,8 @@ export default class Layout extends(React.Component){
 		if (this.state.account.isLoggedIn){
 			if (currentPath == undefined) currentPath = 'users';
 			menu = [
-				<NavItem eventKey="home" key={0}>Домой</NavItem>,
-				<NavItem eventKey="projects" key={1}>Проект</NavItem>,
+				<NavItem eventKey="profile" key={0}>Профиль</NavItem>,
+				<NavItem eventKey="projects" key={1}>Проекты</NavItem>,
 				<NavItem eventKey="schedule" key={2}>Расписание</NavItem>
 			];
 			login = [
@@ -59,9 +59,7 @@ export default class Layout extends(React.Component){
 		}
 		else{
 			if (currentPath ==  undefined) currentPath = 'login';
-			menu = [
-				<NavItem key={0} eventKey="home">Домой</NavItem>
-			];
+			menu = [];
 			login = [
 				<NavItem key={0} eventKey="register">Регистрация</NavItem>,
 				<NavItem key={1} eventKey="login">Вход </NavItem>
