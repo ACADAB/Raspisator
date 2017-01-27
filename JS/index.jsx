@@ -15,6 +15,7 @@ import Editor from './pages/editor.jsx';
 import Index from './pages/index.jsx';
 import Home from './pages/home.jsx';
 import NewProject from './pages/newProject.jsx';
+import Schedule from './pages/schedule.jsx';
 import ProjectPreferences from './pages/projectPreferences.jsx';
 import NotFound from './pages/404.jsx';
 
@@ -35,6 +36,7 @@ ReactDOM.render((
 			<Route path="newProject" component={NewProject}></Route>
 			<Route path="logout" component={Logout}></Route>
 			<Route path="login" component={Login}></Route>
+			<Route path="schedule" component={Schedule}></Route>
 			<Route path="home" component={Home}></Route>
 			<Route path="editor/:id" component={Editor}></Route>
 			<Route path="projectPreferences/:id" component={ProjectPreferences}></Route>

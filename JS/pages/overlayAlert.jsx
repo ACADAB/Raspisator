@@ -17,7 +17,7 @@ export default class OverlayAlert extends(React.Component){
 	}
 
 	componentWillMount(){
-		setTimeout(()=>{this.remove()}, 1000);
+		setTimeout(()=>{this.remove()}, 3000);
 	}
 
 	render(){

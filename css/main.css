@@ -10,6 +10,22 @@
 	background-color: #e1d8ff;
 }
 
+.schedule-time{
+	width:150px;
+	height:30px;
+
+	-webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+
+	background-color: #e1d8ff;
+}
+
+.schedule-selected{
+	background-color: #42f453;
+}
+
+
 td:not(:last-child) .class-space{
 	border-right:solid 1px #9c9ba3;
 }
