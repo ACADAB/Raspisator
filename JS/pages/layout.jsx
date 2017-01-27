@@ -44,34 +44,26 @@ export default class Layout extends(React.Component){
 
 	render(){
 		let currentPath = this.props.routes[this.props.routes.length - 1].path;
-		let header = (<Navbar.Header>
-							<Navbar.Brand>
-								Raspisator
-							</Navbar.Brand>
-							<Navbar.Toggle />
-						</Navbar.Header>);
 		let menu = [];
 		let login = [];
 		if (this.state.account.isLoggedIn){
 			if (currentPath == undefined) currentPath = 'users';
 			menu = [
-				<NavItem eventKey="home" key={0}>Home</NavItem>,
-				<NavItem eventKey="projects" key={1}>Projects</NavItem>,
-				<NavItem eventKey="schedule" key={2}>Schedule</NavItem>
+				<NavItem eventKey="Проекты" key={1}>Projects</NavItem>,
+				<NavItem eventKey="Расписание" key={2}>Schedule</NavItem>,
+				<NavItem eventKey="Личный кабинет" key={3}>Schedule</NavItem>
 			];
 			login = [
 				<NavItem key={0}>Hello, {this.state.account.name}</NavItem>,
-				<NavItem key={1} eventKey="logout">Logout</NavItem>
+				<NavItem key={1} eventKey="Выйти">Logout</NavItem>
 			];
 		}
 		else{
 			if (currentPath ==  undefined) currentPath = 'login';
-			menu = [
-				<NavItem key={0} eventKey="home">Home</NavItem>
-			];
+			menu = [];
 			login = [
-				<NavItem key={0} eventKey="register">Register</NavItem>,
-				<NavItem key={1} eventKey="login">Log in </NavItem>
+				<NavItem key={0} eventKey="Регистрация">Register</NavItem>,
+				<NavItem key={1} eventKey="Логин">Log in </NavItem>
 			];
 		}
 
@@ -81,7 +73,7 @@ export default class Layout extends(React.Component){
 					<Grid>
 						<Row>
 							<Navbar>
-								{header}
+								<a class="navbar-brand" href="#/home">Raspisator</a>
 								<Navbar.Collapse>
 									<Nav bsStyle="tabs" activeKey={currentPath} onSelect={this.handleSelect}>
 										{menu}
