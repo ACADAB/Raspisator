@@ -60,7 +60,7 @@ ul{
 }
 
 .orange{
-	background-color: #ffad42 !important;	
+	background-color: #FFA07A !important;	
 }
 
 .white{
@@ -68,7 +68,7 @@ ul{
 }
 
 .yellow{
-	background-color: #ffd428 !important;
+	background-color: #FFFF00 !important;
 }
 
 .grey{
@@ -91,7 +91,7 @@ ul{
 }
 
 .border-orange{
-	border-color: #ffad42 !important;	
+	border-color: #FFA07A !important;	
 	border:solid 2px;
 }
 
@@ -101,7 +101,7 @@ ul{
 }
 
 .border-yellow{
-	border-color: #ffd428 !important;
+	border-color: ##FFFF00 !important;
 	border:solid 2px;
 }
 
@@ -187,7 +187,7 @@ table{
 }
 
 .table-head{
-	background-color: #d69c46;
+	background-color:  #66CCCC;
 	/*position: fixed;*/
 }
 .table-head > th {
@@ -197,7 +197,7 @@ table{
 .class-list-fixed{
 	position: fixed;
 	left: 10px;
-	background-color: #bad4ff;
+	background-color: #CCCCFF;
 	padding: 5px;
 	width: auto;
 	align-content: center;
@@ -256,9 +256,15 @@ table{
 	border: 1px solid #dd0033;
 }
 */
+
 .alert-message{
 	display: inline-block;
 	float: left;
+}
+
+
+body{
+	background-color: 	 #F8F8F8  ;
 }
 
 /*React spinner*/
