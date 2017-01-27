@@ -120,17 +120,23 @@ class USER
           $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
 		  $stmt->execute();
 		  $subjects = stmt_to_dict($stmt);
+		  
 		  $stmt = $this->db->prepare("SELECT id, grade_name, grade_number FROM grades WHERE school_id = :id");
           $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
 		  $stmt->execute();
 		  $grades= stmt_to_dict($stmt);
 		  
-		  $stmt = $this->db->prepare("SELECT users.user_id, name FROM users JOIN role_user_school_relation ON role_user_school_relation.user_id = users.user_id WHERE role_user_school_relation.school_id = :id");
+		  $stmt = $this->db->prepare("SELECT name, lessons_per_day FROM schools WHERE id = :id");
+          $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
+		  $stmt->execute();
+		  $sinfo=$stmt->fetchall(PDO::FETCH_ASSOC);
+		  
+		  $stmt = $this->db->prepare("SELECT DISTINCT users.user_id, name FROM users JOIN role_user_school_relation ON role_user_school_relation.user_id = users.user_id WHERE role_user_school_relation.school_id = :id");
           $stmt->bindparam(":id", $sid, PDO::PARAM_INT);
 		  $stmt->execute();
 		  $teachers= stmt_to_dict($stmt, 'user_id');
 		  
-		  $all = ['subjects' => $subjects, 'grades' => $grades, 'teachers' => $teachers];
+		  $all = ['school' => $sinfo, 'subjects' => $subjects, 'grades' => $grades, 'teachers' => $teachers];
           return $all;
        }
        catch(PDOException $e)
@@ -209,7 +215,7 @@ class USER
       try
        {
 		  $result = [];
-          $stmt = $this->db->prepare("SELECT DISTINCT schools.name, schools.id FROM schools JOIN role_user_school_relation 
+          $stmt = $this->db->prepare("SELECT DISTINCT schools.name, schools.id, schools.lessons_per_day FROM schools JOIN role_user_school_relation 
 		  ON role_user_school_relation.school_id = schools.id and role_user_school_relation.user_id = :oid");
 		  $stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
 		  $stmt->execute();
@@ -288,7 +294,36 @@ class USER
            
        }
    }
+   public function set_schedule($schedule)
+   {
+	   try
+       {
+		  //$schedule['days'];
+          $schedule = json_decode($schedule);
+		  //var_dump($schedule);
+		  //var_dump( $schedule->school_id);
+	      $s = "INSERT INTO schedule (user_id, date, school_id, free_pairs) VALUES ";
+			   for($i = 0; $i < count($schedule->days); $i=$i+1)
+			   {//todo: fix this to be secure
+			       $s=$s."(".$_SESSION['user_session'].",\"".$schedule->days[$i]->date."\",".$schedule->school_id.",\"".json_encode($schedule->days[$i]->ready)."\")";
+				   if($i != count($schedule->days)-1)
+					   $s=$s.',';
+			   }
+		  echo $s;
+		  $stmt = $this->db->prepare($s);
+	   	  $stmt->execute();
+          //$res = $stmt->fetch(PDO::FETCH_ASSOC);
+          http_response_code(200);  
+          return ;
+       }
+       catch(PDOException $e)
+       {
+        //  http_response_code(400);
+          echo $e->getMessage();
+      //return [];           
+       }
 
+   }
    public function is_loggedin()
    {
       if(isset($_SESSION['user_session']))
@@ -381,11 +416,12 @@ class USER
 	   {
            if(isset($_SESSION['user_session']))
            {
+			   echo $start;
                $stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name, school_id, start, finish, lessons_per_day) VALUES (:oid, :pr_name, :s_id, :start, :finish, :lpd)");
 	           $stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
 			   $stmt->bindparam(":s_id", $s_id, PDO::PARAM_INT);
-			   $stmt->bindparam(":lpd", $lessons_per_day, PDO::PARAM_INT);
-               $stmt->bindparam(":pr_name", $p_name);
+               $stmt->bindparam(":lpd", $lessons_per_day, PDO::PARAM_INT);
+			   $stmt->bindparam(":pr_name", $p_name);
 			   $stmt->bindparam(":start", $start);
 			   $stmt->bindparam(":finish", $finish);
 	   	       $stmt->execute();
@@ -399,14 +435,15 @@ class USER
            return ['error'=>$e->getMessage()];
        }
    }
-   public function add_school($school_name)
+   public function add_school($school_name, $lessons_per_day)
    {
        try
 	   {
            if(isset($_SESSION['user_session']))
            {
-               $stmt = $this->db->prepare("INSERT INTO schools (name) VALUES (:school_name)");
+               $stmt = $this->db->prepare("INSERT INTO schools (name, lessons_per_day) VALUES (:school_name, :lpd)");
                $stmt->bindparam(":school_name", $school_name);
+			   $stmt->bindparam(":lpd", $lessons_per_day, PDO::PARAM_INT);
 	   	       $stmt->execute();
 		       http_response_code(200);
                return ['success'=>'OK'];
@@ -473,7 +510,7 @@ class USER
        try
        {
 		  $result = [];
-          $stmt = $this->db->prepare("SELECT id, project_name FROM projects WHERE owner_id = :cid");
+          $stmt = $this->db->prepare("SELECT id, project_name, lessons_per_day FROM projects WHERE owner_id = :cid");
 		  $stmt->bindparam(":cid", $_SESSION['user_session'], PDO::PARAM_INT);
           $stmt->execute();
           while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
