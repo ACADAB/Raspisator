@@ -309,7 +309,6 @@ class USER
 				   if($i != count($schedule->days)-1)
 					   $s=$s.',';
 			   }
-		  echo $s;
 		  $stmt = $this->db->prepare($s);
 	   	  $stmt->execute();
           //$res = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -416,7 +415,6 @@ class USER
 	   {
            if(isset($_SESSION['user_session']))
            {
-			   echo $start;
                $stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name, school_id, start, finish, lessons_per_day) VALUES (:oid, :pr_name, :s_id, :start, :finish, :lpd)");
 	           $stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
 			   $stmt->bindparam(":s_id", $s_id, PDO::PARAM_INT);
@@ -491,7 +489,6 @@ class USER
 				   if($i != count($t)-1)
 					   $s=$s.',';
 			   }
-			   echo $s;
                $stmt = $this->db->prepare($s);
                $stmt->bindparam(":rid", $rel_id, PDO::PARAM_INT);
 	   	       $stmt->execute();

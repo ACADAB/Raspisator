@@ -1,4 +1,4 @@
 <?php
 	require_once('../Dbconfig.php'); 
-	echo json_encode($user->add_project($_POST['p_name'],$_POST['s_id'], $_POST['start'], $_POST['finish'], $_POST['lessons_per_day']));
+	echo json_encode($user->add_project($_GET['p_name'],$_GET['s_id'], $_GET['start'], $_GET['finish'], $_GET['lessons_per_day']));
 ?>
