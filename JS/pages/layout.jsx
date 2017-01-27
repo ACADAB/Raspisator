@@ -16,8 +16,6 @@ export default class Layout extends(React.Component){
 		};
 	}
 
-
-
 	componentWillMount(){//TODO: add unmount!ee
 		AccountStore.on("change", ()=>{
 			this.setState({
@@ -43,6 +41,7 @@ export default class Layout extends(React.Component){
 	}
 
 	render(){
+		
 		let currentPath = this.props.routes[this.props.routes.length - 1].path;
 		let header = (<Navbar.Header>
 							<Navbar.Brand>
@@ -55,23 +54,23 @@ export default class Layout extends(React.Component){
 		if (this.state.account.isLoggedIn){
 			if (currentPath == undefined) currentPath = 'users';
 			menu = [
-				<NavItem eventKey="home" key={0}>Home</NavItem>,
-				<NavItem eventKey="projects" key={1}>Projects</NavItem>,
-				<NavItem eventKey="schedule" key={2}>Schedule</NavItem>
+				<NavItem eventKey="home" key={0}>Домой</NavItem>,
+				<NavItem eventKey="projects" key={1}>Проект</NavItem>,
+				<NavItem eventKey="schedule" key={2}>Расписание</NavItem>
 			];
 			login = [
-				<NavItem key={0}>Hello, {this.state.account.name}</NavItem>,
-				<NavItem key={1} eventKey="logout">Logout</NavItem>
+				<NavItem key={0}>Здравствуйте, {this.state.account.name}</NavItem>,
+				<NavItem key={1} eventKey="logout">Выйти</NavItem>
 			];
 		}
 		else{
 			if (currentPath ==  undefined) currentPath = 'login';
 			menu = [
-				<NavItem key={0} eventKey="home">Home</NavItem>
+				<NavItem key={0} eventKey="home">Домой</NavItem>
 			];
 			login = [
-				<NavItem key={0} eventKey="register">Register</NavItem>,
-				<NavItem key={1} eventKey="login">Log in </NavItem>
+				<NavItem key={0} eventKey="register">Регистрация</NavItem>,
+				<NavItem key={1} eventKey="login">Вход </NavItem>
 			];
 		}
 
