@@ -23,7 +23,7 @@ export default class TimeSpace extends(React.Component){
 
 	handleClick(){
 		const {x, y} = this.props;
-		scheduleStore.schedule.table[x][y] ^= true;
+		scheduleStore.schedule.table[x][y] = !scheduleStore.schedule.table[x][y];
 		this.rerender();
 		//TODO: add change of state
 	}
