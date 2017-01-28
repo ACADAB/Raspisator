@@ -16,6 +16,11 @@ export default class NewProject extends(React.Component){
 			start:'',
 			finish:''
 		}
+		this.firstChanged = {
+			s_id:false,
+			start:false,
+			finish:false	
+		}
 		this.updateFormData = FormData.updateFormData.bind(this);
 		this.setFormData = FormData.setFormData.bind(this);
 		this.state = {schools:[], alertMessage:''};
@@ -28,6 +33,7 @@ export default class NewProject extends(React.Component){
 
 	//validates data, returns false if it's ok or an error message else 
 	validateFormData(data){
+		if (!(this.firstChanged.s_id && this.firstChanged.start && this.firstChanged.finish)) return '';
 		if (data.s_id == "-1") return 'Вы должны выбрать школу';
 		if (data.start == '') return 'Вы должны указать дату начала';
 		if (data.finish == '') return 'Вы должны указать дату конца';
@@ -41,7 +47,7 @@ export default class NewProject extends(React.Component){
 		console.log(dat);
 		const validation = this.validateFormData(dat);
 
-		if (validation){
+		if (validation !== false){
 			this.setState({schools:this.state.schools, alertMessage: validation})
 		} else {
 			scheduleStore.setDates(dat.start, dat.finish, dat.s_id);
@@ -67,7 +73,7 @@ export default class NewProject extends(React.Component){
 						<Col md={4} xs={10}>
 							<FormGroup>
 								<ControlLabel>Школа</ControlLabel>
-								<FormControl placeholder="select" value={this.formData.s_id} componentClass="select" onChange={(e)=> {this.handleSubmit(e)}} type="select" name="s_id">
+								<FormControl placeholder="select" value={this.formData.s_id} componentClass="select" onChange={(e)=> {this.firstChanged.s_id = true;this.handleSubmit(e)}} type="select" name="s_id">
 									<option value="-1">---</option>
 									{schoolOptions}
 								</FormControl>
@@ -76,13 +82,13 @@ export default class NewProject extends(React.Component){
 						<Col md={4} xs={10}>
 							<FormGroup>
 								<ControlLabel>Дата начала расписания</ControlLabel>
-								<DatePicker value={this.formData.start} dateFormat="DD-MM-YYYY" dayLabels={ dayLabels} monthLabels = {monthLabels} onChange={(e)=>{this.formData.start = e.slice(0,10); this.handleSubmit(undefined)}} name='start'/>
+								<DatePicker value={this.formData.start} dateFormat="DD-MM-YYYY" dayLabels={ dayLabels} monthLabels = {monthLabels} onChange={(e)=>{this.firstChanged.start = true;this.formData.start = e.slice(0,10); this.handleSubmit(undefined)}} name='start'/>
 							</FormGroup>
 						</Col>
 						<Col md={4} xs={10}>
 							<FormGroup>
 								<ControlLabel>Дата конца расписания</ControlLabel>
-								<DatePicker dateFormat="DD-MM-YYYY" dayLabels={ dayLabels} value={this.formData.finish} monthLabels = {monthLabels} onChange={(e)=>{this.formData.finish = e.slice(0,10); this.handleSubmit(undefined)}} name='finish'/>
+					-			<DatePicker dateFormat="DD-MM-YYYY" dayLabels={ dayLabels} value={this.formData.finish} monthLabels = {monthLabels} onChange={(e)=>{this.firstChanged.finish = true;this.formData.finish = e.slice(0,10); this.handleSubmit(undefined)}} name='finish'/>
 							</FormGroup>
 						</Col>
 						{renderAlert(this.state.alertMessage)}
