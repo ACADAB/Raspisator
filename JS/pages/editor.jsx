@@ -35,13 +35,15 @@ export default class Editor extends(React.Component){
 				</ButtonGroup>
 				
 					<div className="class-list-container" draggable='false'>
-						<div className="class-list" draggable='false'> </div>
-						<AutoAffix viewportOffsetTop={15} container={this}>
-							<div draggable='false' className="class-list margined class-list-fixedd">
+						<div className="class-list" draggable='false'> 
+							<AutoAffix viewportOffsetTop={15} container={this}>
+							<div draggable='false' className="class-list margined class-list-fixed">
 								<strong className="lessons-header">Уроки</strong>
 								<ClassList used="unused" hideVerbose/>
 							</div>
 						</AutoAffix>
+						</div>
+						
 						<Col draggable='false' md={16} xs={16}>
 							<Grid/>
 						</Col>
