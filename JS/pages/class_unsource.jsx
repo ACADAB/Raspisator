@@ -41,9 +41,26 @@ export default class ClassUnsource extends(React.Component){
 		if (amount && (showAll || amount>1))
 			isAmount = true;
 
-		const DOMclasses = color + ((borderColor!='')?(' border-' + borderColor):'') + ' class-box class';
+		const rgb = parseInt(color.slice(1),16);
+		const r = (rgb >> 16) & 255;
+	    const g = (rgb >> 8) & 255;
+    	const b = rgb & 255;
+
+
+
+		const contrast = Math.round((((r * 299) + g * 587) + b * 114) /1000);
+		
+    
+    //console.log(o);
+
+		let style={'backgroundColor':color, 'borderColor':borderColor};
+
+		if (contrast < 140) style['color'] = 'white';
+
+
+		const DOMclasses =((borderColor!='')?(' border-' + borderColor):'') + ' class-box class';
 		return (
-			<div className={DOMclasses}>
+			<div style={style} className={DOMclasses}>
 				{this.grade}, 
 				{this.teacher}, 
 				{this.subject}

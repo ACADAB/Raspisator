@@ -2,7 +2,7 @@ import React from "react";
 import Class from './class.jsx';
 import ClassList from './classList.jsx';
 import classStore from '../stores/classStore.jsx';
-import {Col,Row} from 'react-bootstrap';
+import {Col,Row,Glyphicon} from 'react-bootstrap';
 import * as ClassActions from '../actions/classActions.jsx';
 import {Link} from 'react-router';
 
@@ -48,7 +48,7 @@ export default class ProjectPreferences extends(React.Component){
 		);
 		return (
 			<div>
-				<p>Укажите количество уроков у каждого класса</p>
+				<p>Укажите количество уроков у каждого класса. Исспользуйте <Glyphicon glyph="chevron-left"/> и <Glyphicon glyph="chevron-right"/> для изменения количества пар и кликайте по урокам для изменения цвета </p>
 				<div className="class-list-container">
 					{gradeLists}
 					<ItemPreview key="__preview" name="Item" />

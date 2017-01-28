@@ -4,7 +4,7 @@ import ItemTypes from '../ItemTypes.jsx';
 import * as ClassActions from '../actions/classActions.jsx';
 import classStore from "../stores/classStore.jsx";
 import {Glyphicon} from 'react-bootstrap';
-
+import {TwitterPicker} from 'react-color';
 
 const cardSource = {
 	canDrag(props){
@@ -21,6 +21,14 @@ const cardSource = {
  		classStore.stopEditing();
  	}
 };
+
+function hasSomeParentTheClass(element, classname, stopOn = undefined) {
+	if(element.className == undefined ) return false;
+	const classes = element.className.split(' ');
+    if ( classes.indexOf(classname)>=0) return true;
+    if ( classes.indexOf(stopOn)>=0) return false;
+    return element.parentNode && hasSomeParentTheClass(element.parentNode, classname);
+}
 
 @DragSource(ItemTypes.CLASS, cardSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
@@ -44,6 +52,7 @@ export default class Class extends(React.Component){
 		this.gradeID = lesson.grade;
 		this.subject = subject.name;
 		this.teacher = teacher.name;
+		this.handleColorChange = this.handleColorChange.bind(this);
 	}
 
 	addCopy(){
@@ -61,21 +70,27 @@ export default class Class extends(React.Component){
     	connectDragPreview(img);
 	}
 
-	handleClick(){
-		if (!classStore.editing) this.startEditing();
+	handleClick(e){
+		if (hasSomeParentTheClass(e.target,'twitter-picker') || hasSomeParentTheClass(e.target,'counter')) return;
+		if ((!classStore.editing || this.props.renderCounter )&& !this.props.renderPicker) this.startEditing();
+		if (this.props.renderPicker) classStore.stopEditing();
+
 	}
 
 	startEditing(){
 		cardSource.beginDrag(this.props);
 	}
 
+	handleColorChange(color){
+		classStore.setColor(this.props.db_id, color.hex);
+	}
 
 	renderCounter(buttons, isAmount){
 		const { amount,isDragging } = this.props;
 		
 		if (buttons)
 			return(
-				<strong className="pull-right">
+				<strong className="pull-right counter">
 					<Glyphicon onClick={this.removeCopy} glyph="chevron-left"/>
 					{isDragging?(''+(amount-1)):''+amount }
 					<Glyphicon onClick={this.addCopy} glyph="chevron-right"/>
@@ -91,19 +106,37 @@ export default class Class extends(React.Component){
 	}
 
 	render(){
-		const { teacher, name, color, showAll ,isDragging, amount, renderCounter,borderColor, id, connectDragSource} = this.props;
+		const { teacher, name, color, showAll ,isDragging, amount, renderPicker, renderCounter,borderColor, id, connectDragSource} = this.props;
 		let isAmount = false;
 		if (amount && (showAll || amount>1))
 			isAmount = true;
 
-		const DOMclasses =color + ((borderColor!='')?(' border-' + borderColor):'') + ' class-box class' + ((isDragging && !(isAmount && amount>1))?' dragging': '');
+		const picker = <TwitterPicker onChangeComplete={(this.handleColorChange)} color={color} />;
+
+		const rgb = parseInt(color.slice(1),16);
+		const r = (rgb >> 16) & 255;
+	    const g = (rgb >> 8) & 255;
+    	const b = rgb & 255;
+
+
+
+		const contrast = Math.round((((r * 299) + g * 587) + b * 114) /1000);
+		
+    
+    //console.log(o);
+
+		let style={'backgroundColor':color, 'borderColor':borderColor};
+
+		if (contrast < 140) style['color'] = 'white';
+
+		const DOMclasses = ((borderColor!='')?(' border-' + borderColor):'') + ' class-box class' + ((isDragging && !(isAmount && amount>1))?' dragging': '');
 		return connectDragSource(
-			<div className={DOMclasses} onClick={this.handleClick}>
+			<div className={DOMclasses} style={style} onClick={this.handleClick}>
 				{this.grade}, 
 				{this.teacher}, 
 				{this.subject}
-				
 				{this.renderCounter(renderCounter,isAmount)}
+				{renderPicker && picker}
 			</div>
 			);
 	}

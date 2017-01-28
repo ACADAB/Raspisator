@@ -38,9 +38,20 @@ class ClassStore extends EventEmitter{
 		this.stopEditing = this.stopEditing.bind(this);
 
 		document.addEventListener('click', (e)=>{
-			if (!e.target.classList.contains("class-box") && !e.target.parentNode.classList.contains("class-box") && this.editing)
-
-			this.stopEditing();
+			try {
+				let a = e.target.parentNode.parentNode.parentNode.parentNode;
+			
+			const isPicker =  (e.target.classList.contains("twitter-picker") 
+			|| e.target.parentNode.classList.contains("twitter-picker")
+			|| e.target.parentNode.parentNode.classList.contains("twitter-picker")
+			|| e.target.parentNode.parentNode.parentNode.classList.contains("twitter-picker")
+			|| e.target.parentNode.parentNode.parentNode.parentNode.classList.contains("twitter-picker"));
+			if (!e.target.classList.contains("class-box") && !e.target.parentNode.classList.contains("class-box") && !isPicker && this.editing)
+				this.stopEditing();
+			} catch(e){
+				//console.log(e);
+				this.stopEditing();
+			}
 		});
 
 	}
@@ -242,7 +253,7 @@ class ClassStore extends EventEmitter{
 		}
 		for(let id in this.projectLessons){
 			if (!(id in allFound)) {
-				this.addPair(this.projectLessons[id].grade,'','','yellow',id, true);
+				this.addPair(this.projectLessons[id].grade,'','','#FFFF00',id, true);
 			} 
 		}
 	}
@@ -463,6 +474,16 @@ class ClassStore extends EventEmitter{
 	getClassByID(id){
 		//console.log(id);
 		return this.getClassByPos(this.classPosition[id]);
+	}
+
+	setColor(db_id, color){
+		for(let c=0; c< this.unused.length; c++){
+			if (this.unused[c].db_id == db_id) this.unused[c].color = color;
+		}
+		for(let c=0; c< this.used.length; c++){
+			if (this.used[c].db_id == db_id) this.used[c].color = color;
+		}
+		this.emit('change');
 	}
 
 	getClassByPos(pos){

@@ -111,11 +111,13 @@ export default class ClassList extends(React.Component){
 	}
 
 	componentWillMount(){
-		classStore.on('change', this.rerender)
+		classStore.on('change', this.rerender);
+        classStore.on('changeHighlight', this.rerender);
 	}
 
 	componentWillUnmount(){
 		classStore.removeListener('change', this.rerender );
+        classStore.removeListener('changeHighlight', this.rerender );
 	}
 
 	render(){//TODO: optimization store the counts and verbose lessons in the unique arrays
@@ -157,7 +159,7 @@ export default class ClassList extends(React.Component){
             
             //if ( unused[i].used || firstPos!=unused[i].unusedIndex) continue;
             classes.push(
-                    <Class db_id={db_id} index={classes.length} color={c.color} id={c.id} amount={count} showAll={!hideVerbose} renderCounter={!hideVerbose} key={c.id}/>
+                    <Class db_id={db_id} renderPicker={classStore.editingID == c.id} index={classes.length} color={c.color} id={c.id} amount={count} showAll={!hideVerbose} renderCounter={!hideVerbose} key={c.id}/>
                 )
             //poses.push(firstPos);
             poses.push(unused[i].unusedIndex);

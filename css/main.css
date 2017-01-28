@@ -136,6 +136,10 @@ ul{
 	filter: brightness(85%);
 }
 
+.twitter-picker{
+	z-index: 20;
+}
+
 
 .dragging{
 	opacity:0;
