@@ -20,7 +20,7 @@
 
 	background-color: #e1d8ff;
 }
-
+	
 .schedule-selected{
 	background-color: #42f453;
 }
@@ -88,7 +88,7 @@ ul{
 }
 
 .grey{
-	background-color: #bc8d8d !important;
+	background-color: #00CCCC !important;
 }
 
 .border-blue{
@@ -203,7 +203,7 @@ table{
 }
 
 .table-head{
-	background-color:  #66CCCC;
+	background-color:  #00CCCC;
 	/*position: fixed;*/
 }
 .table-head > th {
@@ -213,7 +213,7 @@ table{
 .class-list-fixed{
 	position: fixed;
 	left: 10px;
-	background-color: #0033CC;
+	background-color: #00CCCC;
 	padding: 5px;
 	width: auto;
 	align-content: center;
@@ -266,12 +266,12 @@ table{
 .alert-overlay:hover{
 	opacity: 1.0;
 }
-/*
+
 .alert-danger{
 	background-color: #ff0043;
 	border: 1px solid #dd0033;
 }
-*/
+
 
 .alert-message{
 	display: inline-block;
