@@ -11,7 +11,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 //import { default as TouchBackend } from 'react-dnd-touch-backend';
 import classStore from '../stores/classStore.jsx';
 import { Button, ButtonGroup, Glyphicon, Label } from 'react-bootstrap'
-
+import {AutoAffix} from 'react-overlays';
 import AddPair from './addPair.jsx'
 
 import { default as ItemPreview } from './classPreview.jsx';
@@ -33,17 +33,21 @@ export default class Editor extends(React.Component){
 					<Button className="btn-success save-btn" onClick={ClassActions.save}> Сохранить </ Button>
 					<a href={"API/save.php?p_id="+this.props.params.id} download><Button className="btn-success save-btn" onClick={ClassActions.save}> Загрузить </ Button></a>
 				</ButtonGroup>
-				<div className="class-list-container" draggable='false'>
-					<div className="class-list" draggable='false'> </div>
-					<div draggable='false' className="class-list margined class-list-fixed">
-						<strong className="lessons-header">Уроки</strong>
-						<ClassList used="unused" hideVerbose/>
+				
+					<div className="class-list-container" draggable='false'>
+						<div className="class-list" draggable='false'> </div>
+						<AutoAffix viewportOffsetTop={15} container={this}>
+							<div draggable='false' className="class-list margined class-list-fixedd">
+								<strong className="lessons-header">Уроки</strong>
+								<ClassList used="unused" hideVerbose/>
+							</div>
+						</AutoAffix>
+						<Col draggable='false' md={16} xs={16}>
+							<Grid/>
+						</Col>
+						<ItemPreview key="__preview" name="Item" />
 					</div>
-					<Col draggable='false' md={16} xs={16}>
-						<Grid/>
-					</Col>
-					<ItemPreview key="__preview" name="Item" />
-				</div>
+				
 			</div>
 			);//
 	}
