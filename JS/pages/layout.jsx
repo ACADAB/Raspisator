@@ -45,6 +45,14 @@ export default class Layout extends(React.Component){
 		let currentPath = this.props.routes[this.props.routes.length - 1].path;
 		let menu = [];
 		let login = [];
+
+		const header = (<Navbar.Header>
+							<Navbar.Brand>
+								<a class="navbar-brand" href="#/home">Raspisator</a>
+							</Navbar.Brand>
+							<Navbar.Toggle />
+						</Navbar.Header>);
+
 		if (this.state.account.isLoggedIn){
 			if (currentPath == undefined) currentPath = 'users';
 			menu = [
@@ -72,7 +80,7 @@ export default class Layout extends(React.Component){
 					<Grid>
 						<Row>
 							<Navbar>
-								<a class="navbar-brand" href="#/home">Raspisator</a>
+								{header}
 								<Navbar.Collapse>
 									<Nav bsStyle="tabs" activeKey={currentPath} onSelect={this.handleSelect}>
 										{menu}
