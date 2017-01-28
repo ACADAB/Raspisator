@@ -53,7 +53,7 @@ export default class Register extends(React.Component){
 						</Col>
 					</FormGroup>
 					<FormGroup>
-						<Col sm={3} md={3} componentClass={ControlLabel}>ФИО</Col>
+						<Col sm={3} md={3} componentClass={ControlLabel}>ФИО или псевдоним</Col>
 						<Col sm={10} md={3}>
 							<FormControl type="name" name="name"/>
 						</Col>
