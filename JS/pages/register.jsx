@@ -41,25 +41,25 @@ export default class Register extends(React.Component){
 						<Col mdOffset={2}><h1>Регистрация</h1></Col>
 					</FormGroup>
 					<FormGroup>
-						<Col sm={3} md={3} componentClass={ControlLabel}>E-mail</Col>
+						<Col sm={3} md={3} componentClass={ControlLabel}>Эл. почта</Col>
 						<Col sm={10} md={3}>
 							<FormControl type="e-mail" name="umail"/>
 						</Col>
 					</FormGroup>
 					<FormGroup>
-						<Col sm={3} md={3} componentClass={ControlLabel}>Password</Col>
+						<Col sm={3} md={3} componentClass={ControlLabel}>Пароль</Col>
 						<Col sm={10} md={3}>
 							<FormControl type="password" name="password"/>
 						</Col>
 					</FormGroup>
 					<FormGroup>
-						<Col sm={3} md={3} componentClass={ControlLabel}>Name</Col>
+						<Col sm={3} md={3} componentClass={ControlLabel}>ФИО</Col>
 						<Col sm={10} md={3}>
 							<FormControl type="name" name="name"/>
 						</Col>
 					</FormGroup>
 					<FormGroup>
-						<Col sm={3} md={3} componentClass={ControlLabel}>User name</Col>
+						<Col sm={3} md={3} componentClass={ControlLabel}>Имя пользователя</Col>
 						<Col sm={10} md={3}>
 							<FormControl type="uesrname" name="uname"/>
 						</Col>
