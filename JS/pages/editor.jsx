@@ -35,9 +35,9 @@ export default class Editor extends(React.Component){
 				</ButtonGroup>
 				
 					<div className="class-list-container" draggable='false'>
-						<div className="class-list" draggable='false'> 
+						<div className="class-list-fixed-wrapper" draggable='false'> 
 							<AutoAffix viewportOffsetTop={15} container={this}>
-							<div draggable='false' className="class-list margined class-list-fixed">
+							<div draggable='false' className="class-list margined class-list-fixed padded">
 								<strong className="lessons-header">Уроки</strong>
 								<ClassList used="unused" hideVerbose/>
 							</div>

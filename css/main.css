@@ -157,12 +157,19 @@ ul{
 	margin-right:10px;
 }
 
+.padded{
+	padding:10px;
+}
+
 .class-list{
 	height: 80vh;
 	width:200px;
 	border-radius: 5px;
 }
 
+.class-list-fixed-wrapper{
+	width:220px;
+}
 
 .class-list-container{
 	overflow-x: auto;
