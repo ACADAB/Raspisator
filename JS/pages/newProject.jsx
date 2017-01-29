@@ -34,6 +34,7 @@ export default class NewProject extends(React.Component){
 		if (data.start == '') return 'Вы должны указать дату начала';
 		if (data.finish == '') return 'Вы должны указать дату конца';
 		if (data.lessons_per_day == '') return 'Вы должны указать количество уроков в день';
+		if (Date.parse(data.finish) <= Date.parse(data.start)) return 'Дата конца не может быть раньше даты начала';
 		return false;
 	}
 
@@ -75,11 +76,11 @@ export default class NewProject extends(React.Component){
 					</FormGroup>
 					<FormGroup>
 						<ControlLabel>Дата начала расписания</ControlLabel>
-						<DatePicker  dateFormat="DD-MM-YYYY" dayLabels={ ['Вс','Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']} monthLabels = {['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']} onChange={(e)=>{this.formData.start = e.slice(0,10)}} name='start'/>
+						<DatePicker value={this.formData.start} dateFormat="DD-MM-YYYY" dayLabels={ ['Вс','Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']} monthLabels = {['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']} onChange={(e)=>{this.formData.start = e.slice(0,10)}} name='start'/>
 					</FormGroup>
 					<FormGroup>
 						<ControlLabel>Дата конца расписания (недельного)</ControlLabel>
-						<DatePicker  dateFormat="DD-MM-YYYY" dayLabels={ ['Вс','Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']} monthLabels = {['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']} onChange={(e)=>{this.formData.finish = e.slice(0,10)}} name='finish'/>
+						<DatePicker value={this.formData.finish}  dateFormat="DD-MM-YYYY" dayLabels={ ['Вс','Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']} monthLabels = {['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']} onChange={(e)=>{this.formData.finish = e.slice(0,10)}} name='finish'/>
 					</FormGroup>
 					<FormGroup>
 						<ControlLabel>Уроков в день(максимально)</ControlLabel>
