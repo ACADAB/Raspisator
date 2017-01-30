@@ -294,6 +294,26 @@ class USER
 					
 			}
 	}
+	public function get_user_schedule($user_id, $start, $finish)
+	{
+		try
+		{
+			$result = [];
+			$stmt = $this->db->prepare("SELECT free_pairs FROM schedule where user_id = :uid and date >= '".$start."' and date <= '".$finish."'");
+			$stmt->bindparam(":uid", $user_id, PDO::PARAM_INT);
+			$stmt->execute();
+			$result = $stmt->fetchall(PDO::FETCH_ASSOC);
+			return $result;
+		}
+		catch(PDOException $e)
+		{
+			http_response_code(400);
+			echo $e->getMessage();
+		return [];
+
+
+		}
+	}
 	public function set_schedule($schedule)
 	{
 		try
