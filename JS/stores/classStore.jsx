@@ -417,6 +417,13 @@ class ClassStore extends EventEmitter{
 				}
 			isConflict = true;
 		}
+
+		if (! this.schedule[lesson.teacher][x]){
+			if (highlight)
+				this.stoppingHighlight.table[x][y].highlight(Highlight.CONFLICT);
+			isConflict = true;
+		}
+
 		for (let i=0; i< this.table.height; i++){
 			if (i!=y && this.table.table[x][i] != -1 && id!==this.table.table[x][i] && this.getClassByID( this.table.table[x][i]).teacher == lesson.teacher){
 				isConflict = true;
