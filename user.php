@@ -175,9 +175,11 @@ class USER
 					$stmt->bindparam(":id", $current_project_id, PDO::PARAM_INT);
 					$stmt->execute();
 					$row = $stmt->fetch(PDO::FETCH_ASSOC);
-			if($return_school_info)
-							return ['project'=>$row, 'school'=>$this->get_school_data($row['school_id'])];
-			else
+			if($return_school_info){
+							$schedules = $this->get_school_schedules($row['school_id'],$row['start'],$row['finish'] );
+							return ['project'=>$row, 'schedules'=>$schedules ,'school'=>$this->get_school_data($row['school_id'])];
+			
+			}else
 				return $row;
 			}
 			catch(PDOException $e)
@@ -314,6 +316,28 @@ class USER
 
 		}
 	}
+
+	public function get_school_schedules($school_id, $start, $finish)
+	{
+		try
+		{
+			$result = [];
+			$stmt = $this->db->prepare("SELECT free_pairs, date, user_id FROM schedule JOIN  lessons ON lessons.teacher_id = schedule.user_id where lessons.school_id = :sid and date >= '".$start."' and date <= '".$finish."'");
+			$stmt->bindparam(":sid", $school_id, PDO::PARAM_INT);
+			$stmt->execute();
+			$result = $stmt->fetchall(PDO::FETCH_ASSOC);
+			return $result;
+		}
+		catch(PDOException $e)
+		{
+			http_response_code(400);
+			echo $e->getMessage();
+		return [];
+
+
+		}
+	}
+
 	public function set_schedule($schedule)
 	{
 		try

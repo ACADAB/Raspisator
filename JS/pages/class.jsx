@@ -51,7 +51,7 @@ export default class Class extends(React.Component){
 		this.grade = grade.grade_number + grade.grade_name;
 		this.gradeID = lesson.grade;
 		this.subject = subject.name;
-		this.teacher = teacher.name;
+		this.teacher = (teacher.name.length <= 10 ? teacher.name : (teacher.name.slice(0,10)+'...'));
 		this.handleColorChange = this.handleColorChange.bind(this);
 	}
 
