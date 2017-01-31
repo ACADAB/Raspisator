@@ -73,7 +73,7 @@ export default class NewProject extends(React.Component){
 						<Col md={4} xs={10}>
 							<FormGroup>
 								<ControlLabel>Школа</ControlLabel>
-								<FormControl placeholder="select" value={this.formData.s_id} componentClass="select" onChange={(e)=> {this.firstChanged.s_id = true;this.handleSubmit(e)}} type="select" name="s_id">
+								<FormControl placeholder="select" value={this.formData.s_id} componentClass="select" onChange={(e)=> {this.firstChanged.s_id = true; console.log('e',e); this.handleSubmit(e)}} type="select" name="s_id">
 									<option value="-1">---</option>
 									{schoolOptions}
 								</FormControl>

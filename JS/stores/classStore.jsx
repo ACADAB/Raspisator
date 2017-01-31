@@ -18,6 +18,19 @@ function daydiff(first, second) {
     return Math.round((second-first)/(1000*60*60*24));
 }
 
+function stringToColor(str) {
+  var hash = 0;
+  for (var i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  var colour = '#';
+  for (var i = 0; i < 3; i++) {
+    var value = (hash >> (i * 8)) & 0xFF;
+    colour += ('00' + value.toString(16)).substr(-2);
+  }
+  return colour;
+}
+
 class ClassStore extends EventEmitter{
 	constructor(){
 		super();
@@ -253,7 +266,8 @@ class ClassStore extends EventEmitter{
 		}
 		for(let id in this.projectLessons){
 			if (!(id in allFound)) {
-				this.addPair(this.projectLessons[id].grade,'','','#FFFF00',id, true);
+				const teacherName = this.school.teachers[ this.projectLessons[id].teacher].name;
+				this.addPair(this.projectLessons[id].grade,'','',stringToColor(teacherName),id, true);
 			} 
 		}
 	}
