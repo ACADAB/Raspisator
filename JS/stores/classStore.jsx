@@ -88,6 +88,7 @@ class ClassStore extends EventEmitter{
 
 		this.updateTable();
 
+		this.schedule = {};
 
 		this.school = {grades:{}, subjects:{}, teachers:{}}
 		this.refreshStoppingHighlight(false);
@@ -116,6 +117,28 @@ class ClassStore extends EventEmitter{
 		for (let x=0; x< Math.min(newTable.width, this.table.width); x++)
 			for (let y=0; y< Math.min(newTable.height, this.table.height); y++)
 				this.table.table[x][y] = newTable.table[x][y];
+	}
+
+	createEmptySchedule(){
+		this.schedule = {};
+		for(let id in this.school.teachers){
+			this.schedule[id] = (new Array(this.table.width)).fill(true);
+		}
+	}
+
+	//sets teacher schedules from the response
+	setScheduleFromRes(res){
+		this.createEmptySchedule();
+		for (let i = 0; i < res.length; i++){
+			const {date, user_id} = res[i];
+			//console.log('')
+			const free_pairs = JSON.parse(res[i].free_pairs);
+			const num = daydiff(this.startDate, new Date(date))*this.lpd;
+			for (let j =0; j < this.lpd; j++){
+				this.schedule[user_id][j+num] = free_pairs[j];
+			}
+			
+		}
 	}
 
 	loadProject(project_id){
@@ -163,6 +186,7 @@ class ClassStore extends EventEmitter{
 
 			this.refreshStoppingHighlight(false);
 
+			this.setScheduleFromRes(res.data.schedules);
 
 			console.log('resp ',res.data)
 			if ((''+res.data.project.project_data).toLowerCase() == 'null') {
