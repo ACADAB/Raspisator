@@ -34,17 +34,47 @@ class ScheduleStore extends EventEmitter{
 		});
 	}
 
-	setDates(from, to, school_id){
+	dateToId(_date){
+		const date = new Date(_date);
+		return daydiff(this.startDate, date);
+	}
 
-		from = new Date(from);
-		to = new Date(to);
+	setDates(_from, _to, school_id){
+		
+		let from = new Date(_from);
+		let to = new Date(_to);
 		this.startDate = from;
-		this.numDays = daydiff(from,to)+1;
+		this.numDays = this.dateToId(to)+1;
 
 		this.schoolID = school_id;
 		this.lpd = this.idToLPD[school_id];
 
 		this.schedule = getEmptyTable( this.lpd, this.numDays,false);
+
+		const overlayAlert = {message: 'Загрузка графика', wait:true, type: 'warning'};
+		const successAlert = {message: 'График загружен', wait:false, type: 'success'};
+		const errorAlert = {message: 'Ошибка при загрузке графика', wait:false, type: 'danger'};
+
+		//console.log(toSave);
+		request('getSchedule',{user_id:30, start:_from, finish:_to},"get", overlayAlert, successAlert, errorAlert).then(res=>{
+			//console.log(res.data);
+			res.data.map((e)=>{
+				e.free_pairs = JSON.parse(e.free_pairs);
+				return e
+			})
+			for (let i = 0; i < res.data.length; i++){
+				const id = this.dateToId(res.data[i].date);
+				if (id >= 0 && id < this.numDays){
+					for (let j = 0; j < this.lpd; j++){
+						//console.log(res.data[i].free_pairs[j]);
+						this.schedule.table[j][id] = res.data[i].free_pairs[j];
+					}
+				}
+			}
+			this.emit('change');
+		});
+	
+
 		this.emit('change');
 	}
 

@@ -299,7 +299,7 @@ class USER
 		try
 		{
 			$result = [];
-			$stmt = $this->db->prepare("SELECT free_pairs FROM schedule where user_id = :uid and date >= '".$start."' and date <= '".$finish."'");
+			$stmt = $this->db->prepare("SELECT free_pairs, date FROM schedule where user_id = :uid and date >= '".$start."' and date <= '".$finish."'");
 			$stmt->bindparam(":uid", $user_id, PDO::PARAM_INT);
 			$stmt->execute();
 			$result = $stmt->fetchall(PDO::FETCH_ASSOC);
@@ -322,14 +322,14 @@ class USER
 					$schedule = json_decode($schedule);
 			//var_dump($schedule);
 			//var_dump( $schedule->school_id);
-				$s = "INSERT INTO schedule (user_id, date, school_id, free_pairs) VALUES ";
+				$s = "REPLACE INTO schedule (user_id, date, school_id, free_pairs) VALUES ";
 				for($i = 0; $i < count($schedule->days); $i=$i+1)
 				{//todo: fix this to be secure
 						$s=$s."(".$_SESSION['user_session'].",\"".$schedule->days[$i]->date."\",".$schedule->school_id.",\"".json_encode($schedule->days[$i]->ready)."\")";
 					if($i != count($schedule->days)-1)
 						$s=$s.',';
 				}
-			$stmt = $this->db->prepare($s);
+				$stmt = $this->db->prepare($s);
 				$stmt->execute();
 					//$res = $stmt->fetch(PDO::FETCH_ASSOC);
 					http_response_code(200);  
