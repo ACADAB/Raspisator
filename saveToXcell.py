@@ -63,7 +63,7 @@ for i in range(len(a['table']['table'])):
                st = ""
                st = st + subjects[les[temp]['subject_id']]['name'] + ' (' + teachers[les[temp]['teacher_id']]['name'] + ')'
                ws[str(unichr(ord('A')+j+2))+str(i+2+i//lpd)].alignment = Alignment(wrap_text = True, vertical = 'center')
-               tempc = colours[str(a['lessons'][a['table']['table'][i][j]]['color'])]
+               tempc = a['lessons'][a['table']['table'][i][j]]['color'][1:]
                ws[str(unichr(ord('A')+j+2))+str(i+2+i//lpd)].fill=PatternFill(start_color=tempc,fill_type= "solid")
                ws[str(unichr(ord('A')+j+2))+str(i+2+i//lpd)] = st 
                ws.row_dimensions[i+2+i//lpd].height = max(ws.row_dimensions[i+2+i//lpd].height, defheight*(len(st)+len(st)-1)//defwidth)
