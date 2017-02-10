@@ -173,6 +173,7 @@ ul{
 
 .class-list-fixed-wrapper{
 	width:220px;
+	margin-left:20px;
 }
 
 .class-list-container{
@@ -184,6 +185,12 @@ ul{
 .class-list-container > *{
 	display:inline-block;
 	vertical-align:top;
+}
+
+.class-list-inner{
+	overflow-y: auto;
+	overflow-x: hidden;
+	max-height: 90%;
 }
 
 .preview{

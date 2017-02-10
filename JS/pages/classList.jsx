@@ -173,7 +173,7 @@ export default class ClassList extends(React.Component){
 		const {connectDropTarget} = this.props;
 		return connectDropTarget( 
                 <div className="class-list">
-            			<div>
+            			<div className="class-list-inner">
             				{classes}
             			</div>
             			

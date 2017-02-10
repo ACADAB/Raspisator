@@ -48,6 +48,19 @@ export default class Layout extends(React.Component){
 		let currentPath = this.props.routes[this.props.routes.length - 1].path;
 		let menu = [];
 		let login = [];
+		let noGrid = false;
+		try{
+			noGrid = React.Children.toArray(this.props.children)[0].type.displayName.indexOf('Editor') !== -1;
+		} catch(e){
+
+		}
+		let renderedChildren;
+
+		if (noGrid) {
+			renderedChildren = this.props.children;
+		} else {
+			renderedChildren = <Grid>{this.props.children}</Grid>;
+		}
 
 		const header = (<Navbar.Header>
 							<Navbar.Brand>
@@ -78,28 +91,25 @@ export default class Layout extends(React.Component){
 		}
 
 		return (	
-				<div>
+				<div>	
+					<Navbar>
+						{header}
+						<Navbar.Collapse>
+							<Nav bsStyle="tabs" activeKey={currentPath} onSelect={this.handleSelect}>
+								{menu}
+							</Nav>
+							<Nav pullRight onSelect={this.handleSelect}>
+								{login}
+							</Nav>
+						</Navbar.Collapse>
+					</Navbar>
+			
+			
+					<OverlayLayout />
+					{renderedChildren}
 					<Login ref={(ref)=>{this.loginDialog = ref}}/>
-					<Logout ref={(ref)=>{this.logoutDialog = ref}}/>
-					<Grid>
-						<Row>
-							<Navbar>
-								{header}
-								<Navbar.Collapse>
-									<Nav bsStyle="tabs" activeKey={currentPath} onSelect={this.handleSelect}>
-										{menu}
-									</Nav>
-									<Nav pullRight onSelect={this.handleSelect}>
-										{login}
-									</Nav>
-								</Navbar.Collapse>
-							</Navbar>
+					<Logout ref={(ref)=>{this.logoutDialog = ref}}/>	
 					
-					
-							<OverlayLayout />
-							{this.props.children}
-						</Row>
-					</Grid>
 				</div>
 			);
 	}

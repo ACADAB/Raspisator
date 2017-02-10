@@ -263,7 +263,7 @@ class USER
 	}
 	public function save($p_id)
 	{
-			echo __DIR__;
+			//echo __DIR__;
 			$command = escapeshellcmd('python /var/www/html/Raspisator/saveToXcell.py '. $p_id.' > /var/www/html/Raspisator/log.txt');
 		shell_exec($command);
 	}
