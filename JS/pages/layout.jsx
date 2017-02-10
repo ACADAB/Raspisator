@@ -2,6 +2,7 @@ import React from "react";
 import request from "../API.jsx";
 import AccountStore from '../stores/accountStore.jsx';
 import Login from './login.jsx'
+import Logout from './logout.jsx';
 
 import OverlayLayout from './overlayLayout.jsx';
 
@@ -36,6 +37,8 @@ export default class Layout extends(React.Component){
 	handleSelect(to){
 		if (to === 'login'){
 			this.openLoginDialog();
+		}else if (to === 'logout'){
+			this.openLogoutDialog();
 		} else
 		AccountStore.redirect(to);
 	}
@@ -77,6 +80,7 @@ export default class Layout extends(React.Component){
 		return (	
 				<div>
 					<Login ref={(ref)=>{this.loginDialog = ref}}/>
+					<Logout ref={(ref)=>{this.logoutDialog = ref}}/>
 					<Grid>
 						<Row>
 							<Navbar>

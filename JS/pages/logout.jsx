@@ -13,10 +13,10 @@ export default class Logout extends(React.Component){
 	constructor(props){
 		super(props);
 		//this.mixins = [Router.Navigation]
-		//this.state = { showModal: false,  alertMessage: ''};
+		this.state = { showModal: false};
 		//this.formData = defData;
-		//this.close = this.close.bind(this);
-        //this.open = this.open.bind(this);
+		this.close = this.close.bind(this);
+        this.open = this.open.bind(this);
         //this.alert = this.alert.bind(this);
 	}
 	
@@ -24,26 +24,28 @@ export default class Logout extends(React.Component){
 	
 	logout(){
 		AccountActions.logout();
+		this.close();
 	}
 
-	goBack(){
-		hashHistory.goBack();
-	}
+	close() {
+        this.setState({ showModal: false});
+    }
 
+    open() {
+        this.setState({ showModal: true});
+    }
 
 	render(){
 		return (
-			<div>
-				<Modal.Dialog>
-					<Modal.Header>
-						<h1>Вы точно хотите выйти?</h1>
-					</Modal.Header>
-					<Modal.Footer>
-						<Button bsStyle='danger' onClick={this.logout.bind(this)}>Выход!</Button>
-						<Button onClick={this.goBack.bind(this)}>нет</Button>
-					</Modal.Footer>
-				</Modal.Dialog>
-			</div>
+			<Modal show={this.state.showModal} onHide={this.close}>
+				<Modal.Header closeButton>
+					<h1>Вы точно хотите выйти?</h1>
+				</Modal.Header>
+				<Modal.Body>
+					<Button bsStyle='danger' onClick={this.logout.bind(this)}>Выход!</Button>
+					<Button onClick={this.close}>нет</Button>
+				</Modal.Body>
+			</Modal>
 			);
 
 	}
