@@ -16,11 +16,11 @@ export default class Grid extends(React.Component){
 	}
 
 	componentWillMount(){
-		classStore.on('change', this.rerender)
+		classStore.on('init', this.rerender)
 	}
 
 	componentWillUnmount(){
-		classStore.removeListener('change', this.rerender );
+		classStore.removeListener('init', this.rerender );
 	}
 
 	getHeadRow(){
@@ -42,6 +42,7 @@ export default class Grid extends(React.Component){
 	render(){
 		const width = classStore.table.width;
 
+		console.log('rerender grid')
 		const height = classStore.table.height;
 		var rows = [];
 		var rows_head = []

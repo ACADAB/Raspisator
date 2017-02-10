@@ -26,15 +26,13 @@ class USER
 			try
 			{
 					$new_password = password_hash($upass, PASSWORD_DEFAULT);
-					$stmt = $this->db->prepare("INSERT INTO users(user_name,user_email,user_pass, name) 
-																											VALUES(:uname, :umail, :upass, :name)");
+					$stmt = $this->db->prepare("INSERT INTO users(user_name,user_email,user_pass, name) :umail, :upass, :name)");
 					$stmt->bindparam(":uname", $uname);
 					$stmt->bindparam(":name", $name); 
 					$stmt->bindparam(":umail", $umail);
 					$stmt->bindparam(":upass", $new_password);            
 					$stmt->execute(); 
-				$stmt = $this->db->prepare("INSERT INTO role_user_school_relation(user_id,role_id,school_id, is_approved) 
-																											VALUES(".strval($this->db->lastInsertId()).",1,1,1)");
+				$stmt = $this->db->prepare("INSERT INTO role_user_school_relation(user_id,role_id,school_id, is_approved) VALUES(".strval($this->db->lastInsertId()).",1,1,1)");
 								$stmt->execute(); 
 					//return $stmt; 
 					http_response_code(201);//FIX ME NOT SENDING
@@ -265,6 +263,7 @@ class USER
 	}
 	public function save($p_id)
 	{
+			echo __DIR__;
 			$command = escapeshellcmd('python /var/www/html/Raspisator/saveToXcell.py '. $p_id.' > /var/www/html/Raspisator/log.txt');
 		shell_exec($command);
 	}

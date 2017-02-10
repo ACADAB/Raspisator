@@ -191,6 +191,7 @@ class ClassStore extends EventEmitter{
 			console.log('resp ',res.data)
 			if ((''+res.data.project.project_data).toLowerCase() == 'null') {
 				this.emit('change');
+				this.emit('init');
 				console.log('null data');
 				return;
 			}
@@ -238,6 +239,7 @@ class ClassStore extends EventEmitter{
 			}
 			this.makeVerboseLessons();
 			this.emit('change');
+			this.emit('init');
 		})//.catch(err=>{console.log(err);});
 	}
 

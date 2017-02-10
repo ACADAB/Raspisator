@@ -1,10 +1,10 @@
-		import React from "react";
+import React from "react";
 import ItemTypes from '../ItemTypes.jsx';
 import classStore from '../stores/classStore.jsx';
 import * as ClassActions from '../actions/classActions.jsx';
 import { DropTarget } from 'react-dnd';
 import * as Highlight from "../highlightEnum.jsx";
-
+import VisibilitySensor from "react-visibility-sensor";
 
 console.log(Highlight);
 
@@ -53,7 +53,12 @@ export default class ClassSpace extends(React.Component){
 		this.rerender = this.rerender.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 		this.handleHover = this.handleHover.bind(this);
+		this.setVisible = this.setVisible.bind(this);
+		this.upd = this.upd.bind(this);
 
+
+		this.needUpdate = false;
+		this.visible = false;
 		this.oldID = -1;
 		this.oldHighlight = Highlight.toColor[Highlight.NORMAL];
 	}
@@ -61,7 +66,12 @@ export default class ClassSpace extends(React.Component){
 
 	rerender(){
 		if (this.oldID != this.getCurrentId() || this.oldHighlight != this.getCurrentHighlight()[0])
-			this.forceUpdate();//this.setState({});
+			if (this.visible) this.upd();
+			else this.needUpdate = true;
+	}
+
+	upd(){
+		new Promise(()=>{this.forceUpdate()});
 	}
 
 	componentWillMount(){
@@ -103,10 +113,18 @@ export default class ClassSpace extends(React.Component){
 		return [Highlight.toColor[highlight],isHighlighted];
 	}
 
+	setVisible(v){
+		//console.log(v);
+		if (v && this.needUpdate){
+			this.upd();
+			this.needUpdate = false;
+		}
+		this.visible = v;
+	}
+
 	render(){
 		const {x, y, isOver, isDragging} = this.props;
 		let canDrop = this.props.canDrop;
-
 		const id = this.getCurrentId();
 		
 		const isDrag = (isDragging == null)? false: true;
@@ -143,6 +161,7 @@ export default class ClassSpace extends(React.Component){
 					{isChanging&& canDrop && isOver && this.renderOverlay('yellow')}			
 					{isChanging&& isHighlighted && overlay && this.renderOverlay(highlightColor)}			
 					</div>
+					<VisibilitySensor  intervalDelay={250} intervalCheck={true} scrollChceck={true}  onChange={(e)=>{this.setVisible(e)}}/>
 				</div>
 					
 				);

@@ -48,7 +48,6 @@ export default class SchduleGrid extends(React.Component){
 		var rows = [];
 		var rows_head = []
 
-		
 
 		rows_head.push(
 				<tr draggable="false" key={-1}>
