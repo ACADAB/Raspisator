@@ -34,9 +34,15 @@ export default class Logout extends(React.Component){
 	render(){
 		return (
 			<div>
-				<h1>Вы точно хотите выйти?</h1>
-				<Button bsStyle='danger' onClick={this.logout.bind(this)}>Выход!</Button>
-				<Button onClick={this.goBack.bind(this)}>нет</Button>
+				<Modal.Dialog>
+					<Modal.Header>
+						<h1>Вы точно хотите выйти?</h1>
+					</Modal.Header>
+					<Modal.Footer>
+						<Button bsStyle='danger' onClick={this.logout.bind(this)}>Выход!</Button>
+						<Button onClick={this.goBack.bind(this)}>нет</Button>
+					</Modal.Footer>
+				</Modal.Dialog>
 			</div>
 			);
 
