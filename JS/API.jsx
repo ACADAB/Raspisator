@@ -20,8 +20,8 @@ export default function request (url, data={}, method='get', a = undefined, succ
 	path = path.split('/');
 	if (path[path.length-1].indexOf('index.php') >= 0) path.remove(-1);
 	path = path.reduce((l,r) => l+'/'+r);
-
-	url = path +'/API/' + url + '.php';
+	if (path == '/') path = '';
+	url =path +'/API/' + url + '.php';
 
 	method = method.toLowerCase();
 		
