@@ -13,6 +13,7 @@ import classStore from '../stores/classStore.jsx';
 import { Button, ButtonGroup, Glyphicon, Label } from 'react-bootstrap'
 import {AutoAffix} from 'react-overlays';
 import AddPair from './addPair.jsx'
+import ComboKeys from 'combokeys';
 
 import { default as ItemPreview } from './classPreview.jsx';
 
@@ -23,6 +24,19 @@ export default class Editor extends(React.Component){
 		this.notGridded = true;
 		classStore.initEmptyProj();
 		classStore.loadProject(props.params.id);
+	}
+
+	componentDidMount(){
+		this.combos = new ComboKeys(document.documentElement);
+		this.combos.bind(['command+s', 'ctrl+s'], (e)=>{
+			e.preventDefault();
+			ClassActions.save();
+			return false;
+		});
+	}
+
+	componentWillUnmount(){
+		this.combos.detach();
 	}
 
 	render(){
