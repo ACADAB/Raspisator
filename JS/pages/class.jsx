@@ -63,6 +63,10 @@ export default class Class extends(React.Component){
 		classStore.removeUnused(this.props.db_id);
 	}
 
+	shouldComponentUpdate(nP, nS){
+		const p = this.props;
+		return !((nP.amount === p.amount) && (nP.color === p.color) && (nP.db_id === p.db_id) && (nP.isDragging === p.isDragging) && (nP.renderPicker === p.renderPicker) && (nP.renderCounter === p.renderCounter));
+	}
 
 	componentDidMount(){
 		var connectDragPreview = this.props.connectDragPreview;
@@ -123,7 +127,7 @@ export default class Class extends(React.Component){
 		const contrast = Math.round((((r * 299) + g * 587) + b * 114) /1000);
 		
     
-    //console.log(o);
+    //console.log('rerender class');
 
 		let style={'backgroundColor':color, 'borderColor':borderColor};
 
