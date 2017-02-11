@@ -50,6 +50,8 @@ class ClassStore extends EventEmitter{
 		this.startEditing = this.startEditing.bind(this);
 		this.stopEditing = this.stopEditing.bind(this);
 
+		this.lastHover = {x:-1, y:-1};
+
 		document.addEventListener('click', (e)=>{
 			try {
 				let a = e.target.parentNode.parentNode.parentNode.parentNode;
@@ -590,6 +592,8 @@ class ClassStore extends EventEmitter{
 		this.editingID = -1;
 
 		this.refreshStoppingHighlight();
+
+		this.lastHover = {x:-1, y:-1};
 
 		this.emit('changeHighlight');
 	}

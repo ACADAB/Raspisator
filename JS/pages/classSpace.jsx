@@ -35,8 +35,11 @@ const cardTarget = {
 		};
 	},
 	hover : function(props, monitor, component) {
-		const dragID = monitor.getItem().id;
-		classStore.canDrop(props.x, props.y,true, true);
+		if (classStore.lastHover.x !== props.x || classStore.lastHover.y !== props.y){
+			classStore.lastHover = {x:props.x, y: props.y};
+			const dragID = monitor.getItem().id;
+			classStore.canDrop(props.x, props.y,true, true);
+		}
 	}
 };
 
@@ -140,6 +143,8 @@ export default class ClassSpace extends(React.Component){
 
 		//console.log(Highlight.toColor[highlight]);
 		
+		//console.log('rerend');
+
 		this.oldID = id;
 		this.oldHighlight = highlightColor;
 
