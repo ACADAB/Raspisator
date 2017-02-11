@@ -2,48 +2,6 @@ import React from "react";
 import ClassSpace from "./classSpace.jsx";
 import classStore from "../stores/classStore.jsx";
 import {Table} from 'react-bootstrap';
-import { DropTarget } from 'react-dnd';
-
-import { findDOMNode } from 'react-dom';
-
-import ItemTypes from '../ItemTypes.jsx';
-
-
-const cardTarget = {
-    /*drop(props, monitor, component){
-        const dragID  = monitor.getItem().id;
-        if (classStore.classPosition[dragID].isUsed){
-            ClassActions.setUnused(dragID);
-        }
-    },*/
-
-    hover(props, monitor, component) {
-        const dragId =  monitor.getItem().id;
-        if (props.grade != undefined && props.grade != classStore.getClassByID(dragId).grade)
-            return;
-        const dragID  = monitor.getItem().id;
-        
-
-        const rootTable = findDOMNode(component).children[0].children[0].children[0];
-
-        const r1 = rootTable.children[0].getBoundingClientRect();
-        const r2 =rootTable.children[1].getBoundingClientRect();
-        
-
-        // Determine mouse position
-        const clientOffset = monitor.getClientOffset();
-
-  		console.log(r1,r2,clientOffset);
-        // get class height to to count the changes amount
-        //const classHeight = (r=>r.bottom - r.top)(thisRect)/numClasses;
-
-
-    }
-};
-
-@DropTarget(ItemTypes.CLASS, cardTarget, connect => ({
-  connectDropTarget: connect.dropTarget()
-}))
 
 export default class Grid extends(React.Component){
 	constructor(props){

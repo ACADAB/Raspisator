@@ -143,7 +143,6 @@ export default class ClassSpace extends(React.Component){
 
 		//console.log(Highlight.toColor[highlight]);
 		
-		//console.log('rerend');
 
 		this.oldID = id;
 		this.oldHighlight = highlightColor;
