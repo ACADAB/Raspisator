@@ -31,6 +31,14 @@ function stringToColor(str) {
   return colour;
 }
 
+function hasSomeParentTheClass(element, classname, stopOn = undefined) {
+	if(element.className == undefined ) return false;
+	const classes = element.className.split(' ');
+    if ( classes.indexOf(classname)>=0) return true;
+    if ( classes.indexOf(stopOn)>=0) return false;
+    return element.parentNode && hasSomeParentTheClass(element.parentNode, classname);
+}
+
 class ClassStore extends EventEmitter{
 	constructor(){
 		super();
@@ -55,13 +63,9 @@ class ClassStore extends EventEmitter{
 		document.addEventListener('click', (e)=>{
 			try {
 				let a = e.target.parentNode.parentNode.parentNode.parentNode;
-			
-			const isPicker =  (e.target.classList.contains("twitter-picker") 
-			|| e.target.parentNode.classList.contains("twitter-picker")
-			|| e.target.parentNode.parentNode.classList.contains("twitter-picker")
-			|| e.target.parentNode.parentNode.parentNode.classList.contains("twitter-picker")
-			|| e.target.parentNode.parentNode.parentNode.parentNode.classList.contains("twitter-picker"));
-			if (!e.target.classList.contains("class-box") && !e.target.parentNode.classList.contains("class-box") && !isPicker && this.editing)
+			const isPicker =  hasSomeParentTheClass(e.target, "twitter-picker");
+			const isList =  hasSomeParentTheClass(e.target, "class-list");
+			if (!e.target.classList.contains("class-box") && !isList && !e.target.parentNode.classList.contains("class-box") && !isPicker && this.editing)
 				this.stopEditing();
 			} catch(e){
 				//console.log(e);
@@ -596,6 +600,10 @@ class ClassStore extends EventEmitter{
 		this.lastHover = {x:-1, y:-1};
 
 		this.emit('changeHighlight');
+	}
+
+	isUsed(id){
+		return this.classPosition[id].isUsed;
 	}
 
 	//sets class with id=id to the grid with coordinates x,y

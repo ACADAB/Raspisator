@@ -104,11 +104,19 @@ export default class ClassList extends(React.Component){
 	constructor(props){
 		super(props);
 		this.rerender = this.rerender.bind(this);
+        this.unuseIfEditing = this.unuseIfEditing.bind(this);
 	}
 
 	rerender(){
 		this.setState({});
 	}
+
+    unuseIfEditing(){
+        if (classStore.editing && classStore.isUsed(classStore.editingID)){
+            ClassActions.setUnused(classStore.editingID);
+            //classStore.stopEditing();
+        }
+    }
 
 	componentWillMount(){
 		classStore.on('change', this.rerender);
@@ -172,8 +180,8 @@ export default class ClassList extends(React.Component){
         this.poses = poses;
 		const {connectDropTarget} = this.props;
 		return connectDropTarget( 
-                <div className="class-list">
-            			<ScrollArea horizontal={false} speed={0.8} smoothScrolling={true} className="class-list-inner">
+                <div className="class-list" onClick={this.unuseIfEditing}>
+            			<ScrollArea onClick={this.unuseIfEditing} horizontal={false} speed={0.8} smoothScrolling={true} className="class-list-inner">
             				{classes}
             			</ScrollArea>
             			
