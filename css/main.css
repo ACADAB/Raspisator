@@ -232,6 +232,7 @@ table{
 	left: 10px;
 	background-color: #00CCCC;
 	padding: 5px;
+	z-index: 3;
 	width: auto;
 	align-content: center;
 	
