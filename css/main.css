@@ -188,7 +188,7 @@ ul{
 }
 
 .class-list-inner{
-	overflow-y: auto;
+	overflow-y: hidden;
 	overflow-x: hidden;
 	max-height: 90%;
 }

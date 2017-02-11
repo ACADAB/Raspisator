@@ -6,7 +6,7 @@ import { findDOMNode } from 'react-dom';
 import ItemTypes from '../ItemTypes.jsx';
 import * as ClassActions from '../actions/classActions.jsx';
 import classStore from '../stores/classStore.jsx';
-
+import ScrollArea from 'react-scrollbar';
 
 
 const cardTarget = {
@@ -173,9 +173,9 @@ export default class ClassList extends(React.Component){
 		const {connectDropTarget} = this.props;
 		return connectDropTarget( 
                 <div className="class-list">
-            			<div className="class-list-inner">
+            			<ScrollArea horizontal={false} speed={0.8} smoothScrolling={true} className="class-list-inner">
             				{classes}
-            			</div>
+            			</ScrollArea>
             			
                 </div>
             );
