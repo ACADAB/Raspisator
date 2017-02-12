@@ -22,6 +22,16 @@
 ]
 }
 */
-	require_once('../Dbconfig.php'); 
-	echo json_encode($user->set_schedule($_POST['schedule']));
+
+	require_once('../Dbconfig.php'); 	
+
+	$id = -1;
+	if (isset($_SESSION['user_session'])){
+		$id = $_SESSION['user_session'];
+	}
+	if (isset($_POST['user_id'])) {
+		$id = $_POST['user_id'];
+	}
+
+	echo json_encode($user->set_schedule($_POST['schedule'], $id));
 ?>

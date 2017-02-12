@@ -14,7 +14,8 @@ export default class NewProject extends(React.Component){
 		this.formData = {
 			s_id:-1,
 			start:'',
-			finish:''
+			finish:'',
+			t_id:-1
 		}
 		this.firstChanged = {
 			s_id:false,
@@ -23,7 +24,7 @@ export default class NewProject extends(React.Component){
 		}
 		this.updateFormData = FormData.updateFormData.bind(this);
 		this.setFormData = FormData.setFormData.bind(this);
-		this.state = {schools:[], alertMessage:''};
+		this.state = {schools:[],teachers:[], alertMessage:''};
 	}
 
 	componentWillMount(){
@@ -46,12 +47,16 @@ export default class NewProject extends(React.Component){
 		const dat = this.formData;
 		console.log(dat);
 		const validation = this.validateFormData(dat);
-
-		if (validation !== false){
-			this.setState({schools:this.state.schools, alertMessage: validation})
+		if (dat.s_id != -1) {
+			scheduleStore.getSchoolTeachers(dat.s_id).then((res)=>{this.setState({schools:this.state.schools, teachers:res,alertMessage:this.state.schools})});
 		} else {
-			scheduleStore.setDates(dat.start, dat.finish, dat.s_id);
-			this.setState({schools:this.state.schools, alertMessage:''});
+			this.setState({schools:this.state.schools, teachers:res,alertMessage:this.state.schools});
+		}
+		if (validation !== false){
+			this.setState({schools:this.state.schools, teachers:this.state.teachers, alertMessage: validation})
+		} else {
+			scheduleStore.setDates(dat.start, dat.finish, dat.s_id, dat.t_id);
+			this.setState({schools:this.state.schools, teachers:this.state.teachers, alertMessage:''});
 		}
 	}
 
@@ -65,7 +70,13 @@ export default class NewProject extends(React.Component){
 				<option value={school.id} key={index}>{school.name}</option>
 			)});
 
-		return (//TODO: rewrite it with react-bootstrap
+
+		const teacherOptions = this.state.teachers.map((teacher,index)=>{return (
+				<option value={teacher.user_id} key={index}>{teacher.name}</option>
+			)});
+
+
+		return (
 			<div>
 				<h1>Личное расписание</h1>
 				<Row>
@@ -73,11 +84,21 @@ export default class NewProject extends(React.Component){
 						<Col md={4} xs={10}>
 							<FormGroup>
 								<ControlLabel>Школа</ControlLabel>
-								<FormControl placeholder="select" value={this.formData.s_id} componentClass="select" onChange={(e)=> {this.firstChanged.s_id = true; console.log('e',e); this.handleSubmit(e)}} type="select" name="s_id">
+								<FormControl placeholder="select" value={this.formData.s_id} componentClass="select" onChange={(e)=> {this.firstChanged.s_id = true; setTimeout(()=>{this.handleSubmit(e)},100) }} type="select" name="s_id">
 									<option value="-1">---</option>
 									{schoolOptions}
 								</FormControl>
 							</FormGroup>
+							{ teacherOptions.length > 0 && (
+									<FormGroup>
+										<ControlLabel>Преподаватель</ControlLabel>
+										<FormControl placeholder="select" value={this.formData.t_id} componentClass="select" onChange={(e)=> {this.firstChanged.s_id = true; setTimeout(()=>{this.handleSubmit(e)},100) }} type="select" name="t_id">
+											<option value="-1">---</option>
+											{teacherOptions}
+										</FormControl>
+									</FormGroup>
+								)
+							}
 						</Col>
 						<Col md={4} xs={10}>
 							<FormGroup>

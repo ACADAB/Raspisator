@@ -109,6 +109,24 @@ class USER
 					echo $e->getMessage();
 			}
 	}
+
+	public function get_school_teachers($school_id)
+	{
+			try
+			{
+				$stmt = $this->db->prepare("SELECT DISTINCT users.user_id, name FROM users JOIN role_user_school_relation ON role_user_school_relation.user_id = users.user_id WHERE role_user_school_relation.school_id = :id AND role_user_school_relation.role_id = 1");
+				$stmt->bindparam(":id", $school_id, PDO::PARAM_INT);
+				$stmt->execute();
+				$teachers= stmt_to_dict($stmt, 'user_id');
+				return $teachers;
+			}
+			catch(PDOException $e)
+			{
+				echo $e->getMessage();
+			}
+	}
+
+
 	public function get_school_data($sid)
 	{
 			try
@@ -129,10 +147,7 @@ class USER
 			$stmt->execute();
 			$sinfo=$stmt->fetchall(PDO::FETCH_ASSOC);
 			
-			$stmt = $this->db->prepare("SELECT DISTINCT users.user_id, name FROM users JOIN role_user_school_relation ON role_user_school_relation.user_id = users.user_id WHERE role_user_school_relation.school_id = :id");
-					$stmt->bindparam(":id", $sid, PDO::PARAM_INT);
-			$stmt->execute();
-			$teachers= stmt_to_dict($stmt, 'user_id');
+			$teachers = $this->get_school_teachers($sid);//fix
 			
 			$all = ['school' => $sinfo, 'subjects' => $subjects, 'grades' => $grades, 'teachers' => $teachers];
 					return $all;
@@ -215,7 +230,7 @@ class USER
 			try
 			{
 			$result = [];
-					$stmt = $this->db->prepare("SELECT DISTINCT schools.name, schools.id, schools.lessons_per_day FROM schools JOIN role_user_school_relation 
+					$stmt = $this->db->prepare("SELECT DISTINCT schools.name, schools.id, schools.lessons_per_day, role_user_school_relation.role_id FROM schools JOIN role_user_school_relation 
 			ON role_user_school_relation.school_id = schools.id and role_user_school_relation.user_id = :oid");
 			$stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
 			$stmt->execute();
@@ -337,7 +352,7 @@ class USER
 		}
 	}
 
-	public function set_schedule($schedule)
+	public function set_schedule($schedule, $user_id)
 	{
 		try
 			{
@@ -348,7 +363,7 @@ class USER
 				$s = "REPLACE INTO schedule (user_id, date, school_id, free_pairs) VALUES ";
 				for($i = 0; $i < count($schedule->days); $i=$i+1)
 				{//todo: fix this to be secure
-						$s=$s."(".$_SESSION['user_session'].",\"".$schedule->days[$i]->date."\",".$schedule->school_id.",\"".json_encode($schedule->days[$i]->ready)."\")";
+						$s=$s."(".$user_id.",\"".$schedule->days[$i]->date."\",".$schedule->school_id.",\"".json_encode($schedule->days[$i]->ready)."\")";
 					if($i != count($schedule->days)-1)
 						$s=$s.',';
 				}

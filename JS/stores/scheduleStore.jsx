@@ -22,6 +22,10 @@ class ScheduleStore extends EventEmitter{
 		this.schoolID = -1;
 		this.setMaxListeners(1000);
 		this.idToLPD = {};
+		this.idToRole = {};
+		this.schoolTeachers = {};
+		this.my_id = -1;
+		this.mySched = true;
 		this.lpd = 0;//[{message:'Привет, Дмитрий!', wait:true, type:'danger'}]
 	}
 
@@ -29,8 +33,9 @@ class ScheduleStore extends EventEmitter{
 		return request('getMySchools').then((res)=>{
 			for (let i = 0; i< res.data.length; i++){
 				this.idToLPD[res.data[i].id] = parseInt(res.data[i].lessons_per_day);
-				return res;
+				this.idToRole[res.data[i].id] = parseInt(res.data[i].role_id);
 			}
+			return res;
 		});
 	}
 
@@ -39,8 +44,27 @@ class ScheduleStore extends EventEmitter{
 		return daydiff(this.startDate, date);
 	}
 
-	setDates(_from, _to, school_id){
+	getSchoolTeachers(school_id){
+		if (this.schoolTeachers[school_id] != undefined) return new Promise(()=>this.schoolTeachers[school_id]);
+		return request('getSchoolTeachers', {school_id:school_id}).then((res)=>{
+			let teachers = [];
+			for (let id in res.data){
+				teachers.push(res.data[id]);
+			}
+			this.schoolTeachers[school_id] = teachers;
+			return teachers;
+		});
+	}
+
+	setDates(_from, _to, school_id, u_id){
+		const role = this.idToRole[school_id];
+
+
+		const mySched = (u_id === -1 && role == 1);
 		
+		this.mySched = mySched;
+		this.my_id = u_id;
+
 		let from = new Date(_from);
 		let to = new Date(_to);
 		this.startDate = from;
@@ -56,7 +80,9 @@ class ScheduleStore extends EventEmitter{
 		const errorAlert = {message: 'Ошибка при загрузке графика', wait:false, type: 'danger'};
 
 		//console.log(toSave);
-		request('getSchedule',{user_id:30, start:_from, finish:_to},"get", overlayAlert, successAlert, errorAlert).then(res=>{
+		let getSched = mySched? {start:_from, finish:_to} : {user_id:u_id ,start:_from, finish:_to}
+
+		request('getSchedule',getSched,"get", overlayAlert, successAlert, errorAlert).then(res=>{
 			//console.log(res.data);
 			res.data.map((e)=>{
 				e.free_pairs = JSON.parse(e.free_pairs);
@@ -103,7 +129,9 @@ class ScheduleStore extends EventEmitter{
 		const errorAlert = {message: 'Ошибка при сохранении графика', wait:false, type: 'danger'};
 
 		//console.log(toSave);
-		request('setSchedule',{schedule:JSON.stringify({'days': toSave, 'school_id':this.schoolID})},"post", overlayAlert, successAlert, errorAlert).then(res=>{console.log(res)});
+		let params = {schedule:JSON.stringify({'days': toSave, 'school_id':this.schoolID})};
+		if (!this.mySched) params.user_id = this.my_id;
+		request('setSchedule', params, "post", overlayAlert, successAlert, errorAlert).then(res=>{console.log(res)});
 	
 	}
 
