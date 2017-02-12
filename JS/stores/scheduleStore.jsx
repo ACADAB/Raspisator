@@ -52,7 +52,10 @@ class ScheduleStore extends EventEmitter{
 	}
 
 	getSchoolTeachers(school_id){
-		if (this.schoolTeachers[school_id] != undefined) return new Promise(()=>this.schoolTeachers[school_id]);
+		if (this.schoolTeachers[school_id] != undefined) return new Promise((resolve,reject)=>{
+			//console.log('returning', this.schoolTeachers[school_id]);
+			resolve( this.schoolTeachers[school_id]);
+		});
 		return request('getSchoolTeachers', {school_id:school_id}).then((res)=>{
 			let teachers = [];
 			for (let id in res.data){

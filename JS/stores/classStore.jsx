@@ -139,6 +139,7 @@ class ClassStore extends EventEmitter{
 			const {date, user_id} = res[i];
 			//console.log('')
 			const free_pairs = JSON.parse(res[i].free_pairs);
+			//console.log(free_pairs);
 			const num = daydiff(this.startDate, new Date(date))*this.lpd;
 			for (let j =0; j < this.lpd; j++){
 				this.schedule[user_id][j+num] = free_pairs[j];

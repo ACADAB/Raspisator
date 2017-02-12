@@ -74,7 +74,7 @@ export default class ClassSpace extends(React.Component){
 	}
 
 	upd(){
-		new Promise(()=>{this.forceUpdate()});
+		new Promise((resolve,reject)=>{resolve(this.forceUpdate())});
 	}
 
 	componentWillMount(){

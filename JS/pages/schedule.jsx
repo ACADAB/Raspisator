@@ -48,9 +48,11 @@ export default class NewProject extends(React.Component){
 		console.log(dat);
 		const validation = this.validateFormData(dat);
 		if (dat.s_id != -1) {
-			scheduleStore.getSchoolTeachers(dat.s_id).then((res)=>{this.setState({schools:this.state.schools, teachers:res,alertMessage:this.state.schools})});
+			scheduleStore.getSchoolTeachers(dat.s_id).then((res)=>{
+				//console.log('recieve',res);
+				this.setState({schools:this.state.schools, teachers:res,alertMessage:this.state.schools})});
 		} else {
-			this.setState({schools:this.state.schools, teachers:res,alertMessage:this.state.schools});
+			this.setState({schools:this.state.schools, teachers:[],alertMessage:this.state.schools});
 		}
 		if (validation !== false){
 			this.setState({schools:this.state.schools, teachers:this.state.teachers, alertMessage: validation})
