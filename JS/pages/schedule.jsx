@@ -105,8 +105,6 @@ export default class NewProject extends(React.Component){
 								<ControlLabel>Дата начала расписания</ControlLabel>
 								<DatePicker value={this.formData.start} dateFormat="DD-MM-YYYY" dayLabels={ dayLabels} monthLabels = {monthLabels} onChange={(e)=>{this.firstChanged.start = true;this.formData.start = e.slice(0,10); this.handleSubmit(undefined)}} name='start'/>
 							</FormGroup>
-						</Col>
-						<Col md={4} xs={10}>
 							<FormGroup>
 								<ControlLabel>Дата конца расписания</ControlLabel>
 					-			<DatePicker dateFormat="DD-MM-YYYY" dayLabels={ dayLabels} value={this.formData.finish} monthLabels = {monthLabels} onChange={(e)=>{this.firstChanged.finish = true;this.formData.finish = e.slice(0,10); this.handleSubmit(undefined)}} name='finish'/>

@@ -2,6 +2,7 @@ import { EventEmitter} from "events";
 
 import dispatcher from '../dispatcher.jsx';
 import request  from '../API.jsx';
+import accountStore from './accountStore.jsx';
 
 function daydiff(first, second) {
     return Math.floor((second-first)/(1000*60*60*24));
@@ -17,6 +18,11 @@ function getEmptyTable(x,y, val = -1){
 class ScheduleStore extends EventEmitter{
 	constructor(){
 		super();
+		this.initMe();
+		accountStore.on('change', ()=>{this.initMe()});	
+	}
+
+	initMe(){
 		this.schedule = getEmptyTable(0, 0, false);
 		this.numDays = 0;
 		this.schoolID = -1;
@@ -27,6 +33,7 @@ class ScheduleStore extends EventEmitter{
 		this.my_id = -1;
 		this.mySched = true;
 		this.lpd = 0;//[{message:'Привет, Дмитрий!', wait:true, type:'danger'}]
+
 	}
 
 	getSchools(){
