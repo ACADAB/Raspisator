@@ -43,7 +43,11 @@ export default class Class extends(React.Component){
 		this.removeCopy = this.removeCopy.bind(this);
 		
 		const db_id = props.db_id;
-			
+		this.initInfo(db_id);
+		this.handleColorChange = this.handleColorChange.bind(this);
+	}
+
+	initInfo(db_id){
 		const lesson = classStore.projectLessons[db_id];
 		const grade = classStore.school.grades[lesson.grade];
 		const subject = classStore.school.subjects[lesson.name];
@@ -52,7 +56,7 @@ export default class Class extends(React.Component){
 		this.gradeID = lesson.grade;
 		this.subject = subject.name;
 		this.teacher = (teacher.name.length <= 10 ? teacher.name : (teacher.name.slice(0,10)+'...'));
-		this.handleColorChange = this.handleColorChange.bind(this);
+		
 	}
 
 	addCopy(){
@@ -65,6 +69,9 @@ export default class Class extends(React.Component){
 
 	shouldComponentUpdate(nP, nS){
 		const p = this.props;
+		if ((nP.db_id !== p.db_id)){
+			this.initInfo(nP.db_id);
+		}
 		return !((nP.amount === p.amount) && (nP.color === p.color) && (nP.db_id === p.db_id) && (nP.isDragging === p.isDragging) && (nP.renderPicker === p.renderPicker) && (nP.renderCounter === p.renderCounter));
 	}
 
