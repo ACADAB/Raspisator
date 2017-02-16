@@ -26,7 +26,7 @@ class USER
 			try
 			{
 					$new_password = password_hash($upass, PASSWORD_DEFAULT);
-					$stmt = $this->db->prepare("INSERT INTO users(user_name,user_email,user_pass, name) :umail, :upass, :name)");
+					$stmt = $this->db->prepare("INSERT INTO users(user_name,user_email,user_pass, name) VALUES (:uname, :umail, :upass, :name)");
 					$stmt->bindparam(":uname", $uname);
 					$stmt->bindparam(":name", $name); 
 					$stmt->bindparam(":umail", $umail);
