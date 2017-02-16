@@ -19,7 +19,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 <!-- Optional theme -->
 	<link rel="stylesheet" href="css/theme.css">
-	
+	<link rel="stylesheet" href="css/react-bootstrap-switch.min.css">
 
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 </body>

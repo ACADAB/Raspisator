@@ -104,11 +104,18 @@ export default class ClassList extends(React.Component){
 	constructor(props){
 		super(props);
 		this.rerender = this.rerender.bind(this);
+        this.state={subjects:props.subjected};
+        this.setMode = this.setMode.bind(this);
+        props.setMode.set = this.setMode;
         this.unuseIfEditing = this.unuseIfEditing.bind(this);
 	}
 
+    setMode(s){
+        this.setState({subjects:s});
+    }
+
 	rerender(){
-		this.setState({});
+		this.forceUpdate();
 	}
 
     unuseIfEditing(){
@@ -130,7 +137,8 @@ export default class ClassList extends(React.Component){
 
 	render(){//TODO: optimization store the counts and verbose lessons in the unique arrays
         const { grade, used, hideVerbose} = this.props;
-
+        const subjected = this.state.subjects;
+        console.log(subjected);
 		const unused = classStore.getLessons(used,grade);
 
         let unique = {};
