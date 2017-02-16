@@ -105,8 +105,10 @@ export default class ClassList extends(React.Component){
 		super(props);
 		this.rerender = this.rerender.bind(this);
         this.state={subjects:props.subjected};
+
         this.setMode = this.setMode.bind(this);
-        props.setMode.set = this.setMode;
+        
+        if (props.setMode) props.setMode.set = this.setMode;
         this.unuseIfEditing = this.unuseIfEditing.bind(this);
 	}
 
