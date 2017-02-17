@@ -48,6 +48,7 @@ class ClassStore extends EventEmitter{
 
 		this.editing = false;
 		this.editingID = -1;
+		this.editingSubjected = false;
 
 		this.setable = true;
 
@@ -575,17 +576,18 @@ class ClassStore extends EventEmitter{
 		this.emit('change');
 	}
 
-	startEditing(id){
+	startEditing(id, subjected){
 		this.editing = true;
 		this.editingID = id;
 		this.setable = false;
+		this.editingSubjected = subjected;
 
 		setTimeout((()=>{this.setable = true}).bind(this), 100);
 		this.refreshStoppingHighlight();
 
 		for (let x=0; x < this.stoppingHighlight.width; x++){
 			for (let y=0; y< this.stoppingHighlight.height; y++){
-				this.canDrop(x,y,false,true,-1,true);
+				this.canDrop(x,y,false,true,-1,true);//rewrite it!
 			}
 		}
 
@@ -595,6 +597,7 @@ class ClassStore extends EventEmitter{
 	stopEditing(){
 		this.editing = false;
 		this.editingID = -1;
+		this.editingSubjected = false;
 
 		this.refreshStoppingHighlight();
 
@@ -673,7 +676,7 @@ class ClassStore extends EventEmitter{
 				this.save();
 				break;
 			case "START_EDITING":
-				this.startEditing(action.id);
+				this.startEditing(action.id, action.subjected);
 				break;
 			case "STOP_EDITING":
 				this.stopEditing();

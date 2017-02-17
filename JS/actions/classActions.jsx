@@ -62,9 +62,10 @@ export function save(){
 	});
 } 
 
-export function startEditMode(id){
+export function startEditMode(id, subjected){
 	dispatcher.dispatch({
 		id:id,
+		subjected: subjected,
 		type: 'START_EDITING'
 	});
 } 

@@ -11,9 +11,10 @@ const cardSource = {
 		return !props.notDraggable
 	},
 	beginDrag(props) {
-		ClassActions.startEditMode(props.id);
+		ClassActions.startEditMode(props.id, props.subjected);
 		return {
 	      id: props.id,
+	      subjected: props.subjected,
 	      index: props.index,
 	    };
  	},
@@ -41,10 +42,21 @@ export default class Class extends(React.Component){
 		this.handleClick = this.handleClick.bind(this);
 		this.addCopy = this.addCopy.bind(this);
 		this.removeCopy = this.removeCopy.bind(this);
-		
-		const db_id = props.db_id;
-		this.initInfo(db_id);
 		this.handleColorChange = this.handleColorChange.bind(this);
+
+		this.grade = undefined;
+		this.gradeID = undefined;
+		this.subject = undefined;
+		this.teacher = undefined;
+
+		const db_id = props.db_id;
+		if (props.subjected) 
+			this.initSubjectInfo(db_id);
+		else this.initInfo(db_id);
+	}
+
+	initSubjectInfo(db_id){
+		this.subject = classStore.school.subjects[db_id].name;
 	}
 
 	initInfo(db_id){
@@ -144,9 +156,9 @@ export default class Class extends(React.Component){
 		return connectDragSource(
 			<div className={DOMclasses} style={style} onClick={this.handleClick}>
 				{!hideGrade && (this.grade + ',')} 
-				{this.teacher}, 
+				{!subjected && (this.teacher + ',')} 
 				{this.subject}
-				{this.renderCounter(renderCounter,isAmount)}
+				{!subjected && this.renderCounter(renderCounter,isAmount)}
 				{renderPicker && picker}
 			</div>
 			);
