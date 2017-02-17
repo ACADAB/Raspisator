@@ -20,7 +20,7 @@ function fakeMonitor(){
 }
 
 const cardTarget = {
-	canDrop : function(props, monitor, component){
+	canDrop : function(props, monitor = undefined, component = undefined){
 		return classStore.canDrop(props.x, props.y);
 	},
 
@@ -29,9 +29,9 @@ const cardTarget = {
 		const dragID = monitor.getItem().id;
 		const currID = classStore.table.table[props.x][props.y];
 		if (currID == -1){
-			ClassActions.setUsed(dragID, props.x, props.y);
+			ClassActions.setUsed(props.x, props.y);
 		} else {
-			ClassActions.swapByID(dragID, currID);
+			ClassActions.swapByID(currID);
 		};
 	},
 	hover : function(props, monitor, component) {
@@ -95,7 +95,7 @@ export default class ClassSpace extends(React.Component){
 	}
 
 	handleClick(){
-		if (classStore.editing && classStore.setable) cardTarget.drop(this.props, fakeMonitor(),undefined)
+		if (classStore.editing && classStore.setable && cardTarget.canDrop(this.props)) cardTarget.drop(this.props, fakeMonitor(),undefined)
 	}
 
 	handleHover(){

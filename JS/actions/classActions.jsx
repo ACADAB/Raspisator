@@ -12,10 +12,9 @@ export function swapByIndex(i1,i2, stopEdit = true){
 		});
 } 
 
-export function swapByID(i1,i2){
+export function swapByID(i2){
 	dispatcher.dispatch({
 		type: 'SWAP_CLASS_BY_ID',
-		i1: i1,
 		i2: i2
 	});
 	dispatcher.dispatch({
@@ -23,10 +22,9 @@ export function swapByID(i1,i2){
 	});
 } 
 
-export function setUsed(id,x,y){
+export function setUsed(x,y){
 	dispatcher.dispatch({
 		type: 'MOVE_TO_USED',
-		id: id,
 		x: x,
 		y: y
 	});
@@ -62,7 +60,7 @@ export function save(){
 	});
 } 
 
-export function startEditMode(id, subjected){
+export function startEditMode(id, subjected = false){
 	dispatcher.dispatch({
 		id:id,
 		subjected: subjected,

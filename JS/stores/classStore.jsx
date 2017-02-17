@@ -405,6 +405,18 @@ class ClassStore extends EventEmitter{
 		this.emit('change');
 	}
 
+
+	findLessons(subject, grade){
+		const variants = this.unused.filter((les)=>{
+			return !les.verbose && les.name == subject && les.grade == grade;
+		});
+		return variants;
+	}
+
+	freeTeachers(teachers, x){
+		return teachers.filter((t)=>{return this.schedule[t][x]})
+	}
+
 	canDrop(x, y, highlight = false, rec= true, interID=-1, first=false){
 		if (!highlight && !first){
 			return !this.stoppingHighlight.table[x][y].hasHighlight(Highlight.UNAVAILABLE);
@@ -416,11 +428,11 @@ class ClassStore extends EventEmitter{
 
 		const id = interID==-1? this.editingID : interID;
 		
-		const lesson = this.getClassByID(id);
+		const lessons = this.editingSubjected? this.findLessons(this.editingID, this.colClasses[y]) : [this.getClassByID(id)];
 
 		let isConflict = false;
 
-		if (this.colClasses[y] != lesson.grade){
+		if (!this.editingSubjected && this.colClasses[y] != lessons[0].grade){
 			if (highlight)
 				for (let i = 0; i< this.table.width; i++){
 					this.stoppingHighlight.table[i][y].highlight(Highlight.CONFLICT);
@@ -428,23 +440,25 @@ class ClassStore extends EventEmitter{
 			isConflict = true;
 		}
 
-		if (! this.schedule[lesson.teacher][x]){
+		if (this.freeTeachers(lessons.map((l)=>{return l.teacher}), x).length === 0){//! this.schedule[lesson.teacher][x]){
 			if (highlight)
 				this.stoppingHighlight.table[x][y].highlight(Highlight.CONFLICT);
 			isConflict = true;
+
 		}
 
 		for (let i=0; i< this.table.height; i++){
-			if (i!=y && this.table.table[x][i] != -1 && id!==this.table.table[x][i] && this.getClassByID( this.table.table[x][i]).teacher == lesson.teacher){
+			if (i!=y && !lessons.some((lesson) => {
+					//console.log(lesson, this.table.table[x][i], );
+					return this.table.table[x][i] == -1 || this.getClassByID( this.table.table[x][i]).teacher != lesson.teacher
+				})){
 				isConflict = true;
 				if (highlight)
-					this.stoppingHighlight.table[x][i].highlight(Highlight.CONFLICT);
+					console.log()//this.stoppingHighlight.table[x][i].highlight(Highlight.CONFLICT);
 				else 
 					break;
 			}
 		}
-
-		//TODO: add teacher timetable support
 
 		if (isConflict){ 
 			return this.setCanDrop(x,y,isConflict, highlight);
@@ -561,9 +575,15 @@ class ClassStore extends EventEmitter{
 		
 	}
 */
-	swapByID(id1,id2){
-		const pos1 = this.classPosition[id1];
+	swapByID(id1,id2, subjected = false){
 		const pos2 = this.classPosition[id2];
+		if (subjected) {
+			const lesson = this.findLessons(this.editingID, this.colClasses[pos2.y])[0];
+			id1 = lesson.id;
+		}
+
+		const pos1 = this.classPosition[id1];
+		
  		
  		const tmp = this.getClassByPos(pos1);
 
@@ -587,7 +607,7 @@ class ClassStore extends EventEmitter{
 
 		for (let x=0; x < this.stoppingHighlight.width; x++){
 			for (let y=0; y< this.stoppingHighlight.height; y++){
-				this.canDrop(x,y,false,true,-1,true);//rewrite it!
+				this.canDrop(x,y,false,true,-1,true);//rewrite it to run one time
 			}
 		}
 
@@ -612,7 +632,11 @@ class ClassStore extends EventEmitter{
 
 	//sets class with id=id to the grid with coordinates x,y
 	//supposes, that (x,y) is empty
-	setUsed(id,x,y){
+	setUsed(id,x,y, subjected = false){
+		if (subjected) {
+			const lesson = this.findLessons(this.editingID, this.colClasses[y])[0];
+			id = lesson.id;
+		}
 		const pos = this.classPosition[id];
 		if (this.table.table[x][y] != -1){
 			console.error('trying to set in not empty grid cell!',this.table.table[x][y]);
@@ -661,10 +685,10 @@ class ClassStore extends EventEmitter{
 				this.moveUnusedItem(action.i1, action.i2);
 				break;
 			case "SWAP_CLASS_BY_ID":
-				this.swapByID(action.i1, action.i2);
+				this.swapByID(this.editingID, action.i2,this.editingSubjected);
 				break;
 			case "MOVE_TO_USED":
-				this.setUsed(action.id, action.x,action.y);
+				this.setUsed(this.editingID,action.x,action.y, this.editingSubjected);
 				break;
 			case "MOVE_TO_UNUSED":
 				this.setToUnused(action.id);

@@ -11,7 +11,7 @@ const cardSource = {
 		return !props.notDraggable
 	},
 	beginDrag(props) {
-		ClassActions.startEditMode(props.id, props.subjected);
+		ClassActions.startEditMode(props.subjected ?props.db_id : props.id, props.subjected);
 		return {
 	      id: props.id,
 	      subjected: props.subjected,
@@ -49,26 +49,26 @@ export default class Class extends(React.Component){
 		this.subject = undefined;
 		this.teacher = undefined;
 
-		const db_id = props.db_id;
-		if (props.subjected) 
-			this.initSubjectInfo(db_id);
-		else this.initInfo(db_id);
+		const {db_id, subjected} = props;
+		this.initInfo(db_id, subjected);
 	}
 
 	initSubjectInfo(db_id){
 		this.subject = classStore.school.subjects[db_id].name;
 	}
 
-	initInfo(db_id){
-		const lesson = classStore.projectLessons[db_id];
-		const grade = classStore.school.grades[lesson.grade];
-		const subject = classStore.school.subjects[lesson.name];
-		const teacher = classStore.school.teachers[lesson.teacher];
-		this.grade = grade.grade_number + grade.grade_name;
-		this.gradeID = lesson.grade;
-		this.subject = subject.name;
-		this.teacher = (teacher.name.length <= 10 ? teacher.name : (teacher.name.slice(0,10)+'...'));
-		
+	initInfo(db_id, subjected){
+		if (subjected) this.initSubjectInfo(db_id);
+		else {
+			const lesson = classStore.projectLessons[db_id];
+			const grade = classStore.school.grades[lesson.grade];
+			const subject = classStore.school.subjects[lesson.name];
+			const teacher = classStore.school.teachers[lesson.teacher];
+			this.grade = grade.grade_number + grade.grade_name;
+			this.gradeID = lesson.grade;
+			this.subject = subject.name;
+			this.teacher = (teacher.name.length <= 10 ? teacher.name : (teacher.name.slice(0,10)+'...'));
+		}
 	}
 
 	addCopy(){
@@ -82,7 +82,7 @@ export default class Class extends(React.Component){
 	shouldComponentUpdate(nP, nS){
 		const p = this.props;
 		if ((nP.db_id !== p.db_id)){
-			this.initInfo(nP.db_id);
+			this.initInfo(nP.db_id, nP.subjected);
 		}
 		return !((nP.amount === p.amount) && (nP.color === p.color) && (nP.db_id === p.db_id) && (nP.isDragging === p.isDragging) && (nP.renderPicker === p.renderPicker) && (nP.renderCounter === p.renderCounter));
 	}
@@ -129,7 +129,7 @@ export default class Class extends(React.Component){
 	}
 
 	render(){
-		const { teacher, name, hideGrade , color, showAll ,isDragging, amount, renderPicker, renderCounter,borderColor, id, connectDragSource} = this.props;
+		const { teacher, name, hideGrade , color, showAll ,isDragging, amount, subjected, renderPicker, renderCounter,borderColor, id, connectDragSource} = this.props;
 		let isAmount = false;
 		if (amount && (showAll || amount>1))
 			isAmount = true;
@@ -155,10 +155,10 @@ export default class Class extends(React.Component){
 		const DOMclasses = ((borderColor!='')?(' border-' + borderColor):'') + ' class-box class' + ((isDragging && !(isAmount && amount>1))?' dragging': '');
 		return connectDragSource(
 			<div className={DOMclasses} style={style} onClick={this.handleClick}>
-				{!hideGrade && (this.grade + ',')} 
+				{!subjected && !hideGrade && (this.grade + ',')} 
 				{!subjected && (this.teacher + ',')} 
 				{this.subject}
-				{!subjected && this.renderCounter(renderCounter,isAmount)}
+				{this.renderCounter(renderCounter,isAmount)}
 				{renderPicker && picker}
 			</div>
 			);
