@@ -18,6 +18,7 @@ import NewProject from './pages/newProject.jsx';
 import Schedule from './pages/schedule.jsx';
 import ProjectPreferences from './pages/projectPreferences.jsx';
 import NotFound from './pages/404.jsx';
+import Profile from './pages/profile.jsx'
 
 //import properties from './settings.jsx';
 
@@ -37,6 +38,7 @@ ReactDOM.render((
 			<Route path="logout" component={Logout}></Route>
 			<Route path="login" component={Login}></Route>
 			<Route path="schedule" component={Schedule}></Route>
+			<Route path="profile" component={Profile}></Route>
 			<Route path="home" component={Home}></Route>
 			<Route path="editor/:id" component={Editor}></Route>
 			<Route path="projectPreferences/:id" component={ProjectPreferences}></Route>

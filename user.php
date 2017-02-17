@@ -45,7 +45,34 @@ class USER
 			return ['error' =>$e->getMessage()];
 		}    
 	}
+	public function change_pass($oldpass, $newpass)
+	{
+		try
+		{
+			$stmt = $this->db->prepare("SELECT * FROM users WHERE user_id = :uid");
+			$stmt->bindparam(":uid", $_SESSION['user_session'], PDO::PARAM_INT);
+			$stmt->execute();
+			$result = $stmt->fetchall(PDO::FETCH_ASSOC);
+			if(password_verify($oldpass, $result[0]['user_pass']))
+			{
+				$new_password = password_hash($newpass, PASSWORD_DEFAULT);
+				$stmt = $this->db->prepare("UPDATE users SET user_pass = :newpass WHERE user_id = :uid");
+				$stmt->bindparam(":uid", $_SESSION['user_session'], PDO::PARAM_INT);
+				$stmt->bindparam(":newpass", $new_password, PDO::PARAM_INT);
+				$stmt->execute();
+				return 1;
+			}
+			http_response_code(400);
+			return 0;
+		}
+		catch(PDOException $e)
+		{
+			http_response_code(400);
+			return ['isLoggedin'=>false];
 
+			//echo $e->getMessage();
+		}
+	}
 	public function login($uname,$upass)
 	{
 		try

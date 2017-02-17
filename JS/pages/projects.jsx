@@ -32,7 +32,8 @@ export default class projects extends(React.Component){
 		
 		const list2 = this.state.projects.map((u,index)=>
 			<tr key = {index}><td>{index+1}</td>
-			<td>{u.project_name}</td>
+			<td><Project id = {u.id} 
+			name={u.project_name}/></td>
 			<td>{this.state.schools[u.school_id]['name']}</td>
 			<td>{u.start}</td>
 			<td>{u.finish}</td></tr>
@@ -40,29 +41,22 @@ export default class projects extends(React.Component){
 		
 		return (
 			<div>
-				<div>
-					<Table responsive>
-						<thead>
-						  <tr>
-							 <th>Номер</th>
-							<th>Название</th>
-							<th>Школа</th>
-							<th>Начало</th>
-							<th>Конец</th>
-						  </tr>
-						</thead>
-						<tbody>
-							{list2}	
-						</tbody>
-  					</Table>
-				</div>
-				<div>
-					<h1>Ваши проекты:</h1>
-					<ul>
-						{list}
-					</ul>
-					<Link to="newProject">Новое расписание</Link>
-				</div>
+				<h1>Ваши проекты:</h1>
+				<Table responsive>
+					<thead>
+					  <tr>
+						 <th>Номер</th>
+						<th>Название</th>
+						<th>Школа</th>
+						<th>Начало</th>
+						<th>Конец</th>
+					  </tr>
+					</thead>
+					<tbody>
+						{list2}	
+					</tbody>
+				</Table>
+				<Link to="newProject">Новое расписание</Link>
 			</div>	
 		);
 	}
