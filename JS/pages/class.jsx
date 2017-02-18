@@ -110,12 +110,17 @@ export default class Class extends(React.Component){
 
 	renderCounter(buttons, isAmount){
 		const { amount,isDragging } = this.props;
-		
+		const st = {
+			backgroundColor:"transparent",
+			border:"0px solid white"
+		};
+		//<input type="number" value={amount} style={st} /> ADD ME!
 		if (buttons)
 			return(
 				<strong className="pull-right counter">
 					<Glyphicon onClick={this.removeCopy} glyph="chevron-left"/>
 					{isDragging?(''+(amount-1)):''+amount }
+					
 					<Glyphicon onClick={this.addCopy} glyph="chevron-right"/>
 				</strong>
 			)

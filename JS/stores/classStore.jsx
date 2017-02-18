@@ -604,12 +604,12 @@ class ClassStore extends EventEmitter{
 
 		setTimeout((()=>{this.setable = true}).bind(this), 100);
 		this.refreshStoppingHighlight();
-
-		for (let x=0; x < this.stoppingHighlight.width; x++){
-			for (let y=0; y< this.stoppingHighlight.height; y++){
-				this.canDrop(x,y,false,true,-1,true);//rewrite it to run one time
+		if(this.highlight)
+			for (let x=0; x < this.stoppingHighlight.width; x++){
+				for (let y=0; y< this.stoppingHighlight.height; y++){
+					this.canDrop(x,y,false,true,-1,true);//rewrite it to run one time
+				}
 			}
-		}
 
 		this.emit("changeHighlight");
 	}

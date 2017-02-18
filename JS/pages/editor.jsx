@@ -24,6 +24,7 @@ export default class Editor extends(React.Component){
 		this.notGridded = true;
 		this.state={subjects:false};
 		classStore.initEmptyProj();
+		classStore.highlight = true;
 		classStore.loadProject(props.params.id);
 		this.handleSwitch = this.handleSwitch.bind(this);
 	}

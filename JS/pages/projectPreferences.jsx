@@ -23,6 +23,7 @@ export default class ProjectPreferences extends(React.Component){
 		super(props);
 		this.grades = [];
 		this.state = {};
+		classStore.highlight = false;
 		classStore.loadProject(props.params.id).then(()=>{
 			//TODO: add the "add" button
 			for (let grade in classStore.school.grades){
