@@ -90,6 +90,7 @@ class USER
 					return ['isLoggedin'=>true, 'name' => $_SESSION['user_name']];
 				}
 			}
+			http_response_code(400);
 			return ['isLoggedin'=>false];
 		}
 		catch(PDOException $e)
@@ -325,10 +326,7 @@ class USER
 	}
 	public function save($p_id)
 	{
-		//echo __DIR__;
-		//$command = 'python /var/www/html/Raspisator/saveToXcell.py '. escapeshellcmd($p_id);
-		//echo $command;
-		$command = 'python /var/www/html/Raspisator/saveToXcell.py '. escapeshellcmd($p_id).' > /var/www/html/Raspisator/log.txt';
+		$command = '/usr/bin/python '.__DIR__.'/saveToXcell.py '. $p_id.' 2>&1';//.' > '.__DIR__.'/excel_log.txt');
 		shell_exec($command);
 	}
 	public function get_school_lessons($school_id)

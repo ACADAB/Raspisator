@@ -22,7 +22,7 @@ export default class Register extends(React.Component){
 		}
 		this.updateFormData = FormData.updateFormData.bind(this);
 		this.setFormData = FormData.setFormData.bind(this);
-		this.setState({alertMessage: ""});
+		this.state = {alertMessage: ""};
 	}
 	handleSubmit(event){
 		this.setState({alertMessage: ""});
