@@ -417,6 +417,31 @@ class ClassStore extends EventEmitter{
 		return teachers.filter((t)=>{return this.schedule[t][x]})
 	}
 
+	canDropID(x, y, id){
+		const lessons = [this.getClassByID(id)];
+
+		let isConflict = false;
+
+		if (!this.editingSubjected && this.colClasses[y] != lessons[0].grade){
+			return false;
+		}
+
+		if (this.freeTeachers(lessons.map((l)=>{return l.teacher}), x).length === 0){//! this.schedule[lesson.teacher][x]){
+			return false
+		}
+
+		for (let i=0; i< this.table.height; i++){
+			if (i!=y && !lessons.some((lesson) => {
+					//console.log(lesson, this.table.table[x][i], );
+					return this.table.table[x][i] == -1 || this.getClassByID( this.table.table[x][i]).teacher != lesson.teacher
+				})){
+				return false;
+			}
+		}
+		return true;
+	}
+
+
 	canDrop(x, y, highlight = false, rec= true, interID=-1, first=false){
 		if (!highlight && !first){
 			return !this.stoppingHighlight.table[x][y].hasHighlight(Highlight.UNAVAILABLE);
@@ -578,7 +603,7 @@ class ClassStore extends EventEmitter{
 	swapByID(id1,id2, subjected = false){
 		const pos2 = this.classPosition[id2];
 		if (subjected) {
-			const lesson = this.findLessons(this.editingID, this.colClasses[pos2.y])[0];
+			const lesson = this.findLessons(this.editingID, this.colClasses[pos2.y]).filter((l)=>{return this.canDropID(pos2.x,pos2.y, l.id)})[0];
 			id1 = lesson.id;
 		}
 
@@ -634,7 +659,7 @@ class ClassStore extends EventEmitter{
 	//supposes, that (x,y) is empty
 	setUsed(id,x,y, subjected = false){
 		if (subjected) {
-			const lesson = this.findLessons(this.editingID, this.colClasses[y])[0];
+			const lesson = this.findLessons(this.editingID, this.colClasses[y]).filter((l)=>{return this.canDropID(x,y, l.id)})[0];
 			id = lesson.id;
 		}
 		const pos = this.classPosition[id];
