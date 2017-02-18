@@ -1,6 +1,7 @@
 import React from "react";
 import FormData from 'react-form-data';
 import request from '../API.jsx';
+import renderAlert from './alert.jsx';
 import {Form, FormControl, FormGroup, Col, ControlLabel} from 'react-bootstrap';
 import * as AccountActions from '../actions/accountActions.jsx';
 
@@ -16,12 +17,22 @@ export default class Register extends(React.Component){
 			umail:"",
 			password:"",
 			name:"",
-			uname:""
+			uname:"",
+			secpassword:""
 		}
 		this.updateFormData = FormData.updateFormData.bind(this);
 		this.setFormData = FormData.setFormData.bind(this);
+		this.setState({alertMessage: ""});
 	}
 	handleSubmit(event){
+		this.setState({alertMessage: ""});
+		console.log(this.formData);
+		if(this.formData.password != this.formData.secpassword)
+		{
+			console.log(this.formData);
+			this.setState({alertMessage: "Пароли не совпадают"});
+			return;
+		}
 		const dat = this.formData;
 		const overlayAlert = {message: 'Регистрация пользователя', wait:true, type: 'warning'};
 		const successAlert = {message: 'Пользователь успешно зарегистрирован', wait:false, type: 'success'};
@@ -53,6 +64,12 @@ export default class Register extends(React.Component){
 						</Col>
 					</FormGroup>
 					<FormGroup>
+						<Col sm={3} md={3} componentClass={ControlLabel}>Повторите пароль</Col>
+						<Col sm={10} md={3}>
+							<FormControl type="password" name="secpassword"/>
+						</Col>
+					</FormGroup>
+					<FormGroup>
 						<Col sm={3} md={3} componentClass={ControlLabel}>ФИО или псевдоним</Col>
 						<Col sm={10} md={3}>
 							<FormControl type="name" name="name"/>
@@ -69,6 +86,7 @@ export default class Register extends(React.Component){
 							<Button bsStyle='success' type='button' className="btn" onClick={e => this.handleSubmit(e)}>OК</Button>
 						</Col>
 					</FormGroup>
+					{renderAlert(this.state.alertMessage)}
 				</Form>
 				
 			</div>

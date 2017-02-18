@@ -7,6 +7,7 @@ import {FormControl} from 'react-bootstrap';
 import FormData from 'react-form-data';
 import ButtonToolbar from 'react-bootstrap'
 import {Button, Form, Col} from 'react-bootstrap'
+import renderAlert from './alert.jsx';
 
 export default class profile extends(React.Component){
 	constructor(props){
@@ -15,13 +16,21 @@ export default class profile extends(React.Component){
 		this.loaded = 0;
 		this.formData = {
 			oldpass:"",
-			newpass:""
+			newpass:"",
+			secnewpass:""
 		}
 		this.updateFormData = FormData.updateFormData.bind(this);
 		this.setFormData = FormData.setFormData.bind(this);
 	}
 
 	handleSubmit(event){
+		this.setState({alertMessage: ""});
+		if(this.formData.newpass != this.formData.secnewpass)
+		{
+			this.setState({alertMessage: "Новые пароли не совпадают"});
+			return;
+		}
+		this.setState({schools:this.state.schools, alertMessage: ""});
 		const dat = this.formData;
 		const overlayAlert = {message: 'Меняем пароль', wait:true, type: 'warning'};
 		const successAlert = {message: 'Пароль изменен', wait:false, type: 'success'};
@@ -54,8 +63,16 @@ export default class profile extends(React.Component){
 						   placeholder=""
 						   name = "newpass"
 						/>
+						<ControlLabel>Повторите пароль</ControlLabel>
+						<FormControl
+						   type="password"
+						   value={this.state.value}
+						   placeholder=""     
+						   name = "secnewpass" 
+						/>
 						<br/>
 						<Button bsStyle='success' type='button' onClick={e => this.handleSubmit(e)}>Применить</Button>
+						{renderAlert(this.state.alertMessage)}
 					</Form>
 				</Col>
 			</div>	

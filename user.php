@@ -154,7 +154,11 @@ class USER
 		}
 	}
 
-
+	public function mail($adress, $from, $subject, $text)
+	{
+		$header = 'From: '.$from . phpversion();
+		mail($adress, $subject, $text, $header); 
+	}
 	public function get_school_data($sid)
 	{
 		try
