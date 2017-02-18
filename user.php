@@ -322,6 +322,8 @@ class USER
 	public function save($p_id)
 	{
 		//echo __DIR__;
+		//$command = 'python /var/www/html/Raspisator/saveToXcell.py '. escapeshellcmd($p_id);
+		//echo $command;
 		$command = 'python /var/www/html/Raspisator/saveToXcell.py '. escapeshellcmd($p_id).' > /var/www/html/Raspisator/log.txt';
 		shell_exec($command);
 	}
