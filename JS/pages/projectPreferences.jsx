@@ -43,7 +43,7 @@ export default class ProjectPreferences extends(React.Component){
 
 	componentWillMount(){
 		classStore.highlight = false;
-		classStore.loadProject(this.props.params.id).then(()=>{
+		classStore.loadProject(this.props.params.id).then((res)=>{
 			//TODO: add the "add" button
 			for (let grade in classStore.school.grades){
 				this.grades.push(grade);
@@ -53,7 +53,14 @@ export default class ProjectPreferences extends(React.Component){
 				const g2 = classStore.school.grades[b];
 				//console.log(a,g1,b,g2 ,parseInt(g1.grade_number) > parseInt(g2.grade_number));
 				return parseInt(g1.grade_number) > parseInt(g2.grade_number);
-			})
+			});
+			this.formData = {
+				p_id:this.formData.p_id,
+				p_name:res.project.project_name,
+				start:res.project.start,
+				finish:res.project.finish,
+				lessons_per_day:res.project.lessons_per_day
+			};
 			this.forceUpdate();
 		}).then(()=>{classStore.loadAllLessons(classStore.schoolID)});
 	}

@@ -83,6 +83,8 @@ class ClassStore extends EventEmitter{
 		this.used = [];
 		this.classPosition = {};
 
+		this.project_name="";
+
 		this.maxID = -1; 
 		this.schoolID = -1;
 
@@ -164,6 +166,7 @@ class ClassStore extends EventEmitter{
 
 			this.initEmptyProj();
 			this.projectID = project_id;
+			this.project_name = res.data.project.project_name;
 
 			this.school = res.data.school;
 
@@ -201,7 +204,7 @@ class ClassStore extends EventEmitter{
 				this.emit('change');
 				this.emit('init');
 				console.log('null data');
-				return;
+				return res.data;
 			}
 			const data = JSON.parse(res.data.project.project_data);
 			const usedLen = data.lessons.filter((lesson)=>lesson.isUsed).length;
@@ -248,6 +251,7 @@ class ClassStore extends EventEmitter{
 			this.makeVerboseLessons();
 			this.emit('change');
 			this.emit('init');
+			return res.data;
 		})//.catch(err=>{console.log(err);});
 	}
 
