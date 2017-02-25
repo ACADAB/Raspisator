@@ -138,6 +138,7 @@ ul{
 
 .twitter-picker{
 	z-index: 20;
+	position: absolute !important; 
 }
 
 
@@ -301,6 +302,11 @@ body{
 	background-color: 	 #F8F8F8  ;
 }
 
+.count-changer{
+	background-color: transparent;
+	border:0px solid white;
+	width: 40px;
+}
 
 /*React spinner*/
 .react-spinner {

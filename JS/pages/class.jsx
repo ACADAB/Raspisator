@@ -51,6 +51,7 @@ export default class Class extends(React.Component){
 
 		const {db_id, subjected} = props;
 		this.initInfo(db_id, subjected);
+		this.changeAmount = this.changeAmount.bind(this);
 	}
 
 	initSubjectInfo(db_id){
@@ -77,6 +78,18 @@ export default class Class extends(React.Component){
 
 	removeCopy(){
 		classStore.removeUnused(this.props.db_id);
+	}
+
+	changeAmount(e){
+		if (e.target.value > this.props.amount){
+			for (let i = 0; i < e.target.value - this.props.amount; i++){
+				this.addCopy();
+			}
+		} else {
+			for (let i = 0; i < this.props.amount - e.target.value; i++){
+				this.removeCopy();
+			}
+		}
 	}
 
 	shouldComponentUpdate(nP, nS){
@@ -110,19 +123,20 @@ export default class Class extends(React.Component){
 
 	renderCounter(buttons, isAmount){
 		const { amount,isDragging } = this.props;
-		const st = {
-			backgroundColor:"transparent",
-			border:"0px solid white"
-		};
+		
+		/*
+		<Glyphicon onClick={this.removeCopy} glyph="chevron-left"/>
+		{isDragging?(''+(amount-1)):''+amount }
+		
+		<Glyphicon onClick={this.addCopy} glyph="chevron-right"/>
+		*/
 		//<input type="number" value={amount} style={st} /> ADD ME!
 		if (buttons)
 			return(
-				<strong className="pull-right counter">
-					<Glyphicon onClick={this.removeCopy} glyph="chevron-left"/>
-					{isDragging?(''+(amount-1)):''+amount }
-					
-					<Glyphicon onClick={this.addCopy} glyph="chevron-right"/>
-				</strong>
+				<div className="pull-right counter">
+					<input className="count-changer" onChange={this.changeAmount} type="number" onFocus={(e)=>{e.target.select()}} value={isDragging?(''+(amount-1)):''+amount }/>
+
+				</div>
 			)
 		else {
 			return(
