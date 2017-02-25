@@ -136,6 +136,10 @@ ul{
 	filter: brightness(85%);
 }
 
+.selected{
+	filter: brightness(85%);
+}
+
 .twitter-picker{
 	z-index: 20;
 	position: absolute !important; 
@@ -156,6 +160,10 @@ ul{
 	zIndex: 1;
 	opacity: 0.5;
 	pointer-events: none;
+}
+
+.teacher-card{
+	background-color: #f47d42;
 }
 
 .margined{

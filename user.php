@@ -90,6 +90,7 @@ class USER
 					return ['isLoggedin'=>true, 'name' => $_SESSION['user_name']];
 				}
 			}
+			http_response_code(400);
 			return ['isLoggedin'=>false];
 		}
 		catch(PDOException $e)
@@ -276,14 +277,20 @@ class USER
 
 		}
 	}
-	public function get_my_roles()
+	public function get_my_roles($s_id = -1)
 	{
 		try
 		{
-			
 			$result = [];
-			$stmt = $this->db->prepare("SELECT role_id, school_id FROM role_user_school_relation WHERE user_id = :oid");
+			$query = "SELECT role_id, school_id FROM role_user_school_relation WHERE user_id = :oid";
+			if ($s_id>=0)
+				$query = $query." AND school_id = :sid";
+			
+			$stmt = $this->db->prepare($query);
 			$stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
+			if ($s_id >= 0){
+				$stmt->bindparam(":sid", $s_id, PDO::PARAM_INT);
+			}
 			$stmt->execute();
 			$result = $stmt->fetchall(PDO::FETCH_ASSOC);
 			return $result;
@@ -465,12 +472,13 @@ class USER
 			return ['error'=>$e->getMessage()];
 		}
 	}
-	public function add_lesson($subject_id, $teacher_id, $grade_id)
+	public function add_lesson($school_id,$subject_id, $teacher_id, $grade_id)
 	{
 		try
 		{
-			$stmt = $this->db->prepare("INSERT INTO lessons (subject_id, teacher_id, grade_id) VALUES (:subject_id, :teacher_id, :grade_id)");
+			$stmt = $this->db->prepare("INSERT INTO lessons (school_id, subject_id, teacher_id, grade_id) VALUES (:school_id,:subject_id, :teacher_id, :grade_id)");
 			$stmt->bindparam(":subject_id", $subject_id);
+			$stmt->bindparam(":school_id", $school_id, PDO::PARAM_INT);
 			$stmt->bindparam(":teacher_id", $teacher_id, PDO::PARAM_INT);
 			$stmt->bindparam(":grade_id", $grade_id, PDO::PARAM_INT);
 			$stmt->execute();
