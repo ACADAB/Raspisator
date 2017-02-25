@@ -156,7 +156,7 @@ class USER
 
 	public function mail($adress, $from, $subject, $text)
 	{
-		$header = 'From: '.$fromг;
+		$header = 'From: '.$from;
 		mail($adress, $subject, $text, $header); 
 	}
 	public function get_school_data($sid)
