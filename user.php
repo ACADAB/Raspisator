@@ -156,7 +156,7 @@ class USER
 
 	public function mail($adress, $from, $subject, $text)
 	{
-		$header = 'From: '.$from;
+		$header = 'From: '.$fromг;
 		mail($adress, $subject, $text, $header); 
 	}
 	public function get_school_data($sid)
@@ -544,6 +544,36 @@ class USER
 			return ['error'=>$e->getMessage()];
 		}
 	}
+
+	public function edit_project($p_id, $p_name, $start, $finish, $lessons_per_day)
+	{
+		try
+		{
+			if(isset($_SESSION['user_session'])) //and in_array({1,2}, $_SESSION['roles'])
+			{
+				$stmt = $this->db->prepare("UPDATE projects SET project_name=:pr_name, start=:start, finish=:finish, lessons_per_day=:lpd WHERE id=:pid AND owner_id=:oid");
+				$stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
+				$stmt->bindparam(":pid", $p_id, PDO::PARAM_INT);
+				$stmt->bindparam(":lpd", $lessons_per_day, PDO::PARAM_INT);
+				$stmt->bindparam(":pr_name", $p_name);
+				$stmt->bindparam(":start", $start);
+				$stmt->bindparam(":finish", $finish);
+				$stmt->execute();
+				http_response_code(200);
+				return ['success'=>'OK'];
+			}
+			else 
+			{
+				return 0;
+			}
+		}
+		catch(PDOException $e)
+		{
+			//http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>$e->getMessage()];
+		}
+	}
+
 	public function add_school($school_name, $lessons_per_day)
 	{
 		try
