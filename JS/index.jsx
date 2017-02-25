@@ -8,6 +8,7 @@ import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 
 import Layout from './pages/layout.jsx';
 import Projects from './pages/projects.jsx';
+import Schools from './pages/schools.jsx';
 import Register from './pages/register.jsx';
 import Logout from './pages/logout.jsx';
 import Login from './pages/login.jsx';
@@ -33,6 +34,7 @@ ReactDOM.render((
 		<Route path="/" component={Layout}>
 			<IndexRoute component={Index}></IndexRoute>
 			<Route path="projects" component={Projects}></Route>
+			<Route path="schools" component={Schools}></Route>
 			<Route path="register" component={Register}></Route>
 			<Route path="newProject" component={NewProject}></Route>
 			<Route path="logout" component={Logout}></Route>

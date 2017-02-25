@@ -74,7 +74,8 @@ export default class Layout extends(React.Component){
 			menu = [
 				<NavItem eventKey="profile" key={0}>Профиль</NavItem>,
 				<NavItem eventKey="projects" key={1}>Проекты</NavItem>,
-				<NavItem eventKey="schedule" key={2}>Расписание</NavItem>
+				<NavItem eventKey="schools" key={2}>Школы</NavItem>,
+				<NavItem eventKey="schedule" key={3}>Расписание</NavItem>
 			];
 			login = [
 				<NavItem key={0}>Здравствуйте, {this.state.account.name}</NavItem>,
