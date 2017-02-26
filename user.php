@@ -46,7 +46,7 @@ class USER
 				$this->redirect("https://".LOCATION."/#/register/approved");
 				return ;
 			} else {
-				http_response_code(201);
+				$this->redirect("https://".LOCATION."/#/register/failed");
 			}
 		}
 		catch(PDOException $e)
@@ -499,7 +499,7 @@ class USER
 	public function redirect($url)
 	{
 		header("Location: $url");
-
+		http_response_code(303);
 	}
 	public function set_role_user_school_relation($school_id, $user_id, $role_id, $is_approved)
 	{
