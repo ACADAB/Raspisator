@@ -16,6 +16,7 @@ import Editor from './pages/editor.jsx';
 import Index from './pages/index.jsx';
 import Home from './pages/home.jsx';
 import NewProject from './pages/newProject.jsx';
+import NewSchool from './pages/newSchool.jsx';
 import School from './pages/school.jsx';
 import Schedule from './pages/schedule.jsx';
 import ProjectPreferences from './pages/projectPreferences.jsx';
@@ -46,6 +47,7 @@ ReactDOM.render((
 				<Route path="failed" component={AppFail}></Route>
 			</Route>
 			<Route path="newProject" component={NewProject}></Route>
+			<Route path="newSchool" component={NewSchool}></Route>
 			<Route path="logout" component={Logout}></Route>
 			<Route path="login" component={Login}></Route>
 			<Route path="schedule" component={Schedule}></Route>
