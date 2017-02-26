@@ -22,6 +22,42 @@ class USER
 		$this->db = $DB_con;
 	}
 
+	public function approve_user($id, $token)
+	{
+		try
+		{
+			$stmt = $this->db->prepare("SELECT user_approve.user_id, user_approve.token, users.user_email FROM user_approve JOIN users ON user_approve.user_id = users.user_id WHERE user_approve.user_id=:id AND user_approve.token=:token");
+			$stmt->bindparam(":id", $id);
+			$stmt->bindparam(":token", $token); 
+			$stmt->execute(); 
+			$result = $stmt->fetchall(PDO::FETCH_ASSOC);
+			if(count($result) > 0){
+				$stmt = $this->db->prepare("DELETE FROM user_approve WHERE user_id=:id AND token=:token");
+				$stmt->bindparam(":id", $id);
+				$stmt->bindparam(":token", $token); 
+				$stmt->execute(); 				
+
+				$stmt = $this->db->prepare("UPDATE users SET approved=1 WHERE user_id=:id");
+				$stmt->bindparam(":id", $id);
+				$stmt->execute(); 				
+
+				$this->mail($result[0]['user_email'], "noreply", "Регистриция в Raspisator.com","Аккаунт успешно зарегистрирован");
+
+				$this->redirect("https://".LOCATION."/#/register/approved");
+				http_response_code(201);//FIX ME NOT SENDING
+				return ;
+			} else {
+				$this->redirect("https://".LOCATION."/#/register/failed");
+				http_response_code(201);
+			}
+		}
+		catch(PDOException $e)
+		{
+			http_response_code(400);//FIX ME NOT SHOWING
+			return ['error' =>$e->getMessage()];
+		}    
+	}
+
 	public function register($name,$uname,$umail,$upass)
 	{
 		try
@@ -33,9 +69,18 @@ class USER
 			$stmt->bindparam(":umail", $umail);
 			$stmt->bindparam(":upass", $new_password);            
 			$stmt->execute(); 
-			$stmt = $this->db->prepare("INSERT INTO role_user_school_relation(user_id,role_id,school_id, is_approved) VALUES(".strval($this->db->lastInsertId()).",1,1,1)");
+			/*$stmt = $this->db->prepare("INSERT INTO role_user_school_relation(user_id,role_id,school_id, is_approved) VALUES(".strval($this->db->lastInsertId()).",1,1,1)");
 			$stmt->execute(); 
 			//return $stmt; 
+			*/
+			$id = $this->db->lastInsertId();
+
+			$token = $this->generate_token();
+			$stmt = $this->db->prepare("INSERT INTO user_approve(user_id, token) VALUES (".strval($id).',"'.$token.'")');
+			$stmt->execute(); 
+
+			$this->mail($umail, "noreply", "Регистриция в Raspisator.com","<p>Для подтверждения вашего аккаунта перейдиите по ссылке:</p><a href='https://".LOCATION."/API/approveUser.php?id=".strval($id)."&token=".$token."'>Подтвердить аккаунт</a>");
+
 			http_response_code(201);//FIX ME NOT SENDING
 			return ['success'=>'OK'];
 		}
@@ -82,7 +127,7 @@ class USER
 			$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 			if($stmt->rowCount() > 0)
 			{
-				if(password_verify($upass, $userRow['user_pass']))
+				if($userRow['approved'] == 1 && password_verify($upass, $userRow['user_pass']))
 				{
 					$_SESSION['user_session'] = $userRow['user_id'];
 					$_SESSION['user_name'] = $userRow['user_name'];
@@ -155,9 +200,13 @@ class USER
 		}
 	}
 
+	public function generate_token(){
+		return bin2hex(openssl_random_pseudo_bytes(16));
+	}
+
 	public function mail($adress, $from, $subject, $text)
 	{
-		$header = 'From: '.$from;
+		$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 		mail($adress, $subject, $text, $header); 
 	}
 	public function get_school_data($sid)

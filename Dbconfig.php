@@ -25,7 +25,7 @@ catch(PDOException $e)
      echo $e->getMessage();
 }
 
-
+define("LOCATION", $ini['location']);
 include_once 'user.php';
 $user = new USER($DB_con);
 

@@ -20,7 +20,10 @@ import School from './pages/school.jsx';
 import Schedule from './pages/schedule.jsx';
 import ProjectPreferences from './pages/projectPreferences.jsx';
 import NotFound from './pages/404.jsx';
-import Profile from './pages/profile.jsx'
+import Profile from './pages/profile.jsx';
+import RegSuccess from './pages/regSuccess.jsx';
+import AppSuccess from './pages/appSuccess.jsx';
+import AppFail from './pages/appFail.jsx';
 
 //import properties from './settings.jsx';
 
@@ -36,7 +39,12 @@ ReactDOM.render((
 			<IndexRoute component={Index}></IndexRoute>
 			<Route path="projects" component={Projects}></Route>
 			<Route path="schools" component={Schools}></Route>
-			<Route path="register" component={Register}></Route>
+			<Route path="register">
+				<IndexRoute component={Register}></IndexRoute>
+				<Route path="success" component={RegSuccess}></Route>
+				<Route path="approved" component={AppSuccess}></Route>
+				<Route path="failed" component={AppFail}></Route>
+			</Route>
 			<Route path="newProject" component={NewProject}></Route>
 			<Route path="logout" component={Logout}></Route>
 			<Route path="login" component={Login}></Route>
