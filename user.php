@@ -44,10 +44,8 @@ class USER
 				$this->mail($result[0]['user_email'], "noreply", "Регистриция в Raspisator.com","Аккаунт успешно зарегистрирован");
 
 				$this->redirect("https://".LOCATION."/#/register/approved");
-				http_response_code(201);//FIX ME NOT SENDING
 				return ;
 			} else {
-				$this->redirect("https://".LOCATION."/#/register/failed");
 				http_response_code(201);
 			}
 		}
@@ -501,6 +499,7 @@ class USER
 	public function redirect($url)
 	{
 		header("Location: $url");
+
 	}
 	public function set_role_user_school_relation($school_id, $user_id, $role_id, $is_approved)
 	{
