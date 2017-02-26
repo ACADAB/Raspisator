@@ -183,6 +183,31 @@ class SchoolStore extends EventEmitter{
 		this.emit('change');
 	}
 
+	addSubject(name){
+		const overlayAlert = {message: 'Добавление урока', wait:true, type: 'warning'};
+		const successAlert = {message: 'Урок добавлен', wait:false, type: 'success'};
+		const errorAlert = {message: 'Ошибка при добавлении', wait:false, type: 'danger'};
+		
+		request('addSubject', {school_id:this.schoolID, name:name},'post',overlayAlert,successAlert, errorAlert).then((res)=>{
+			this.school.subjects[res.data.id] = {id:res.data.id, name:name};
+			this.emit('change');
+		});
+
+	}
+
+	addGrade(name, number){
+		const overlayAlert = {message: 'Добавление класса', wait:true, type: 'warning'};
+		const successAlert = {message: 'Класс добавлен', wait:false, type: 'success'};
+		const errorAlert = {message: 'Ошибка при добавлении', wait:false, type: 'danger'};
+		
+		request('addGrade', {school_id:this.schoolID, name:name, number:number},'post',overlayAlert,successAlert, errorAlert).then((res)=>{
+			console.log(res);
+			this.school.grades[res.data.id] = {id:res.data.id, grade_name:name, grade_number:number};
+			this.emit('change');
+		});
+
+	}
+
 	save(){
 		const news = this.added.filter((e=>this.removed.indexOf(e) == -1));
 		const rems = this.removed.filter((e=>this.added.indexOf(e) == -1));

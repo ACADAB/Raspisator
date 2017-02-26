@@ -39,7 +39,8 @@ export default class Register extends(React.Component){
 		const errorAlert = {message: 'Ошибка при регистрации пользователя', wait:false, type: 'danger'};
 		request('register', dat, 'post', overlayAlert, successAlert, errorAlert).then(res=>{
 			console.log(res);
-			hashHistory.push('register/success');
+			if (res.data.success == "OK")
+				hashHistory.push('register/success');
 		}).catch(e=>{console.log(e)});//fix me!
 	}
 

@@ -56,6 +56,15 @@ class USER
 		}    
 	}
 
+	public function hasRole($id, $s_id){
+		$roles = $this->get_my_roles($s_id);
+		foreach ($roles as $role) {
+			if ($role['school_id'] == $s_id && $role['role_id'] == $id)
+				return true;
+		} 
+		return false;
+	}
+
 	public function register($name,$uname,$umail,$upass)
 	{
 		try
@@ -202,9 +211,54 @@ class USER
 		return bin2hex(openssl_random_pseudo_bytes(16));
 	}
 
+	public function add_subject($s_id, $name)
+	{
+		if (!$this->hasRole(2, $s_id)){
+			http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>"Access denied"];
+		}
+		try
+		{
+			$stmt = $this->db->prepare("INSERT INTO subjects (name,school_id) VALUES (:name, :sid)");
+			$stmt->bindparam(":name", $name);
+			$stmt->bindparam(":sid", $s_id, PDO::PARAM_INT);
+			$stmt->execute();
+			http_response_code(200);
+			return ['success'=>'OK', 'id'=> $this->db->lastInsertId()];
+		}
+		catch(PDOException $e)
+		{
+			http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>$e->getMessage()];
+		}
+	}
+
+	public function add_grade($s_id, $name, $number)
+	{
+		if (!$this->hasRole(2, $s_id)){
+			http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>"Access denied"];
+		}
+		try
+		{
+			$stmt = $this->db->prepare("INSERT INTO grades (grade_name,grade_number,school_id) VALUES (:name, :num, :sid)");
+			$stmt->bindparam(":name", $name);
+			$stmt->bindparam(":num", $number);
+			$stmt->bindparam(":sid", $s_id, PDO::PARAM_INT);
+			$stmt->execute();
+			http_response_code(200);
+			return ['success'=>'OK', 'id'=> $this->db->lastInsertId()];
+		}
+		catch(PDOException $e)
+		{
+			http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>$e->getMessage()];
+		}
+	}
+
 	public function mail($adress, $from, $subject, $text)
 	{
-		$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+		$header = 'From: '.$from."@".LOCATION."\r\nContent-Type: text/html; charset=UTF-8\r\n";
 		mail($adress, $subject, $text, $header); 
 	}
 	public function get_school_data($sid)

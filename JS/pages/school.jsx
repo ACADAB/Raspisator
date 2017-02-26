@@ -8,6 +8,9 @@ import { hashHistory } from 'react-router';
 import schoolStore from '../stores/schoolStore.jsx';
 import TeachersList from './teachersList.jsx';
 
+import AddSubject from './addSubject.jsx';
+import AddGrade from './addGrade.jsx';
+
 export default class School extends(React.Component){
 	constructor(props){
 		super(props);
@@ -32,15 +35,15 @@ export default class School extends(React.Component){
 						<Button className="save-btn btn-success" onClick={(e)=>{schoolStore.save();}}> Сохранить </ Button>
 					</ButtonGroup>
 					<Col md={4}>
-						<h2>Учителя</h2>
+						<h2 className="school-list-heading">Учителя</h2>
 						<TeachersList type="teachers"/>
 					</Col>
 					<Col md={4}>
-						<h2>Предметы</h2>
+						<h2 className="school-list-heading">Предметы</h2><AddSubject />
 						<TeachersList type="subjects"/>
 					</Col>
 					<Col md={4}>
-						<h2>Классы</h2>
+						<h2 className="school-list-heading">Классы</h2><AddGrade />
 						<TeachersList type="grades"/>
 					</Col>
 				</Row>

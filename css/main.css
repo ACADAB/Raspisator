@@ -281,6 +281,22 @@ table{
 
 }
 
+.school-list-heading{
+	display: inline;
+}
+
+.add-btn-wrapper{
+	display: inline-block;
+}
+
+.add-btn{
+	opacity: 0.5;
+	margin:8px;
+}
+
+.add-btn:hover{
+	opacity: 1.0;
+}
 
 .alert-overlay{
 	border-radius:7px;
