@@ -202,6 +202,12 @@ ul{
 	max-height: 90%;
 }
 
+.users-list-wrapper{
+	overflow-y: hidden;
+	overflow-x: hidden;
+	max-height: 50%;
+}
+
 .preview{
 	position: absolute;
     top: 0px;

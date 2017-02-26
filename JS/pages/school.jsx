@@ -10,6 +10,7 @@ import TeachersList from './teachersList.jsx';
 
 import AddSubject from './addSubject.jsx';
 import AddGrade from './addGrade.jsx';
+import AddTeacher from './addTeacher.jsx';
 
 export default class School extends(React.Component){
 	constructor(props){
@@ -35,7 +36,7 @@ export default class School extends(React.Component){
 						<Button className="save-btn btn-success" onClick={(e)=>{schoolStore.save();}}> Сохранить </ Button>
 					</ButtonGroup>
 					<Col md={4}>
-						<h2 className="school-list-heading">Учителя</h2>
+						<h2 className="school-list-heading">Учителя</h2><AddTeacher />
 						<TeachersList type="teachers"/>
 					</Col>
 					<Col md={4}>

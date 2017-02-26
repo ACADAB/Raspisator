@@ -208,6 +208,20 @@ class SchoolStore extends EventEmitter{
 
 	}
 
+	addTeacher(id, name){
+		const overlayAlert = {message: 'Добавление учителя', wait:true, type: 'warning'};
+		const successAlert = {message: 'Учитель добавлен', wait:false, type: 'success'};
+		const errorAlert = {message: 'Ошибка при добавлении', wait:false, type: 'danger'};
+		console.log(id,name);
+		request('addRole', {school_id:this.schoolID, user_id:id, role_id:1},'post',overlayAlert,successAlert, errorAlert).then((res)=>{
+			console.log(res);
+			this.school.teachers[id] = {user_id:id, name:name};
+			this.emit('change');
+		});
+
+	}
+
+
 	save(){
 		const news = this.added.filter((e=>this.removed.indexOf(e) == -1));
 		const rems = this.removed.filter((e=>this.added.indexOf(e) == -1));

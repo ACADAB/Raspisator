@@ -555,8 +555,9 @@ class USER
 		header("Location: $url");
 		http_response_code(303);
 	}
-	public function set_role_user_school_relation($school_id, $user_id, $role_id, $is_approved)
+	public function set_role_user_school_relation($school_id, $user_id, $role_id)
 	{
+		$is_approved = !$this->hasRole(2, $school_id);
 		try
 		{
 			$stmt = $this->db->prepare("INSERT INTO role_user_school_relation (user_id, role_id, school_id, is_approved) VALUES (:user_id, :role_id, :school_id, :is_approved)");
@@ -565,12 +566,12 @@ class USER
 			$stmt->bindparam(":school_id", $school_id, PDO::PARAM_INT);
 			$stmt->bindparam(":is_approved", $is_approved, PDO::PARAM_INT);
 			$stmt->execute();
-			http_response_code(200);
+			//http_response_code(200);
 			return ['success'=>'OK'];
 		}
 		catch(PDOException $e)
 		{
-			http_response_code(400);//FIX ME NOT SENDING
+			//http_response_code(400);//FIX ME NOT SENDING
 			return ['error'=>$e->getMessage()];
 		}
 	}
