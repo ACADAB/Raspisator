@@ -566,12 +566,12 @@ class USER
 			$stmt->bindparam(":school_id", $school_id, PDO::PARAM_INT);
 			$stmt->bindparam(":is_approved", $is_approved, PDO::PARAM_INT);
 			$stmt->execute();
-			//http_response_code(200);
+			http_response_code(200);
 			return ['success'=>'OK'];
 		}
 		catch(PDOException $e)
 		{
-			//http_response_code(400);//FIX ME NOT SENDING
+			http_response_code(400);//FIX ME NOT SENDING
 			return ['error'=>$e->getMessage()];
 		}
 	}
