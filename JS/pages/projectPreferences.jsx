@@ -106,11 +106,11 @@ export default class ProjectPreferences extends(React.Component){
 			<div>
 				<Tabs defaultActiveKey={1} id="project-settings-tabs">
 					<Tab eventKey={1}  title="Количество уроков">
-						<p>Укажите количество уроков у каждого класса. Исспользуйте <Glyphicon glyph="chevron-left"/> и <Glyphicon glyph="chevron-right"/> для изменения количества пар и кликайте по урокам для изменения цвета </p>
 						<Form inline>
-							<ControlLabel >Автосохранение(каждую минуту)</ControlLabel>
-								
+							<p style={{display:"inline"}}>Укажите количество уроков у каждого класса. Исспользуйте <Glyphicon glyph="chevron-left"/> и <Glyphicon glyph="chevron-right"/> для изменения количества пар и кликайте по урокам для изменения цвета </p>	
 							<Switch onChange={this.handleSwitch} bsSize="mini" defaultValue={classStore.autoSave} wrapperClass="wrapper pull-right"/>
+							<ControlLabel className="pull-right">Автосохранение(каждую минуту)</ControlLabel>
+							
 						</Form>
 						<div className="class-list-container">
 							{gradeLists}

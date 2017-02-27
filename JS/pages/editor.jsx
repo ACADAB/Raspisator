@@ -53,11 +53,10 @@ export default class Editor extends(React.Component){
 	render(){
 		return (
 			<div className="editor noselect" draggable='false'>
-				<Link to={"projectPreferences/"+this.props.params.id}>Параметры проекта</Link>
 				<Form inline>
-					<ControlLabel >Автосохранение(каждую минуту)</ControlLabel>
-						
+					<Link to={"projectPreferences/"+this.props.params.id}>Параметры проекта</Link>
 					<Switch onChange={this.handleSwitch} bsSize="mini" defaultValue={classStore.autoSave} wrapperClass="wrapper pull-right"/>
+					<ControlLabel className="pull-right">Автосохранение(каждую минуту)</ControlLabel>
 				</Form>
 				<ButtonGroup className="fixed-buttons">
 					<Button className="btn-success save-btn" onClick={ClassActions.save}> Сохранить </ Button>
