@@ -193,6 +193,10 @@ class USER
 
 	public function get_school_teachers($school_id)
 	{
+		if (!$this->hasRole(2, $school_id)){
+			http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>"Access denied"];
+		}
 		try
 		{
 			$stmt = $this->db->prepare("SELECT DISTINCT users.user_id, name FROM users JOIN role_user_school_relation ON role_user_school_relation.user_id = users.user_id WHERE role_user_school_relation.school_id = :id AND role_user_school_relation.role_id = 1");
@@ -263,6 +267,10 @@ class USER
 	}
 	public function get_school_data($sid)
 	{
+		if (!$this->hasRole(2, $sid)){
+			http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>"Access denied"];
+		}
 		try
 		{
 
