@@ -40,7 +40,8 @@ class ScheduleStore extends EventEmitter{
 		return request('getMySchools').then((res)=>{
 			for (let i = 0; i< res.data.length; i++){
 				this.idToLPD[res.data[i].id] = parseInt(res.data[i].lessons_per_day);
-				this.idToRole[res.data[i].id] = parseInt(res.data[i].role_id);
+				let next = parseInt(res.data[i].role_id);
+				this.idToRole[res.data[i].id] = (this.idToRole[res.data[i].id] == undefined)? next : Math.max(this.idToRole[res.data[i].id], next);
 			}
 			return res;
 		});
@@ -52,6 +53,11 @@ class ScheduleStore extends EventEmitter{
 	}
 
 	getSchoolTeachers(school_id){
+		const role = this.idToRole[school_id];
+		if (role == 1) return new Promise((resolve,reject)=>{
+			//console.log('returning', this.schoolTeachers[school_id]);
+			resolve( []);
+		});
 		if (this.schoolTeachers[school_id] != undefined) return new Promise((resolve,reject)=>{
 			//console.log('returning', this.schoolTeachers[school_id]);
 			resolve( this.schoolTeachers[school_id]);
