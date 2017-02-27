@@ -46,11 +46,19 @@ export default class Editor extends(React.Component){
 		this.setState({subjects:s});
 	}
 
+	handleSwitch(e,s){
+		classStore.setAutoSave(s);
+	}
+
 	render(){
 		return (
 			<div className="editor noselect" draggable='false'>
 				<Link to={"projectPreferences/"+this.props.params.id}>Параметры проекта</Link>
-				
+				<Form inline>
+					<ControlLabel >Автосохранение(каждую минуту)</ControlLabel>
+						
+					<Switch onChange={this.handleSwitch} bsSize="mini" defaultValue={classStore.autoSave} wrapperClass="wrapper pull-right"/>
+				</Form>
 				<ButtonGroup className="fixed-buttons">
 					<Button className="btn-success save-btn" onClick={ClassActions.save}> Сохранить </ Button>
 					<a href={"API/save.php?p_id="+this.props.params.id} download><Button className="btn-success save-btn" onClick={ClassActions.save}> Загрузить </ Button></a>

@@ -52,6 +52,7 @@ class ClassStore extends EventEmitter{
 
 		this.setable = true;
 
+		this.autoSave = false;
 		this.setMaxListeners(1000);
 		this.save = this.save.bind(this);
 
@@ -132,6 +133,17 @@ class ClassStore extends EventEmitter{
 		this.schedule = {};
 		for(let id in this.school.teachers){
 			this.schedule[id] = (new Array(this.table.width)).fill(true);
+		}
+	}
+
+
+
+	setAutoSave(s){
+		if (!this.autoSave && s) {
+			this.autoSave = s;
+			this.save();
+		} else {
+			this.autoSave = s;
 		}
 	}
 
@@ -528,6 +540,9 @@ class ClassStore extends EventEmitter{
 
 
 		request('saveProject',{'data': JSON.stringify(toSave), 'project_id':this.projectID},"post", overlayAlert, successAlert, errorAlert).then(res=>{console.log(res)});
+		if (this.autoSave){
+			setTimeout(this.save, 60000);
+		}
 	}
 
 	moveUnusedItem(from,to){

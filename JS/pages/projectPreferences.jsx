@@ -12,6 +12,7 @@ import DatePicker from 'react-bootstrap-date-picker';
 import {Row, Glyphicon, Form, FormControl, Alert, Button, FormGroup, Col, ControlLabel, ButtonGroup, Tabs, Tab} from 'react-bootstrap';
 import renderAlert from './alert.jsx';
 
+import Switch from 'react-bootstrap-switch';
 
 import { hashHistory } from 'react-router';
 import { DragDropContext } from 'react-dnd';
@@ -88,6 +89,11 @@ export default class ProjectPreferences extends(React.Component){
 			}).catch(e=>{console.log(e)});//fix me!
 	}
 
+	handleSwitch(e,s){
+		classStore.setAutoSave(s);
+	}
+
+
 	render(){
 
 		const gradeLists = this.grades.map(gradeId=>
@@ -101,6 +107,11 @@ export default class ProjectPreferences extends(React.Component){
 				<Tabs defaultActiveKey={1} id="project-settings-tabs">
 					<Tab eventKey={1}  title="Количество уроков">
 						<p>Укажите количество уроков у каждого класса. Исспользуйте <Glyphicon glyph="chevron-left"/> и <Glyphicon glyph="chevron-right"/> для изменения количества пар и кликайте по урокам для изменения цвета </p>
+						<Form inline>
+							<ControlLabel >Автосохранение(каждую минуту)</ControlLabel>
+								
+							<Switch onChange={this.handleSwitch} bsSize="mini" defaultValue={classStore.autoSave} wrapperClass="wrapper pull-right"/>
+						</Form>
 						<div className="class-list-container">
 							{gradeLists}
 							<ItemPreview key="__preview" name="Item" />
