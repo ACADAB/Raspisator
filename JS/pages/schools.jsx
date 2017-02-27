@@ -14,7 +14,7 @@ export default class Schools extends(React.Component){
 	componentWillMount(){
 		this.loaded = 0;
 		
-		request('getAllSchools').then((res)=>{
+		request('getMySchools').then((res)=>{
 			this.loaded++;
 			console.log(res.data);
 			this.setState({ schools : res.data });				   
@@ -24,19 +24,18 @@ export default class Schools extends(React.Component){
 		if (this.loaded < 1) return <div></div>;
 		
 
-		const schools = [];
-		for (let school in this.state.schools){
-			schools.push(
-					<tr key = {schools.length}>
-						<td>{this.state.schools[school].name}</td>
-						<td><Link to={'school/'+school}>Подробнее</Link></td>
+		const schools = this.state.schools.map((school,index)=>
+		{
+			return (
+					<tr key = {index}>
+						<td>{school.name}</td>
+						<td><Link to={'school/'+school.id}>Подробнее</Link></td>
 					</tr>
 				);
-		}
-		
+		})
 		return (
 			<div>
-				<h1>Ваши проекты:</h1>
+				<h1>Ваши школы:</h1>
 				<Table responsive>
 					<thead>
 					  <tr>
