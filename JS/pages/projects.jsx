@@ -3,6 +3,8 @@ import request from '../API.jsx';
 import Project from './project.jsx';
 import {Link} from 'react-router';
 import {Table} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
+import {hashHistory} from 'react-router';
 
 export default class projects extends(React.Component){
 	constructor(props){
@@ -23,6 +25,12 @@ export default class projects extends(React.Component){
 			this.setState({projects:this.state.projects, schools : res.data })	;				   
 		});
 	}
+	onButtonClick(proj_id){
+		request('copyProject', {id:proj_id}, 'post').then((res)=>{
+			hashHistory.push('projectPreferences/'+res.data.project_id+'/params');
+		});
+			
+	}
 	render(){
 		if (this.loaded < 2) return <div></div>;
 		const list = this.state.projects.map(u=>
@@ -36,7 +44,10 @@ export default class projects extends(React.Component){
 			name={u.project_name}/></td>
 			<td>{this.state.schools[u.school_id]['name']}</td>
 			<td>{u.start}</td>
-			<td>{u.finish}</td></tr>
+			<td>{u.finish}</td>
+			<td><Button type='button' onClick={()=>{this.onButtonClick(u.id)}}>Создать копию</Button>
+			</td>
+			</tr>
 			)
 		
 		return (
@@ -50,6 +61,7 @@ export default class projects extends(React.Component){
 						<th>Школа</th>
 						<th>Начало</th>
 						<th>Конец</th>
+						<th></th>
 					  </tr>
 					</thead>
 					<tbody>
