@@ -58,7 +58,7 @@ export default class NewProject extends(React.Component){
 		const schoolOptions = this.state.schools.map((school,index)=>{return (
 				<option value={school.id} key={index}>{school.name}</option>
 			)});
-
+		
 		return (//TODO: rewrite it with react-bootstrap
 			<div>
 				<h1>Новый проект расписания</h1>
@@ -82,10 +82,6 @@ export default class NewProject extends(React.Component){
 						<ControlLabel>Дата конца расписания (недельного)</ControlLabel>
 						<DatePicker value={this.formData.finish}  dateFormat="DD-MM-YYYY" dayLabels={ ['Вс','Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']} monthLabels = {['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']} onChange={(e)=>{this.formData.finish = e.slice(0,10)}} name='finish'/>
 					</FormGroup>
-					<FormGroup>
-						<ControlLabel>Уроков в день(максимально)</ControlLabel>
-						<FormControl type="number" name="lessons_per_day"/>
-					</FormGroup>
 					<Button type='button'  onClick={e => this.handleSubmit(e)}>Создать</Button>
 					{renderAlert(this.state.alertMessage)}
 				</Form>
@@ -93,3 +89,8 @@ export default class NewProject extends(React.Component){
 			);
 	}
 }
+
+/*<FormGroup>
+						<ControlLabel>Уроков в день(максимально)</ControlLabel>
+						<FormControl type="number" name="lessons_per_day"/>
+					</FormGroup>*/
