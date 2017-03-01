@@ -236,7 +236,37 @@ class USER
 			return ['error'=>$e->getMessage()];
 		}
 	}
-
+	
+	public function copy_project($p_id)
+	{
+		try
+		{
+			if(isset($_SESSION['user_session']))
+			{
+				var_dump($p_id);
+				$stmt = $this->db->prepare("INSERT INTO projects 
+				(owner_id, project_name, project_data, school_id, start, finish, lessons_per_day)
+				SELECT owner_id, project_name, project_data, school_id, start, finish, lessons_per_day
+				FROM projects WHERE id = :pid");
+				$stmt->bindparam(":pid", $p_id, PDO::PARAM_INT);
+				$stmt->bindparam(":new_name", $new_name);
+				$stmt->execute();
+				var_dump(1000);
+				http_response_code(200);
+				return ['success'=>'OK', 'project_id' => $this->db->lastInsertId()];
+			}
+			else 
+			{
+				return 0;
+			}
+		}
+		catch(PDOException $e)
+		{
+			http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>$e->getMessage()];
+		}
+	}
+	
 	public function add_grade($s_id, $name, $number)
 	{
 		if (!$this->hasRole(2, $s_id)){
@@ -641,7 +671,9 @@ class USER
 		{
 			if(isset($_SESSION['user_session'])) //and in_array({1,2}, $_SESSION['roles'])
 			{
-				$stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name, school_id, start, finish, lessons_per_day) VALUES (:oid, :pr_name, :s_id, :start, :finish, :lpd)");
+				//$stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name, school_id, start, finish, lessons_per_day) VALUES (:oid, :pr_name, :s_id, :start, :finish, :lpd)");
+				$stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name, school_id, start, finish, lessons_per_day)
+				SELECT :oid, :pr_name, :s_id, :start, :finish, lessons_per_day FROM schools where id = :s_id");
 				$stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
 				$stmt->bindparam(":s_id", $s_id, PDO::PARAM_INT);
 				$stmt->bindparam(":lpd", $lessons_per_day, PDO::PARAM_INT);
@@ -670,10 +702,12 @@ class USER
 		{
 			if(isset($_SESSION['user_session'])) //and in_array({1,2}, $_SESSION['roles'])
 			{
-				$stmt = $this->db->prepare("UPDATE projects SET project_name=:pr_name, start=:start, finish=:finish, lessons_per_day=:lpd WHERE id=:pid AND owner_id=:oid");
+				$stmt = $this->db->prepare("UPDATE projects JOIN schools on projects.school_id = schools.id SET project_name=:pr_name, start=:start, finish=:finish, projects.lessons_per_day=schools.lessons_per_day WHERE projects.id=:pid AND projects.owner_id=:oid");
+				//$stmt = $this->db->prepare("UPDATE projects SET project_name=:pr_name, start=:start, finish=:finish, lessons_per_day=:lpd WHERE id=:pid AND owner_id=:oid");
+				//$stmt = $this->db->prepare("UPDATE projects (owner_id, project_name, school_id, start, finish, lessons_per_day)
+				//SELECT :oid, :pr_name, :s_id, :start, :finish, lessons_per_day FROM schools where id = :s_id");
 				$stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
 				$stmt->bindparam(":pid", $p_id, PDO::PARAM_INT);
-				$stmt->bindparam(":lpd", $lessons_per_day, PDO::PARAM_INT);
 				$stmt->bindparam(":pr_name", $p_name);
 				$stmt->bindparam(":start", $start);
 				$stmt->bindparam(":finish", $finish);
