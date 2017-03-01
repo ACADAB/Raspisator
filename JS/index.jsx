@@ -55,7 +55,7 @@ ReactDOM.render((
 			<Route path="home" component={Home}></Route>
 			<Route path="editor/:id" component={Editor}></Route>
 			<Route path="school/:id" component={School}></Route>
-			<Route path="projectPreferences/:id" component={ProjectPreferences}></Route>
+			<Route path="projectPreferences/:id(/:page)" component={ProjectPreferences}></Route>
 			<Route path="*" component={NotFound} />
 		</Route> 
 	</Router>

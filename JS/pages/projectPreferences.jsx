@@ -76,6 +76,10 @@ export default class ProjectPreferences extends(React.Component){
 		return false;
 	}
 
+	shouldComponentUpdate(np,ns){
+		return np.params.id != this.props.params.id;
+	}
+
 	handleSubmit(event){
 		const dat = this.formData;
 		console.log(dat);
@@ -102,16 +106,20 @@ export default class ProjectPreferences extends(React.Component){
 				<ClassList used="all" grade={gradeId} />
 			</div>
 		);
+		const pagesToIndex = {lesons:"lessons", params:"params"};
+		const curKey = (this.props.params.page in pagesToIndex) ? pagesToIndex[this.props.params.page] : "lessons";
+
 		return (
 			<div>
-				<Tabs defaultActiveKey={1} id="project-settings-tabs">
-					<Tab eventKey={1}  title="Количество уроков">
+				<Tabs defaultActiveKey={curKey} onSelect={(e)=>{hashHistory.push("projectPreferences/"+this.props.params.id+"/"+e)}} id="project-settings-tabs">
+					<Tab eventKey={"lessons"}  title="Количество уроков">
 						<Form inline>
 							<p style={{display:"inline"}}>Укажите количество уроков у каждого класса. Исспользуйте <Glyphicon glyph="chevron-left"/> и <Glyphicon glyph="chevron-right"/> для изменения количества пар и кликайте по урокам для изменения цвета </p>	
 							<Switch onChange={this.handleSwitch} bsSize="mini" defaultValue={classStore.autoSave} wrapperClass="wrapper pull-right"/>
 							<ControlLabel className="pull-right">Автосохранение(каждую минуту)</ControlLabel>
 							
 						</Form>
+						<br/>
 						<div className="class-list-container">
 							{gradeLists}
 							<ItemPreview key="__preview" name="Item" />
@@ -120,7 +128,7 @@ export default class ProjectPreferences extends(React.Component){
 							<Button className="save-btn btn-success" onClick={(e)=>{ClassActions.save(); hashHistory.push('editor/'+this.props.params.id);}}> Сохранить </ Button>
 						</ButtonGroup>
 					</Tab>
-					<Tab eventKey={2} title="Параметры проекта">
+					<Tab eventKey={"params"} title="Параметры проекта">
 						<h1>Параметры расписания</h1>
 						<Form onChange={this.updateFormData} method="POST" acceptCharset="utf-8" action="http://localhost/var/www/html/Raspisator/API/register.php">
 							<FormGroup>
