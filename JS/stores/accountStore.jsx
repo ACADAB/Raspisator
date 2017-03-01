@@ -61,9 +61,13 @@ class AccountStore extends EventEmitter{
 				try{
 					request('login', action.data, 'post').then(res=>{
 						this.setAccountFromResponse(res);
+						
+						console.log(res);
+						
 						this.redirectToIndex();
 						this.emit('login_success');
 					},(res)=>{
+						console.log(res);
 						this.setGuest();
 						this.emit('login_fail');
 					});
