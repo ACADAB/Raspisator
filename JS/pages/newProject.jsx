@@ -76,11 +76,11 @@ export default class NewProject extends(React.Component){
 					</FormGroup>
 					<FormGroup>
 						<ControlLabel>Дата начала расписания</ControlLabel>
-						<DatePicker value={this.formData.start} dateFormat="DD-MM-YYYY" dayLabels={ ['Вс','Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']} monthLabels = {['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']} onChange={(e)=>{this.formData.start = e.slice(0,10)}} name='start'/>
+						<DatePicker value={this.formData.start} dateFormat="DD-MM-YYYY" dayLabels={ ['Вс','Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']} weekStartsOnMonday monthLabels = {['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']} onChange={(e)=>{this.formData.start = e.slice(0,10)}} name='start'/>
 					</FormGroup>
 					<FormGroup>
 						<ControlLabel>Дата конца расписания (недельного)</ControlLabel>
-						<DatePicker value={this.formData.finish}  dateFormat="DD-MM-YYYY" dayLabels={ ['Вс','Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']} monthLabels = {['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']} onChange={(e)=>{this.formData.finish = e.slice(0,10)}} name='finish'/>
+						<DatePicker value={this.formData.finish}  dateFormat="DD-MM-YYYY" dayLabels={ ['Вс','Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']} weekStartsOnMonday monthLabels = {['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']} onChange={(e)=>{this.formData.finish = e.slice(0,10)}} name='finish'/>
 					</FormGroup>
 					<Button type='button'  onClick={e => this.handleSubmit(e)}>Создать</Button>
 					{renderAlert(this.state.alertMessage)}
