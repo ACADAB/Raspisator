@@ -21,8 +21,7 @@ export default function request (url, data={}, method='get', a = undefined, succ
 	if (path[path.length-1].indexOf('index.php') >= 0) path.remove(-1);
 	path = path.reduce((l,r) => l+'/'+r);
 	if (path == '/') path = '';
-	url =path +'/API/' + url + '.php';
-
+	url =document.location.origin + path +'/API/' + url + '.php';
 	method = method.toLowerCase();
 		
 	let config = {
