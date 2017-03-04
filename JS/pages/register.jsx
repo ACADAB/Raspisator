@@ -48,7 +48,7 @@ export default class Register extends(React.Component){
 		let a =0;
 		return (//TODO: rewrite it with react-bootstrap
 			<div>
-				<Form horizontal onChange={this.updateFormData} method="POST" acceptCharset="utf-8" action="http://localhost/var/www/html/Raspisator/API/register.php">
+				<Form horizontal onChange={this.updateFormData} method="POST" acceptCharset="utf-8">
 					<FormGroup>
 						<Col mdOffset={2}><h1>Регистрация</h1></Col>
 					</FormGroup>

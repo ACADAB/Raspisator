@@ -135,7 +135,7 @@ export default class ProjectPreferences extends(React.Component){
 					</Tab>
 					<Tab eventKey={"params"} title="Параметры проекта">
 						<h1>Параметры расписания</h1>
-						<Form onChange={this.updateFormData} method="POST" acceptCharset="utf-8" action="http://localhost/var/www/html/Raspisator/API/register.php">
+						<Form onChange={this.updateFormData} method="POST" acceptCharset="utf-8">
 							<FormGroup>
 								<ControlLabel>Название проекта</ControlLabel>
 								<FormControl value={this.formData.p_name} type="text" name="p_name" onChange={(e)=>{this.formData.p_name = e.target.value; this.forceUpdate()}}/>

@@ -61,7 +61,7 @@ export default class Login extends(React.Component){
                         <Modal.Title>Вход</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-						<Form horizontal onChange={this.updateFormData} method="POST" acceptCharset="utf-8" action="http://localhost/var/www/html/Raspisator/API/register.php">
+						<Form horizontal onChange={this.updateFormData} method="POST" acceptCharset="utf-8" >
 							<FormGroup>
 								<Col sm={5} md={5} componentClass={ControlLabel}>Имя пользователя / E-mail</Col>
 								<Col sm={5} md={5}>

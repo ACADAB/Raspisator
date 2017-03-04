@@ -61,7 +61,7 @@ export default class NewProject extends(React.Component){
 		return (//TODO: rewrite it with react-bootstrap
 			<div>
 				<h1>Новый проект расписания</h1>
-				<Form onChange={this.updateFormData} method="POST" acceptCharset="utf-8" action="http://localhost/var/www/html/Raspisator/API/register.php">
+				<Form onChange={this.updateFormData} method="POST" acceptCharset="utf-8">
 					<FormGroup>
 						<ControlLabel>Название проекта</ControlLabel>
 						<FormControl type="text" name="p_name"/>

@@ -82,7 +82,7 @@ export default class NewProject extends(React.Component){
 			<div>
 				<h1>Личное расписание</h1>
 				<Row>
-					<Form onChange={this.updateFormData} method="POST" acceptCharset="utf-8" action="http://localhost/var/www/html/Raspisator/API/register.php">
+					<Form onChange={this.updateFormData} method="POST" acceptCharset="utf-8" action="/API/register.php">
 						<Col md={4} xs={10}>
 							<FormGroup>
 								<ControlLabel>Школа</ControlLabel>
