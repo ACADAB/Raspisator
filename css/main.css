@@ -287,8 +287,21 @@ table{
 
 }
 
+.school-list{
+	width:95% !important;
+	height:70vh !important;
+}
+
 .school-list-heading{
 	display: inline;
+}
+
+#popover-hint{
+	max-width: 700px;
+}
+
+.scrollbar-container{
+	z-index:800 !important;
 }
 
 .add-btn-wrapper{

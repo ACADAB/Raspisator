@@ -71,7 +71,6 @@ export default class ProjectPreferences extends(React.Component){
 		if (data.p_name == '') return 'Вы должны выбрать проект';
 		if (data.start == '') return 'Вы должны указать дату начала';
 		if (data.finish == '') return 'Вы должны указать дату конца';
-		if (data.lessons_per_day == '') return 'Вы должны указать количество уроков в день';
 		if (Date.parse(data.finish) <= Date.parse(data.start)) return 'Дата конца не может быть раньше даты начала';
 		return false;
 	}

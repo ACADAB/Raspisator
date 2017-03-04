@@ -76,7 +76,7 @@ export default class TeachersList extends(React.Component){
 		}
 		
 		return (
-				<ScrollArea horizontal={false} speed={0.8} smoothScrolling={true} className="class-list">
+				<ScrollArea horizontal={false} speed={0.8} smoothScrolling={true} className="class-list school-list">
 					<div>
 				        {items}
 				    </div>
