@@ -153,7 +153,7 @@ export default class Class extends(React.Component){
 		if (amount && (showAll || amount>1))
 			isAmount = true;
 
-		const picker = <TwitterPicker onChangeComplete={(this.handleColorChange)} color={color} />;
+		const picker = <div class='picker-container'><TwitterPicker onChangeComplete={(this.handleColorChange)} color={color} /></div>;
 
 		const rgb = parseInt(color.slice(1),16);
 		const r = (rgb >> 16) & 255;
@@ -174,9 +174,11 @@ export default class Class extends(React.Component){
 		const DOMclasses = ((borderColor!='')?(' border-' + borderColor):'') + ' class-box class' + ((isDragging && !(isAmount && amount>1))?' dragging': '');
 		return connectDragSource(
 			<div className={DOMclasses} style={style} onClick={this.handleClick}>
-				{!subjected && !hideGrade && (this.grade + ',')} 
-				{!subjected && (this.teacher + ',')} 
-				{this.subject}
+				<div className="class-text">
+					{!subjected && !hideGrade && (this.grade + ',')} 
+					{!subjected && (this.teacher + ',')} 
+					{this.subject}
+				</div>
 				{this.renderCounter(renderCounter,isAmount)}
 				{renderPicker && picker}
 			</div>

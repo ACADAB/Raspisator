@@ -189,7 +189,7 @@ export default class ClassList extends(React.Component){
             
             //if (subjected && firstPos!=unused[i].unusedIndex) continue;
             classes.push(
-                    <Class db_id={db_id} renderPicker={!subjected && classStore.editingID == c.id && !hideVerbose} index={classes.length} color={c.color} id={c.id} amount={count} showAll={!hideVerbose} renderCounter={!hideVerbose} subjected={subjected} key={c.id}/>
+                    <Class db_id={db_id} hideGrade={grade != undefined} renderPicker={!subjected && classStore.editingID == c.id && !hideVerbose} index={classes.length} color={c.color} id={c.id} amount={count} showAll={!hideVerbose} renderCounter={!hideVerbose} subjected={subjected} key={c.id}/>
                 )
             //poses.push(firstPos);
             poses.push(unused[i].unusedIndex);

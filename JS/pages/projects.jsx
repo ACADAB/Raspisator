@@ -3,7 +3,7 @@ import request from '../API.jsx';
 import Project from './project.jsx';
 import {Link} from 'react-router';
 import {Table} from 'react-bootstrap';
-import {Button} from 'react-bootstrap';
+import {Button, ButtonToolbar, Glyphicon, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import {hashHistory} from 'react-router';
 
 export default class projects extends(React.Component){
@@ -38,6 +38,13 @@ export default class projects extends(React.Component){
 			name={u.project_name}/></li>
 			);
 		
+		const copyTip = (
+				<Tooltip>Создать копию проекта</Tooltip>
+			);
+		const editTip = (
+				<Tooltip>Редактировать проект</Tooltip>
+			);
+
 		const list2 = this.state.projects.map((u,index)=>
 			<tr key = {index}><td>{index+1}</td>
 			<td><Project id = {u.id} 
@@ -45,14 +52,24 @@ export default class projects extends(React.Component){
 			<td>{this.state.schools[u.school_id]['name']}</td>
 			<td>{u.start}</td>
 			<td>{u.finish}</td>
-			<td><Button type='button' onClick={()=>{this.onButtonClick(u.id)}}>Создать копию</Button>
+			<td>
+				<ButtonToolbar>
+					<OverlayTrigger placement="bottom" overlay={copyTip}>
+						<Button bsSize="small" type='button' onClick={()=>{this.onButtonClick(u.id)}}><Glyphicon className="add-btn"  glyph="copy"/></Button>
+					</OverlayTrigger>
+					<OverlayTrigger placement="bottom" overlay={editTip}>
+						<Button  bsSize="small" onClick={()=>{hashHistory.push('editor/'+u.id)}}> <Glyphicon className="add-btn"  glyph="pencil"/></Button>
+					</OverlayTrigger>
+				</ButtonToolbar>
 			</td>
 			</tr>
 			)
 		
 		return (
 			<div>
-				<h1>Ваши проекты:</h1>
+				<h1 className="inline">Ваши проекты:</h1>
+				<div className="inline pull-right"><Link to="newProject"><Button>Новое расписание</Button></Link></div>
+				<br/><br/>
 				<Table responsive>
 					<thead>
 					  <tr>
@@ -68,7 +85,6 @@ export default class projects extends(React.Component){
 						{list2}	
 					</tbody>
 				</Table>
-				<Link to="newProject">Новое расписание</Link>
 			</div>	
 		);
 	}

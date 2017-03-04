@@ -38,7 +38,7 @@ export default class School extends(React.Component){
 		return (
 			<div>
 				<h2 style={{display:'inline'}}>Школа:{schoolStore.school.school[0].name}</h2>
-				<OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+				<OverlayTrigger placement="bottom" overlay={popover}>
 					<Glyphicon className="add-btn"  glyph="question-sign"/> 
 				</OverlayTrigger>
 				<Row>

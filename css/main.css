@@ -136,6 +136,14 @@ ul{
 	filter: brightness(85%);
 }
 
+.class-text{
+	display: inline-block;
+	max-width: 70%;
+	white-space: nowrap;
+    overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .selected{
 	filter: brightness(85%);
 }
@@ -190,6 +198,7 @@ ul{
 	overflow-y: hidden;
 	white-space:nowrap
 }
+
 
 .class-list-container > *{
 	display:inline-block;
@@ -340,6 +349,9 @@ table{
 	float: left;
 }
 
+.inline{
+	display: inline;
+}
 
 body{
 	background-color: 	 #F8F8F8  ;

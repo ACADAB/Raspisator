@@ -2,7 +2,7 @@ import React from "react";
 import request from '../API.jsx';
 import Project from './project.jsx';
 import {Link} from 'react-router';
-import {Table} from 'react-bootstrap';
+import {Table, Button} from 'react-bootstrap';
 
 export default class Schools extends(React.Component){
 	constructor(props){
@@ -35,7 +35,9 @@ export default class Schools extends(React.Component){
 		})
 		return (
 			<div>
-				<h1>Ваши школы:</h1>
+				<h1 className="inline">Ваши школы:</h1>
+				<div className="inline pull-right"><Link to="newSchool"><Button>Новая школа</Button></Link></div>
+				<br/><br/>
 				<Table responsive>
 					<thead>
 					  <tr>
@@ -47,7 +49,6 @@ export default class Schools extends(React.Component){
 						{schools}	
 					</tbody>
 				</Table>
-				<Link to="newSchool">Новая школа</Link>
 			</div>	
 		);
 	}
