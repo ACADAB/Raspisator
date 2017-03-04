@@ -9,7 +9,7 @@ import request from '../API.jsx';
 import FormData from 'react-form-data';
 import DatePicker from 'react-bootstrap-date-picker';
 
-import {Row, Glyphicon, Form, FormControl, Alert, Button, FormGroup, Col, ControlLabel, ButtonGroup, Tabs, Tab} from 'react-bootstrap';
+import {Row, Glyphicon, Form, FormControl, Alert, Button,Popover, OverlayTrigger, FormGroup, Col, ControlLabel, ButtonGroup, Tabs, Tab} from 'react-bootstrap';
 import renderAlert from './alert.jsx';
 
 import Switch from 'react-bootstrap-switch';
@@ -108,17 +108,23 @@ export default class ProjectPreferences extends(React.Component){
 		const pagesToIndex = {lesons:"lessons", params:"params"};
 		const curKey = (this.props.params.page in pagesToIndex) ? pagesToIndex[this.props.params.page] : "lessons";
 
+		const popover = (
+			<Popover id="popover-hint" title="Подсказка">
+				<p>Укажите количество уроков у каждого класса. Исспользуйте <Glyphicon glyph="chevron-left"/> и <Glyphicon glyph="chevron-right"/> для изменения количества пар и кликайте по урокам для изменения цвета </p>
+			</Popover>
+			);
+
 		return (
 			<div>
 				<Tabs defaultActiveKey={curKey} onSelect={(e)=>{hashHistory.push("projectPreferences/"+this.props.params.id+"/"+e)}} id="project-settings-tabs">
 					<Tab eventKey={"lessons"}  title="Количество уроков">
 						<Form inline>
-							<p style={{display:"inline"}}>Укажите количество уроков у каждого класса. Исспользуйте <Glyphicon glyph="chevron-left"/> и <Glyphicon glyph="chevron-right"/> для изменения количества пар и кликайте по урокам для изменения цвета </p>	
+							<OverlayTrigger placement="bottom" overlay={popover}>
+								<p className="inline"><strong>Подсказка</strong> <Glyphicon className="add-btn"  glyph="question-sign"/> </p>
+							</OverlayTrigger>
 							<Switch onChange={this.handleSwitch} bsSize="mini" defaultValue={classStore.autoSave} wrapperClass="wrapper pull-right"/>
 							<ControlLabel className="pull-right">Автосохранение(каждую минуту)</ControlLabel>
-							
 						</Form>
-						<br/>
 						<div className="class-list-container">
 							{gradeLists}
 							<ItemPreview key="__preview" name="Item" />
