@@ -243,15 +243,14 @@ class USER
 		{
 			if(isset($_SESSION['user_session']))
 			{
-				var_dump($p_id);
+				//var_dump($p_id);
 				$stmt = $this->db->prepare("INSERT INTO projects 
 				(owner_id, project_name, project_data, school_id, start, finish, lessons_per_day)
 				SELECT owner_id, project_name, project_data, school_id, start, finish, lessons_per_day
 				FROM projects WHERE id = :pid");
 				$stmt->bindparam(":pid", $p_id, PDO::PARAM_INT);
-				$stmt->bindparam(":new_name", $new_name);
 				$stmt->execute();
-				var_dump(1000);
+				//var_dump(1000);
 				http_response_code(200);
 				return ['success'=>'OK', 'project_id' => $this->db->lastInsertId()];
 			}
