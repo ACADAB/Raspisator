@@ -54,7 +54,7 @@ export default class newSchool extends(React.Component){
 						<ControlLabel>Уроков в день(максимально)</ControlLabel>
 						<FormControl type="number" name="lessons_per_day"/>
 					</FormGroup>
-					<Button type='button'  onClick={e => this.handleSubmit(e)}>Создать</Button>
+					<Button type='button' bsStyle = 'success' onClick={e => this.handleSubmit(e)}>Создать</Button>
 					{renderAlert(this.state.alertMessage)}
 				</Form>
 			</div>

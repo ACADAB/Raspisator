@@ -148,12 +148,12 @@ export default class ProjectPreferences extends(React.Component){
 								<ControlLabel>Дата конца расписания (недельного)</ControlLabel>
 								<DatePicker value={this.formData.finish}  dateFormat="DD-MM-YYYY" dayLabels={ ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']} monthLabels = {['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']} weekStartsOnMonday onChange={(e)=>{this.formData.finish = e.slice(0,10)}} name='finish'/>
 							</FormGroup>
-							<Button type='button'  onClick={e => this.handleSubmit(e)}>Изменить</Button>
+							<Button type='button' bsStyle = "success"  onClick={e => this.handleSubmit(e)}>Применить</Button>
 							{renderAlert(this.state.alertMessage)}
 						</Form>
 					</Tab>
 				</Tabs>
-				<Link to={"editor/"+this.props.params.id}>Редактирование расписания</Link>
+				<Button type='button' bsStyle = "primary"  onClick={e => hashHistory.push("editor/"+this.props.params.id)}>Редактирование расписания</Button>
 			</div>
 			);//
 	}
