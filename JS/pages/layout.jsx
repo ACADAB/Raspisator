@@ -50,7 +50,7 @@ export default class Layout extends(React.Component){
 		let login = [];
 		let noGrid = false;
 		try{;
-			noGrid = this.props.routes[1].path.indexOf("project") !== -1;
+			noGrid = this.props.routes[1].path.indexOf("project/") !== -1;
 		} catch(e){
 
 		}
