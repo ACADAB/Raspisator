@@ -57,7 +57,6 @@ class SchoolStore extends EventEmitter{
 		this.loading+=1;
 		return request('getSchoolLessons', {'school_id':this.schoolID}).then(res=>{	
 			const dataLen = res.data.length;
-			console.log(res);
 			this.lessons = {};
 			let maxID = 0;
 			for (let i =0; i< dataLen; i++){

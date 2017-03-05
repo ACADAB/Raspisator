@@ -36,6 +36,7 @@ export default class TeachersList extends(React.Component){
 			case "teachers":
 				for (let id in schoolStore.school.teachers){
 					const selected = schoolStore.selection[this.props.type].indexOf(id) > -1;
+					if (!(id in ["remove", "filterInPlace", "getUnique"]))
 					items.push(
 						<Teacher key={id} selected={selected} id={id} onClick={(e)=>{this.clickSelect(e,id)}} selectableKey={id}/>
 						);
@@ -44,6 +45,7 @@ export default class TeachersList extends(React.Component){
 			case "subjects":
 				for (let id in schoolStore.school.subjects){
 					const selected = schoolStore.selection[this.props.type].indexOf(id) > -1;
+					if (!(id in ["remove", "filterInPlace", "getUnique"]))
 					items.push(
 						<Subject key={id} selected={selected} id={id} onClick={(e)=>{this.clickSelect(e,id)}} selectableKey={id}/>
 						);
@@ -52,9 +54,10 @@ export default class TeachersList extends(React.Component){
 			case "grades":
 				let grades = []
 				for (let id in schoolStore.school.grades){
-					grades.push(id);
+					//I'm so sorry for this, but we have a deadline tomorrow
+					if (!(id in ["remove", "filterInPlace", "getUnique"]))
+						grades.push(id);
 				}
-
 				grades.sort((a,b)=>{
 					const g1 = schoolStore.school.grades[a];
 					const g2 = schoolStore.school.grades[b];
@@ -74,7 +77,6 @@ export default class TeachersList extends(React.Component){
 				// statements_def
 				break;
 		}
-		
 		return (
 				<ScrollArea horizontal={false} speed={0.8} smoothScrolling={true} className="class-list school-list">
 					<div>

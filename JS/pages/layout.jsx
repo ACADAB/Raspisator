@@ -54,7 +54,6 @@ export default class Layout extends(React.Component){
 		} catch(e){
 
 		}
-		console.log(noGrid);
 		let renderedChildren;
 
 		if (noGrid) {
