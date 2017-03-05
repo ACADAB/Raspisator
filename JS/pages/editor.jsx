@@ -1,5 +1,4 @@
 import React from "react";
-import Class from './class.jsx';
 import Grid from './grid.jsx';
 import {Col,Row} from 'react-bootstrap';
 import * as ClassActions from '../actions/classActions.jsx';
@@ -23,9 +22,11 @@ export default class Editor extends(React.Component){
 		super(props);
 		this.notGridded = true;
 		this.state={subjects:false};
+		/*
 		classStore.initEmptyProj();
 		classStore.highlight = true;
 		classStore.loadProject(props.params.id);
+		*/
 		this.handleSwitch = this.handleSwitch.bind(this);
 	}
 
@@ -54,13 +55,13 @@ export default class Editor extends(React.Component){
 		return (
 			<div className="editor noselect" draggable='false'>
 				<Form inline>
-					<Link to={"projectPreferences/"+this.props.params.id}>Параметры проекта</Link>
 					<Switch onChange={this.handleSwitch} bsSize="mini" defaultValue={classStore.autoSave} wrapperClass="wrapper pull-right"/>
 					<ControlLabel className="pull-right">Автосохранение(каждую минуту)</ControlLabel>
 				</Form>
+				<br/><br/>
 				<ButtonGroup className="fixed-buttons">
 					<Button className="btn-success save-btn" onClick={ClassActions.save}> Сохранить </ Button>
-					<a href={"API/save.php?p_id="+this.props.params.id} download><Button className="btn-success save-btn" onClick={ClassActions.save}> Загрузить </ Button></a>
+					<a href={"API/save.php?p_id="+classStore.projectID} download><Button className="btn-success save-btn" onClick={ClassActions.save}> Загрузить </ Button></a>
 				</ButtonGroup>
 				
 				<div className="class-list-container" draggable='false'>

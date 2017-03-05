@@ -5,7 +5,7 @@ import {Link} from 'react-router';
 export default class Project extends(React.Component){
 	render(){
 		return (
-			<Link to={"editor/"+this.props.id}>
+			<Link to={"project/"+this.props.id+'/editor'}>
 				{this.props.name}
 			</Link>
 			);

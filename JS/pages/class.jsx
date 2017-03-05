@@ -5,23 +5,7 @@ import * as ClassActions from '../actions/classActions.jsx';
 import classStore from "../stores/classStore.jsx";
 import {Glyphicon} from 'react-bootstrap';
 import {TwitterPicker} from 'react-color';
-
-const cardSource = {
-	canDrag(props){
-		return !props.notDraggable
-	},
-	beginDrag(props) {
-		ClassActions.startEditMode(props.subjected ?props.db_id : props.id, props.subjected);
-		return {
-	      id: props.id,
-	      subjected: props.subjected,
-	      index: props.index,
-	    };
- 	},
- 	endDrag(props) {
- 		classStore.stopEditing();
- 	}
-};
+import cardSource from './cardSource.jsx';
 
 function hasSomeParentTheClass(element, classname, stopOn = undefined) {
 	if(element.className == undefined ) return false;
@@ -31,11 +15,6 @@ function hasSomeParentTheClass(element, classname, stopOn = undefined) {
     return element.parentNode && hasSomeParentTheClass(element.parentNode, classname);
 }
 
-@DragSource(ItemTypes.CLASS, cardSource, (connect, monitor) => ({
-  connectDragSource: connect.dragSource(),
-  isDragging: monitor.isDragging(),
-  connectDragPreview: connect.dragPreview()
-}))
 export default class Class extends(React.Component){
 	constructor(props){
 		super(props);
@@ -103,7 +82,8 @@ export default class Class extends(React.Component){
 	componentDidMount(){
 		var connectDragPreview = this.props.connectDragPreview;
   		var img = new Image();
-    	connectDragPreview(img);
+    	if (connectDragPreview) 
+    		connectDragPreview(img);
 	}
 
 	handleClick(e){
@@ -113,6 +93,7 @@ export default class Class extends(React.Component){
 
 	}
 
+	
 	startEditing(){
 		cardSource.beginDrag(this.props);
 	}
@@ -172,7 +153,9 @@ export default class Class extends(React.Component){
 		if (contrast < 140) style['color'] = 'white';
 
 		const DOMclasses = ((borderColor!='')?(' border-' + borderColor):'') + ' class-box class' + ((isDragging && !(isAmount && amount>1))?' dragging': '');
-		return connectDragSource(
+		
+
+		const res = (
 			<div className={DOMclasses} style={style} onClick={this.handleClick}>
 				<div className="class-text">
 					{!subjected && !hideGrade && (this.grade + ',')} 
@@ -183,5 +166,8 @@ export default class Class extends(React.Component){
 				{renderPicker && picker}
 			</div>
 			);
+
+
+		return connectDragSource? connectDragSource(res) : res;
 	}
 }

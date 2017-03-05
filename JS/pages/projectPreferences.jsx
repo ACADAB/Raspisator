@@ -23,7 +23,9 @@ import AddPair from './addPair.jsx'
 
 import { default as ItemPreview } from './classPreview.jsx';
 
-@DragDropContext(HTML5Backend)
+
+import Editor from './editor.jsx';
+
 export default class ProjectPreferences extends(React.Component){
 	constructor(props){
 		super(props);
@@ -37,13 +39,16 @@ export default class ProjectPreferences extends(React.Component){
 			finish:'',
 			lessons_per_day:'',
 		}
+
+		classStore.initEmptyProj();
+		classStore.highlight = true;
 		this.updateFormData = FormData.updateFormData.bind(this);
 		this.setFormData = FormData.setFormData.bind(this);
 		this.state = {alertMessage:''};
 	}
 
 	componentWillMount(){
-		classStore.highlight = false;
+		//classStore.highlight = false;
 		classStore.loadProject(this.props.params.id).then((res)=>{
 			//TODO: add the "add" button
 			for (let grade in classStore.school.grades){
@@ -105,7 +110,7 @@ export default class ProjectPreferences extends(React.Component){
 				<ClassList used="all" grade={gradeId} />
 			</div>
 		);
-		const pagesToIndex = {lesons:"lessons", params:"params"};
+		const pagesToIndex = {lesons:"lessons", params:"params", editor:"editor"};
 		const curKey = (this.props.params.page in pagesToIndex) ? pagesToIndex[this.props.params.page] : "lessons";
 
 		const popover = (
@@ -116,7 +121,7 @@ export default class ProjectPreferences extends(React.Component){
 
 		return (
 			<div>
-				<Tabs defaultActiveKey={curKey} onSelect={(e)=>{hashHistory.push("projectPreferences/"+this.props.params.id+"/"+e)}} id="project-settings-tabs">
+				<Tabs defaultActiveKey={curKey} onSelect={(e)=>{hashHistory.push("project/"+this.props.params.id+"/"+e)}} id="project-settings-tabs">
 					<Tab eventKey={"lessons"}  title="Количество уроков">
 						<Form inline>
 							<OverlayTrigger placement="bottom" overlay={popover}>
@@ -127,10 +132,9 @@ export default class ProjectPreferences extends(React.Component){
 						</Form>
 						<div className="class-list-container">
 							{gradeLists}
-							<ItemPreview key="__preview" name="Item" />
 						</div>
 						<ButtonGroup className="fixed-buttons">
-							<Button className="save-btn btn-success" onClick={(e)=>{ClassActions.save(); hashHistory.push('editor/'+this.props.params.id);}}> Сохранить </ Button>
+							<Button className="save-btn btn-success" onClick={(e)=>{ClassActions.save();}}> Сохранить </ Button>
 						</ButtonGroup>
 					</Tab>
 					<Tab eventKey={"params"} title="Параметры проекта">
@@ -152,8 +156,10 @@ export default class ProjectPreferences extends(React.Component){
 							{renderAlert(this.state.alertMessage)}
 						</Form>
 					</Tab>
+					<Tab eventKey={"editor"}  title="Расписание">
+						<Editor/>
+					</Tab>
 				</Tabs>
-				<Button type='button' bsStyle = "primary"  onClick={e => hashHistory.push("editor/"+this.props.params.id)}>Редактирование расписания</Button>
 			</div>
 			);//
 	}

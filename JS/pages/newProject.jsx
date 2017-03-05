@@ -47,7 +47,7 @@ export default class NewProject extends(React.Component){
 		} else 
 			request('addProject', dat, 'post').then(res=>{
 				console.log(res);
-				hashHistory.push('projectPreferences/'+res.data.project_id);
+				hashHistory.push('project/'+res.data.project_id);
 			}).catch(e=>{console.log(e)});//fix me!
 	}
 

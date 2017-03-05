@@ -27,7 +27,7 @@ export default class projects extends(React.Component){
 	}
 	onButtonClick(proj_id){
 		request('copyProject', {id:proj_id}, 'post').then((res)=>{
-			hashHistory.push('projectPreferences/'+res.data.project_id+'/params');
+			hashHistory.push('project/'+res.data.project_id+'/params');
 		});
 			
 	}
@@ -58,7 +58,7 @@ export default class projects extends(React.Component){
 						<Button bsSize="small" type='button' onClick={()=>{this.onButtonClick(u.id)}}><Glyphicon className="add-btn"  glyph="copy"/></Button>
 					</OverlayTrigger>
 					<OverlayTrigger placement="bottom" overlay={editTip}>
-						<Button  bsSize="small" onClick={()=>{hashHistory.push('editor/'+u.id)}}> <Glyphicon className="add-btn"  glyph="pencil"/></Button>
+						<Button  bsSize="small" onClick={()=>{hashHistory.push('project/'+u.id+'/editor')}}> <Glyphicon className="add-btn"  glyph="pencil"/></Button>
 					</OverlayTrigger>
 				</ButtonToolbar>
 			</td>

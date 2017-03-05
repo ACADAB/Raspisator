@@ -4,7 +4,7 @@ import {Form, ControlLabel } from 'react-bootstrap'
 import {AutoAffix} from 'react-overlays';
 import Switch from 'react-bootstrap-switch';
 
-import ClassList from './classList.jsx';
+import ClassListDrag from './classListDrag.jsx';
 
 export default class SideList extends(React.Component){
 	constructor(props){
@@ -28,7 +28,7 @@ export default class SideList extends(React.Component){
 										
 									<Switch onChange={this.handleSwitch} bsSize="mini" defaultValue={false} wrapperClass="wrapper pull-right"/>
 								</Form>
-								<ClassList used="unused" setMode={this.setMode} subjected={false} hideVerbose/>
+								<ClassListDrag used="unused" setMode={this.setMode} subjected={false} hideVerbose/>
 							</div>
 						</AutoAffix>
 					</div>

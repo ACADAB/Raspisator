@@ -12,7 +12,7 @@ import Schools from './pages/schools.jsx';
 import Register from './pages/register.jsx';
 import Logout from './pages/logout.jsx';
 import Login from './pages/login.jsx';
-import Editor from './pages/editor.jsx';
+//import Editor from './pages/editor.jsx';
 import Index from './pages/index.jsx';
 import Home from './pages/home.jsx';
 import NewProject from './pages/newProject.jsx';
@@ -53,9 +53,8 @@ ReactDOM.render((
 			<Route path="schedule" component={Schedule}></Route>
 			<Route path="profile" component={Profile}></Route>
 			<Route path="home" component={Home}></Route>
-			<Route path="editor/:id" component={Editor}></Route>
 			<Route path="school/:id" component={School}></Route>
-			<Route path="projectPreferences/:id(/:page)" component={ProjectPreferences}></Route>
+			<Route path="project/:id(/:page)" component={ProjectPreferences}></Route>
 			<Route path="*" component={NotFound} />
 		</Route> 
 	</Router>

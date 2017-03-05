@@ -206,9 +206,7 @@ class ClassStore extends EventEmitter{
 
 
 			this.updateTable(this.lpd*numDays);
-
 			this.refreshStoppingHighlight(false);
-
 			this.setScheduleFromRes(res.data.schedules);
 
 			console.log('resp ',res.data)
@@ -334,15 +332,28 @@ class ClassStore extends EventEmitter{
 
 	addPair(grade, name, teacher, color, db_id = -1, verbose = false){
 		this.maxID += 1;//FIX we need grade to be correct
-		this.unused.push({//todo: remove unused properties e.g. grade, name, teachers
-			id : this.maxID,
-			db_id : db_id,
-			grade : grade,
-			name : name,
-			teacher : teacher,
-			color : color,
-			verbose : verbose
-		});
+		if (db_id == -1){
+			this.unused.push({//todo: remove unused properties e.g. grade, name, teachers
+				id : this.maxID,
+				db_id : db_id,
+				grade : grade,
+				name : name,
+				teacher : teacher,
+				color : color,
+				verbose : verbose
+			});
+		} else {
+			const l = this.projectLessons[db_id];
+			this.unused.push({//todo: remove unused properties e.g. grade, name, teachers
+				id : this.maxID,
+				db_id : db_id,
+				grade : l.grade,
+				name : l.name,
+				teacher : l.teacher,
+				color : color,
+				verbose : verbose
+			});
+		}
 		this.classPosition[this.maxID] = {isUsed : false, index : this.unused.length-1, x : -1, y : -1};		
 		this.emit('change');
 	}
@@ -430,7 +441,8 @@ class ClassStore extends EventEmitter{
 	}
 
 	freeTeachers(teachers, x){
-		return teachers.filter((t)=>{return this.schedule[t][x]})
+		return teachers.filter((t)=>{
+			return this.schedule[t][x]})
 	}
 
 	canDropID(x, y, id){

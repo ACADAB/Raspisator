@@ -8,7 +8,7 @@ import VisibilitySensor from "react-visibility-sensor";
 
 console.log(Highlight);
 
-import Class from './class.jsx';
+import ClassDrag from './classDrag.jsx';
 
 
 function fakeMonitor(){
@@ -160,7 +160,7 @@ export default class ClassSpace extends(React.Component){
       }}>
 					
 					{
-					(id != -1) && <Class hideGrade id={c.id} index={c.id} db_id={c.db_id} color={c.color} borderColor={(!overlay)?highlightColor:''}/>
+					(id != -1) && <ClassDrag hideGrade id={c.id} index={c.id} db_id={c.db_id} color={c.color} borderColor={(!overlay)?highlightColor:''}/>
 					}
 					{isChanging&& canDrop && isOver && this.renderOverlay('yellow')}			
 					{isChanging&& isHighlighted && overlay && this.renderOverlay(highlightColor)}			
