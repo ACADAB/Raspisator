@@ -49,11 +49,12 @@ export default class Layout extends(React.Component){
 		let menu = [];
 		let login = [];
 		let noGrid = false;
-		try{
-			noGrid = React.Children.toArray(this.props.children)[0].type.displayName.indexOf('Editor') !== -1;
+		try{;
+			noGrid = this.props.routes[1].path.indexOf("project") !== -1;
 		} catch(e){
 
 		}
+		console.log(noGrid);
 		let renderedChildren;
 
 		if (noGrid) {
