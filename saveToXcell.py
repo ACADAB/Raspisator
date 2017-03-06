@@ -32,7 +32,7 @@ print(startdate.weekday())
 les = requests.get("http://localhost/var/www/html/Raspisator/API/getLessons.php?project_id="+sys.argv[1])
 les = json.loads(les.text)
 les = {i['id'] : i for i in les}
-print(lpd)
+print(sinfo)
 grades = sinfo['grades']
 teachers = sinfo['teachers']
 subjects = sinfo['subjects']
