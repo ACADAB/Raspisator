@@ -9,7 +9,7 @@ import request from '../API.jsx';
 import FormData from 'react-form-data';
 import DatePicker from 'react-bootstrap-date-picker';
 
-import {Row, Glyphicon, Form, FormControl, Alert, Button,Popover, OverlayTrigger, FormGroup, Col, ControlLabel, ButtonGroup, Tabs, Tab} from 'react-bootstrap';
+import {Row, Grid, Glyphicon, Form, FormControl, Alert, Button,Popover, OverlayTrigger, FormGroup, Col, ControlLabel, ButtonGroup, Tabs, Tab} from 'react-bootstrap';
 import renderAlert from './alert.jsx';
 
 import Switch from 'react-bootstrap-switch';
@@ -123,38 +123,42 @@ export default class ProjectPreferences extends(React.Component){
 			<div>
 				<Tabs defaultActiveKey={curKey} onSelect={(e)=>{hashHistory.push("project/"+this.props.params.id+"/"+e)}} id="project-settings-tabs">
 					<Tab eventKey={"lessons"}  title="Количество уроков">
-						<Form inline>
-							<OverlayTrigger placement="bottom" overlay={popover}>
-								<p className="inline"><strong>Подсказка</strong> <Glyphicon className="add-btn"  glyph="question-sign"/> </p>
-							</OverlayTrigger>
-							<Switch onChange={this.handleSwitch} bsSize="mini" defaultValue={classStore.autoSave} wrapperClass="wrapper pull-right"/>
-							<ControlLabel className="pull-right">Автосохранение(каждую минуту)</ControlLabel>
-						</Form>
-						<div className="class-list-container">
-							{gradeLists}
-						</div>
-						<ButtonGroup className="fixed-buttons">
-							<Button className="save-btn btn-success" onClick={(e)=>{ClassActions.save();}}> Сохранить </ Button>
-						</ButtonGroup>
+						<Grid>
+							<Form inline>
+								<OverlayTrigger placement="bottom" overlay={popover}>
+									<p className="inline"><strong>Подсказка</strong> <Glyphicon className="add-btn"  glyph="question-sign"/> </p>
+								</OverlayTrigger>
+								<Switch onChange={this.handleSwitch} bsSize="mini" defaultValue={classStore.autoSave} wrapperClass="wrapper pull-right"/>
+								<ControlLabel className="pull-right">Автосохранение(каждую минуту)</ControlLabel>
+							</Form>
+							<div className="class-list-container">
+								{gradeLists}
+							</div>
+							<ButtonGroup className="fixed-buttons">
+								<Button className="save-btn btn-success" onClick={(e)=>{ClassActions.save();}}> Сохранить </ Button>
+							</ButtonGroup>
+						</Grid>
 					</Tab>
 					<Tab eventKey={"params"} title="Параметры проекта">
-						<h1>Параметры расписания</h1>
-						<Form onChange={this.updateFormData} method="POST" acceptCharset="utf-8">
-							<FormGroup>
-								<ControlLabel>Название проекта</ControlLabel>
-								<FormControl value={this.formData.p_name} type="text" name="p_name" onChange={(e)=>{this.formData.p_name = e.target.value; this.forceUpdate()}}/>
-							</FormGroup>
-							<FormGroup>
-								<ControlLabel>Дата начала расписания</ControlLabel>
-								<DatePicker value={this.formData.start} dateFormat="DD-MM-YYYY" dayLabels={ ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']} monthLabels = {['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']} weekStartsOnMonday onChange={(e)=>{this.formData.start = e.slice(0,10)}} name='start'/>
-							</FormGroup>
-							<FormGroup>
-								<ControlLabel>Дата конца расписания (недельного)</ControlLabel>
-								<DatePicker value={this.formData.finish}  dateFormat="DD-MM-YYYY" dayLabels={ ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']} monthLabels = {['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']} weekStartsOnMonday onChange={(e)=>{this.formData.finish = e.slice(0,10)}} name='finish'/>
-							</FormGroup>
-							<Button type='button' bsStyle = "success"  onClick={e => this.handleSubmit(e)}>Применить</Button>
-							{renderAlert(this.state.alertMessage)}
-						</Form>
+						<Grid>
+							<h1>Параметры расписания</h1>
+							<Form onChange={this.updateFormData} method="POST" acceptCharset="utf-8">
+								<FormGroup>
+									<ControlLabel>Название проекта</ControlLabel>
+									<FormControl value={this.formData.p_name} type="text" name="p_name" onChange={(e)=>{this.formData.p_name = e.target.value; this.forceUpdate()}}/>
+								</FormGroup>
+								<FormGroup>
+									<ControlLabel>Дата начала расписания</ControlLabel>
+									<DatePicker value={this.formData.start} dateFormat="DD-MM-YYYY" dayLabels={ ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']} monthLabels = {['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']} weekStartsOnMonday onChange={(e)=>{this.formData.start = e.slice(0,10)}} name='start'/>
+								</FormGroup>
+								<FormGroup>
+									<ControlLabel>Дата конца расписания (недельного)</ControlLabel>
+									<DatePicker value={this.formData.finish}  dateFormat="DD-MM-YYYY" dayLabels={ ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']} monthLabels = {['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']} weekStartsOnMonday onChange={(e)=>{this.formData.finish = e.slice(0,10)}} name='finish'/>
+								</FormGroup>
+								<Button type='button' bsStyle = "success"  onClick={e => this.handleSubmit(e)}>Применить</Button>
+								{renderAlert(this.state.alertMessage)}
+							</Form>
+						</Grid>
 					</Tab>
 					<Tab eventKey={"editor"}  title="Расписание">
 						<Editor/>
