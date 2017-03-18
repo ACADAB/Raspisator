@@ -22,6 +22,59 @@ class USER
 		$this->db = $DB_con;
 	}
 
+	public function approve_user($id, $token)
+	{
+		try
+		{
+			$stmt = $this->db->prepare("SELECT user_approve.user_id, user_approve.token, users.user_email FROM user_approve JOIN users ON user_approve.user_id = users.user_id WHERE user_approve.user_id=:id AND user_approve.token=:token");
+			$stmt->bindparam(":id", $id);
+			$stmt->bindparam(":token", $token); 
+			$stmt->execute(); 
+			$result = $stmt->fetchall(PDO::FETCH_ASSOC);
+			if(count($result) > 0){
+				$stmt = $this->db->prepare("DELETE FROM user_approve WHERE user_id=:id AND token=:token");
+				$stmt->bindparam(":id", $id);
+				$stmt->bindparam(":token", $token); 
+				$stmt->execute(); 				
+
+				$stmt = $this->db->prepare("UPDATE users SET approved=1 WHERE user_id=:id");
+				$stmt->bindparam(":id", $id);
+				$stmt->execute(); 				
+
+				$this->mail($result[0]['user_email'], "noreply", "Регистриция в Raspisator.com","Аккаунт успешно зарегистрирован");
+
+				$this->redirect("https://".LOCATION."/#/register/approved");
+				return ;
+			} else {
+				$this->redirect("https://".LOCATION."/#/register/failed");
+			}
+		}
+		catch(PDOException $e)
+		{
+			http_response_code(400);//FIX ME NOT SHOWING
+			return ['error' =>$e->getMessage()];
+		}    
+	}
+
+	public function hasRole($id, $s_id){
+		
+		$whitelist = array(
+		    '127.0.0.1',
+		    '87.236.16.107',
+		    '::1'
+		);
+		if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
+		    return true;
+		}
+
+		$roles = $this->get_my_roles($s_id);
+		foreach ($roles as $role) {
+			if ($role['school_id'] == $s_id && $role['role_id'] == $id)
+				return true;
+		} 
+		return false;
+	}
+
 	public function register($name,$uname,$umail,$upass)
 	{
 		try
@@ -33,9 +86,18 @@ class USER
 			$stmt->bindparam(":umail", $umail);
 			$stmt->bindparam(":upass", $new_password);            
 			$stmt->execute(); 
-			$stmt = $this->db->prepare("INSERT INTO role_user_school_relation(user_id,role_id,school_id, is_approved) VALUES(".strval($this->db->lastInsertId()).",1,1,1)");
+			/*$stmt = $this->db->prepare("INSERT INTO role_user_school_relation(user_id,role_id,school_id, is_approved) VALUES(".strval($this->db->lastInsertId()).",1,1,1)");
 			$stmt->execute(); 
 			//return $stmt; 
+			*/
+			$id = $this->db->lastInsertId();
+
+			$token = $this->generate_token();
+			$stmt = $this->db->prepare("INSERT INTO user_approve(user_id, token) VALUES (".strval($id).',"'.$token.'")');
+			$stmt->execute(); 
+
+			$this->mail($umail, "noreply", "Регистриция в Raspisator.com","<p>Для подтверждения вашего аккаунта перейдиите по ссылке:</p><a href='https://".LOCATION."/API/approveUser.php?id=".strval($id)."&token=".$token."'>Подтвердить аккаунт</a>");
+
 			http_response_code(201);//FIX ME NOT SENDING
 			return ['success'=>'OK'];
 		}
@@ -82,7 +144,7 @@ class USER
 			$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 			if($stmt->rowCount() > 0)
 			{
-				if(password_verify($upass, $userRow['user_pass']))
+				if($userRow['approved'] == 1 && password_verify($upass, $userRow['user_pass']))
 				{
 					$_SESSION['user_session'] = $userRow['user_id'];
 					$_SESSION['user_name'] = $userRow['user_name'];
@@ -141,6 +203,10 @@ class USER
 
 	public function get_school_teachers($school_id)
 	{
+		if (!$this->hasRole(2, $school_id)){
+			http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>"Access denied"];
+		}
 		try
 		{
 			$stmt = $this->db->prepare("SELECT DISTINCT users.user_id, name FROM users JOIN role_user_school_relation ON role_user_school_relation.user_id = users.user_id WHERE role_user_school_relation.school_id = :id AND role_user_school_relation.role_id = 1");
@@ -155,13 +221,96 @@ class USER
 		}
 	}
 
+	public function generate_token(){
+		return bin2hex(openssl_random_pseudo_bytes(16));
+	}
+
+	public function add_subject($s_id, $name)
+	{
+		if (!$this->hasRole(2, $s_id)){
+			http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>"Access denied"];
+		}
+		try
+		{
+			$stmt = $this->db->prepare("INSERT INTO subjects (name,school_id) VALUES (:name, :sid)");
+			$stmt->bindparam(":name", $name);
+			$stmt->bindparam(":sid", $s_id, PDO::PARAM_INT);
+			$stmt->execute();
+			http_response_code(200);
+			return ['success'=>'OK', 'id'=> $this->db->lastInsertId()];
+		}
+		catch(PDOException $e)
+		{
+			http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>$e->getMessage()];
+		}
+	}
+	
+	public function copy_project($p_id)
+	{
+		try
+		{
+			if(isset($_SESSION['user_session']))
+			{
+				//var_dump($p_id);
+				$stmt = $this->db->prepare("INSERT INTO projects 
+				(owner_id, project_name, project_data, school_id, start, finish, lessons_per_day)
+				SELECT owner_id, project_name, project_data, school_id, start, finish, lessons_per_day
+				FROM projects WHERE id = :pid");
+				$stmt->bindparam(":pid", $p_id, PDO::PARAM_INT);
+				$stmt->execute();
+				//var_dump(1000);
+				http_response_code(200);
+				return ['success'=>'OK', 'project_id' => $this->db->lastInsertId()];
+			}
+			else 
+			{
+				return 0;
+			}
+		}
+		catch(PDOException $e)
+		{
+			http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>$e->getMessage()];
+		}
+	}
+	
+	public function add_grade($s_id, $name, $number)
+	{
+		if (!$this->hasRole(2, $s_id)){
+			http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>"Access denied"];
+		}
+		try
+		{
+			$stmt = $this->db->prepare("INSERT INTO grades (grade_name,grade_number,school_id) VALUES (:name, :num, :sid)");
+			$stmt->bindparam(":name", $name);
+			$stmt->bindparam(":num", $number);
+			$stmt->bindparam(":sid", $s_id, PDO::PARAM_INT);
+			$stmt->execute();
+			http_response_code(200);
+			return ['success'=>'OK', 'id'=> $this->db->lastInsertId()];
+		}
+		catch(PDOException $e)
+		{
+			http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>$e->getMessage()];
+		}
+	}
+
 	public function mail($adress, $from, $subject, $text)
 	{
-		$header = 'From: '.$from;
+		$header = 'From: '.$from."@".LOCATION."\r\nContent-Type: text/html; charset=UTF-8\r\n";
 		mail($adress, $subject, $text, $header); 
+		return LOCATION;
 	}
 	public function get_school_data($sid)
 	{
+		if (!$this->hasRole(2, $sid)){
+			//http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>"Access denied"];
+		}
 		try
 		{
 
@@ -277,14 +426,20 @@ class USER
 
 		}
 	}
-	public function get_my_roles()
+	public function get_my_roles($s_id = -1)
 	{
 		try
 		{
-			
 			$result = [];
-			$stmt = $this->db->prepare("SELECT role_id, school_id FROM role_user_school_relation WHERE user_id = :oid");
+			$query = "SELECT role_id, school_id FROM role_user_school_relation WHERE user_id = :oid";
+			if ($s_id>=0)
+				$query = $query." AND school_id = :sid";
+			
+			$stmt = $this->db->prepare($query);
 			$stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
+			if ($s_id >= 0){
+				$stmt->bindparam(":sid", $s_id, PDO::PARAM_INT);
+			}
 			$stmt->execute();
 			$result = $stmt->fetchall(PDO::FETCH_ASSOC);
 			return $result;
@@ -327,7 +482,7 @@ class USER
 	public function save($p_id)
 	{
 		$command = '/usr/bin/python '.__DIR__.'/saveToXcell.py '. $p_id.' 2>&1';//.' > '.__DIR__.'/excel_log.txt');
-		shell_exec($command);
+		echo shell_exec($command);
 	}
 	public function get_school_lessons($school_id)
 	{
@@ -443,9 +598,11 @@ class USER
 	public function redirect($url)
 	{
 		header("Location: $url");
+		http_response_code(303);
 	}
-	public function set_role_user_school_relation($school_id, $user_id, $role_id, $is_approved)
+	public function set_role_user_school_relation($school_id, $user_id, $role_id)
 	{
+		$is_approved = !$this->hasRole(2, $school_id);
 		try
 		{
 			$stmt = $this->db->prepare("INSERT INTO role_user_school_relation (user_id, role_id, school_id, is_approved) VALUES (:user_id, :role_id, :school_id, :is_approved)");
@@ -463,12 +620,13 @@ class USER
 			return ['error'=>$e->getMessage()];
 		}
 	}
-	public function add_lesson($subject_id, $teacher_id, $grade_id)
+	public function add_lesson($school_id,$subject_id, $teacher_id, $grade_id)
 	{
 		try
 		{
-			$stmt = $this->db->prepare("INSERT INTO lessons (subject_id, teacher_id, grade_id) VALUES (:subject_id, :teacher_id, :grade_id)");
+			$stmt = $this->db->prepare("INSERT INTO lessons (school_id, subject_id, teacher_id, grade_id) VALUES (:school_id,:subject_id, :teacher_id, :grade_id)");
 			$stmt->bindparam(":subject_id", $subject_id);
+			$stmt->bindparam(":school_id", $school_id, PDO::PARAM_INT);
 			$stmt->bindparam(":teacher_id", $teacher_id, PDO::PARAM_INT);
 			$stmt->bindparam(":grade_id", $grade_id, PDO::PARAM_INT);
 			$stmt->execute();
@@ -520,7 +678,9 @@ class USER
 		{
 			if(isset($_SESSION['user_session'])) //and in_array({1,2}, $_SESSION['roles'])
 			{
-				$stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name, school_id, start, finish, lessons_per_day) VALUES (:oid, :pr_name, :s_id, :start, :finish, :lpd)");
+				//$stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name, school_id, start, finish, lessons_per_day) VALUES (:oid, :pr_name, :s_id, :start, :finish, :lpd)");
+				$stmt = $this->db->prepare("INSERT INTO projects (owner_id, project_name, school_id, start, finish, lessons_per_day)
+				SELECT :oid, :pr_name, :s_id, :start, :finish, lessons_per_day FROM schools where id = :s_id");
 				$stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
 				$stmt->bindparam(":s_id", $s_id, PDO::PARAM_INT);
 				$stmt->bindparam(":lpd", $lessons_per_day, PDO::PARAM_INT);
@@ -542,6 +702,38 @@ class USER
 			return ['error'=>$e->getMessage()];
 		}
 	}
+
+	public function edit_project($p_id, $p_name, $start, $finish, $lessons_per_day)
+	{
+		try
+		{
+			if(isset($_SESSION['user_session'])) //and in_array({1,2}, $_SESSION['roles'])
+			{
+				$stmt = $this->db->prepare("UPDATE projects JOIN schools on projects.school_id = schools.id SET project_name=:pr_name, start=:start, finish=:finish, projects.lessons_per_day=schools.lessons_per_day WHERE projects.id=:pid AND projects.owner_id=:oid");
+				//$stmt = $this->db->prepare("UPDATE projects SET project_name=:pr_name, start=:start, finish=:finish, lessons_per_day=:lpd WHERE id=:pid AND owner_id=:oid");
+				//$stmt = $this->db->prepare("UPDATE projects (owner_id, project_name, school_id, start, finish, lessons_per_day)
+				//SELECT :oid, :pr_name, :s_id, :start, :finish, lessons_per_day FROM schools where id = :s_id");
+				$stmt->bindparam(":oid", $_SESSION['user_session'], PDO::PARAM_INT);
+				$stmt->bindparam(":pid", $p_id, PDO::PARAM_INT);
+				$stmt->bindparam(":pr_name", $p_name);
+				$stmt->bindparam(":start", $start);
+				$stmt->bindparam(":finish", $finish);
+				$stmt->execute();
+				http_response_code(200);
+				return ['success'=>'OK'];
+			}
+			else 
+			{
+				return 0;
+			}
+		}
+		catch(PDOException $e)
+		{
+			//http_response_code(400);//FIX ME NOT SENDING
+			return ['error'=>$e->getMessage()];
+		}
+	}
+
 	public function add_school($school_name, $lessons_per_day)
 	{
 		try
@@ -552,8 +744,12 @@ class USER
 				$stmt->bindparam(":school_name", $school_name);
 				$stmt->bindparam(":lpd", $lessons_per_day, PDO::PARAM_INT);
 				$stmt->execute();
+//TODO:ADDDMEEEEE
+				$id = $this->db->lastInsertId();
+				$this->set_role_user_school_relation($id, $_SESSION['user_session'], 2, 1);
+
 				http_response_code(200);
-				return ['success'=>'OK'];
+				return ['success'=>'OK', 'id'=>$id];
 			}
 		}
 		catch(PDOException $e)

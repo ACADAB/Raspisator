@@ -36,7 +36,7 @@ export default class TeachersList extends(React.Component){
 			case "teachers":
 				for (let id in schoolStore.school.teachers){
 					const selected = schoolStore.selection[this.props.type].indexOf(id) > -1;
-					if (!(id in ["remove", "filterInPlace", "getUnique"]))
+					if (["remove", "filterInPlace", "getUnique"].indexOf(id) == -1)
 					items.push(
 						<Teacher key={id} selected={selected} id={id} onClick={(e)=>{this.clickSelect(e,id)}} selectableKey={id}/>
 						);
@@ -45,7 +45,7 @@ export default class TeachersList extends(React.Component){
 			case "subjects":
 				for (let id in schoolStore.school.subjects){
 					const selected = schoolStore.selection[this.props.type].indexOf(id) > -1;
-					if (!(id in ["remove", "filterInPlace", "getUnique"]))
+					if (["remove", "filterInPlace", "getUnique"].indexOf(id) == -1)
 					items.push(
 						<Subject key={id} selected={selected} id={id} onClick={(e)=>{this.clickSelect(e,id)}} selectableKey={id}/>
 						);
@@ -55,7 +55,7 @@ export default class TeachersList extends(React.Component){
 				let grades = []
 				for (let id in schoolStore.school.grades){
 					//I'm so sorry for this, but we have a deadline tomorrow
-					if (!(id in ["remove", "filterInPlace", "getUnique"]))
+					if (["remove", "filterInPlace", "getUnique"].indexOf(id) == -1)
 						grades.push(id);
 				}
 				grades.sort((a,b)=>{
@@ -65,7 +65,7 @@ export default class TeachersList extends(React.Component){
 					if (g1.grade_number == g2.grade_number && g1.grade_name < g2.grade_name){ return true;}
 					return false;
 				});
-
+				console.log(grades);
 				items = grades.map((id,index)=>{
 					const selected = schoolStore.selection[this.props.type].indexOf(id) > -1;
 					return <Grade key={index} selected={selected} id={id} onClick={(e)=>{this.clickSelect(e,id)}} selectableKey={id}/>

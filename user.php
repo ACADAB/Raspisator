@@ -747,10 +747,11 @@ class USER
 				$stmt->bindparam(":lpd", $lessons_per_day, PDO::PARAM_INT);
 				$stmt->execute();
 //TODO:ADDDMEEEEE
-				$this->set_role_user_school_relation($this->db->lastInsertId(), $_SESSION['user_session'], 2, 1);
+				$id = $this->db->lastInsertId();
+				$this->set_role_user_school_relation($id, $_SESSION['user_session'], 2, 1);
 
 				http_response_code(200);
-				return ['success'=>'OK', 'id'=>$this->db->lastInsertId()];
+				return ['success'=>'OK', 'id'=>$id];
 			}
 		}
 		catch(PDOException $e)

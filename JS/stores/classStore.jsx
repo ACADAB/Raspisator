@@ -507,7 +507,7 @@ class ClassStore extends EventEmitter{
 				})){
 				isConflict = true;
 				if (highlight)
-					console.log()//this.stoppingHighlight.table[x][i].highlight(Highlight.CONFLICT);
+					this.stoppingHighlight.table[x][i].highlight(Highlight.CONFLICT);
 				else 
 					break;
 			}
